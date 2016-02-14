@@ -1,0 +1,17 @@
+---
+
+common_deploy_user_name: deploy
+common_deploy_user_comments: ""
+common_deploy_sudoroot: true
+
+## Note: password seems to trigger a usermod bug on openbsd
+COMMON_DEPLOY_PASSWORD: change_me_or_die!
+
+common_deploy_public_keys:
+- dummykey.pub
+#- /path/to/key2.pub
+
+## prepend ?
+#adduser_sshkey_options: 'no-port-forwarding,from="10.0.1.1"'
+
+
