@@ -7,7 +7,10 @@ before_install:
  - sudo apt-get install -qq python-apt python-pycurl
 install:
   - pip install ansible
-  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
+#  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+## different naming
+  - "ln -s ansible-adduser ../adduser"
 script:
   - "echo localhost > inventory"
 
