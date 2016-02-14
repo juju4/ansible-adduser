@@ -12,7 +12,7 @@ install:
 ## different naming
   - "ln -s ansible-adduser ../adduser"
 script:
-  - "echo localhost > inventory"
+  - "echo test-kitchen ansible_ssh_host=localhost > inventory"
 
 # Check the role/playbook's syntax.
   - "ansible-playbook -i inventory --syntax-check test/integration/default/default.yml"
