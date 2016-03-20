@@ -27,6 +27,9 @@ before_install:
   # - sudo apt-get update
   # Pull container
   - 'sudo docker pull ${distribution}:${version}'
+  - env
+  - pwd
+  - find -ls
   # Customize container
   - 'sudo docker build --rm=true --file=tests/travis/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
 
