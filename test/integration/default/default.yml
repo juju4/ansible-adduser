@@ -3,6 +3,5 @@
 - hosts: all
 #- hosts: test-kitchen
   roles:
-    - ansible-adduser
-#    - adduser
+    - adduser
 
