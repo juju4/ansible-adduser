@@ -51,7 +51,7 @@ script:
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
-  - 'sudo docker exec "$(cat ${container_id})" cat /tmp/idempotency.log'
+#  - 'sudo docker exec "$(cat ${container_id})" cat /tmp/idempotency.log'
 
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
