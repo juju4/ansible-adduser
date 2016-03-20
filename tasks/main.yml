@@ -26,7 +26,9 @@
   file:
     dest=/home/{{ adduser_user_name }}/.ssh owner={{ adduser_user_name }} mode=700 state=directory
 
+- stat: path=/etc/sudoers
+  register: sudoers
 - name: Add user to sudoers
   lineinfile: "dest=/etc/sudoers regexp='^{{ adduser_user_name }} ALL' line='{{ adduser_user_name }} ALL=(ALL) NOPASSWD: ALL' state=present"
-  when: adduser_sudoroot is defined and adduser_sudoroot
+  when: adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists
 
