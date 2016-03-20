@@ -31,6 +31,8 @@ before_install:
   - pwd
   - find -ls
   - ln -s ansible-adduser ../adduser
+  - ln -s /home/travis/build/juju4/ansible-adduser /etc/ansible/roles/adduser
+  - find -ls /etc/ansible/roles
   # Customize container
   - 'sudo docker build --rm=true --file=test/travis/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible test'
 
