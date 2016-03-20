@@ -1,6 +1,7 @@
 ---
 
-- hosts: test-kitchen
+- hosts: all
+#- hosts: test-kitchen
   roles:
     - adduser
 
