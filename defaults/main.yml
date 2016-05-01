@@ -5,6 +5,7 @@ adduser_user_comments: ""
 adduser_sudoroot: true
 adduser_password: change_me_or_die!
 
+## FIXME! not managing empty var, better put dummy/empty file
 adduser_public_keys:
 - dummykey.pub
 #- /path/to/key2.pub

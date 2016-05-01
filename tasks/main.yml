@@ -2,33 +2,53 @@
 
 - name: Add user
   user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash
-  when: ansible_distribution != 'OpenBSD'
+  when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin'
 
 - name: Add user - OpenBSD
   user: name={{ adduser_user_name }} shell=/bin/ksh
   when: ansible_distribution == 'OpenBSD'
 
+- name: Add user - Darwin admin account
+  user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash groups=admin append=yes
+  when: ansible_os_family == 'Darwin' and adduser_sudoroot is defined and adduser_sudoroot
+  become: yes
+#- name: darwin | add user to admin group
+#  command: "dscl . append /Groups/admin GroupMembership {{ adduser_user_name }}"
+#  when: ansible_os_family == 'Darwin' and adduser_sudoroot is defined and adduser_sudoroot
+- name: Add user - Darwin std account
+  user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash
+  when: ansible_os_family == 'Darwin' and not (adduser_sudoroot is defined and adduser_sudoroot)
+  become: yes
+
+- name: check home has correct permissions
+  file: dest=/home/{{ adduser_user_name }} owner={{ adduser_user_name }} mode=0700 state=directory
+
+- debug: var=adduser_public_keys
 - name: Add authorized keys for {{ adduser_user_name }} user
   authorized_key: 
     "user='{{ adduser_user_name }}' key='{{ item }}'"
   with_file: "{{ adduser_public_keys }}"
-  when: adduser_public_keys is defined and adduser_sshkey_options is not defined
+  when: adduser_public_keys is defined and adduser_public_keys != "" and adduser_sshkey_options is not defined
+  become: yes
 - name: Add authorized keys for {{ adduser_user_name }} user - key_options
   authorized_key: 
     user: "{{ adduser_user_name }}"
     key: "{{ item }}"
     key_options: "{{ adduser_sshkey_options }}"
   with_file: "{{ adduser_public_keys }}"
-  when: adduser_public_keys is defined and adduser_sshkey_options is defined
-
+  when: adduser_public_keys is defined and adduser_public_keys != "" and adduser_sshkey_options is defined
+  become: yes
 
 - name: SSH authorized_keys {{ adduser_user_name }}
   file:
     dest=/home/{{ adduser_user_name }}/.ssh owner={{ adduser_user_name }} mode=700 state=directory
+  become: yes
+  when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin'
 
 - stat: path=/etc/sudoers
   register: sudoers
 - name: Add user to sudoers
   lineinfile: "dest=/etc/sudoers regexp='^{{ adduser_user_name }} ALL' line='{{ adduser_user_name }} ALL=(ALL) NOPASSWD: ALL' state=present"
   when: adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists
+  become: yes
 
