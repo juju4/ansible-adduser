@@ -2,7 +2,12 @@
 
 - name: Add user
   user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash
-  when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin'
+  when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
+
+- name: Add user - Alpine Linux
+  command: "adduser -D {{ adduser_user_name }}"
+  ignore_errors: true
+  when: ansible_os_family == "Alpine"
 
 - name: Add user - OpenBSD
   user: name={{ adduser_user_name }} shell=/bin/ksh
