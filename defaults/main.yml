@@ -1,6 +1,8 @@
 ---
 
 adduser_user_name: deploy
+adduser_user_home: '/home/deploy'
+adduser_user_home_perms: '0700'
 adduser_user_comments: ""
 adduser_sudoroot: true
 adduser_password: change_me_or_die!

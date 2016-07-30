@@ -2,15 +2,18 @@
 
 - name: Add user
   user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash
+  become: yes
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
 
 - name: Add user - Alpine Linux
   command: "adduser -D {{ adduser_user_name }}"
+  become: yes
   ignore_errors: true
   when: ansible_os_family == "Alpine"
 
 - name: Add user - OpenBSD
   user: name={{ adduser_user_name }} shell=/bin/ksh
+  become: yes
   when: ansible_distribution == 'OpenBSD'
 
 - name: Add user - Darwin admin account
@@ -26,17 +29,18 @@
   become: yes
 
 - name: check home has correct permissions
-  file: dest=/home/{{ adduser_user_name }} owner={{ adduser_user_name }} mode=0700 state=directory
+  file: "dest={{ adduser_user_home }} owner={{ adduser_user_name }} mode={{ adduser_user_home_perms }} state=directory"
+  become: yes
 
 - debug: var=adduser_public_keys
 - name: Add authorized keys for {{ adduser_user_name }} user
-  authorized_key: 
+  authorized_key:
     "user='{{ adduser_user_name }}' key='{{ item }}'"
   with_file: "{{ adduser_public_keys }}"
   when: adduser_public_keys is defined and adduser_public_keys != "" and adduser_sshkey_options is not defined
   become: yes
 - name: Add authorized keys for {{ adduser_user_name }} user - key_options
-  authorized_key: 
+  authorized_key:
     user: "{{ adduser_user_name }}"
     key: "{{ item }}"
     key_options: "{{ adduser_sshkey_options }}"
@@ -46,7 +50,7 @@
 
 - name: SSH authorized_keys {{ adduser_user_name }}
   file:
-    dest=/home/{{ adduser_user_name }}/.ssh owner={{ adduser_user_name }} mode=700 state=directory
+    dest={{ adduser_user_home }}/.ssh owner={{ adduser_user_name }} mode=700 state=directory
   become: yes
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin'
 

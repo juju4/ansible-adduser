@@ -1,0 +1,34 @@
+{
+  "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "sleep 30",
+                "apt-get update",
+                "apt-get install -y ansible"
+            ]
+        },
+        {
+            "type": "ansible-local",
+            "playbook_file": "../test/integration/default/default.yml",
+            "role_paths": [
+                "/etc/ansible/roles/adduser"
+             ]
+        }
+  ],
+  "variables": {
+    "do_api_token": "{{env `DO_TOKEN`}}"
+  },
+  "builders": [
+    {
+      "type": "digitalocean",
+      "api_token": "{{user `do_api_token`}}",
+      "image": "ubuntu-14-04-x64",
+      "region": "nyc2",
+      "size": "512mb",
+      "droplet_name": "adduser",
+      "snapshot_name": "build-with-packer-{{timestamp}}"
+    }
+  ]
+}
+
