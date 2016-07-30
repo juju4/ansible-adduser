@@ -53,11 +53,13 @@ before_install:
   - service --status-all
   - sudo service lxd restart
   - wget -q https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb && sudo dpkg -i vagrant_1.8.5_x86_64.deb
+  - sudo -E su $USER -c "env"
+  - sudo -E su $USER -c "which kitchen"
+  - sudo -E su $USER -c "kitchen diagnose --all"
 
 script:
 #  - KITCHEN_LOCAL_YAML=.kitchen.local.yml bundle exec kitchen verify ${INSTANCE}
-  - sudo -E su $USER -c "env PATH=/home/travis/.chefdk/gem/ruby/2.1.0/bin:$PATH kitchen diagnose --all"
-  - sudo -E su $USER -c "env PATH=/home/travis/.chefdk/gem/ruby/2.1.0/bin:$PATH kitchen verify ${INSTANCE} -l debug"
+  - sudo -E su $USER -c "kitchen verify ${INSTANCE} -l debug"
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
