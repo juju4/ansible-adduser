@@ -53,11 +53,15 @@ before_install:
   - service --status-all
   - sudo service lxd restart
   - wget -q https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb && sudo dpkg -i vagrant_1.8.5_x86_64.deb
+## ssh key for lxd_cli ?
+  - ls ~/.ssh
+  - ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -P ""
 ## sudo/su get us a non-usual PATH ...
   - sudo -E su $USER -c "env"
   - sudo -E su $USER -c "which kitchen"
   - sudo -E su $USER -c "env PATH=/usr/local/rvm/gems/ruby-2.2.3/bin:/usr/local/rvm/gems/ruby-2.2.3@global/bin:/usr/local/rvm/rubies/ruby-2.2.3/bin:/usr/local/rvm/bin:/home/travis/bin:/home/travis/.local/bin:/home/travis/.phpenv/shims:/home/travis/.php-build/bin:/home/travis/.gimme/versions/go1.5.1.linux.amd64/bin:/home/travis/.local/bin:/home/travis/.pyenv/shims:/opt/pyenv/bin:/opt/python/2.7.10/bin:/opt/python/3.5.0/bin:/opt/python/2.6.9/bin:/opt/python/3.2.6/bin:/opt/python/3.3.6/bin:/opt/python/3.4.3/bin:/opt/python/pypy-2.6.1/bin:/opt/python/pypy3-2.4.0/bin:/home/travis/.phpenv/shims:/usr/local/phantomjs/bin:/usr/local/phantomjs:/home/travis/perl5/perlbrew/bin:/home/travis/.nvm/versions/node/v4.1.2/bin:./node_modules/.bin:/usr/local/maven-3.1.1/bin:/usr/local/gradle/bin:/usr/local/clang-3.5.0/bin:/home/travis/.gimme/versions/go1.5.1.linux.amd64/bin:/home/travis/.local/bin:/home/travis/.pyenv/shims:/opt/pyenv/bin:/opt/python/2.7.10/bin:/opt/python/3.5.0/bin:/opt/python/2.6.9/bin:/opt/python/3.2.6/bin:/opt/python/3.3.6/bin:/opt/python/3.4.3/bin:/opt/python/pypy-2.6.1/bin:/opt/python/pypy3-2.4.0/bin:/home/travis/.phpenv/shims:/usr/local/phantomjs/bin:/usr/local/phantomjs:./node_modules/.bin:/usr/local/maven-3.1.1/bin:/usr/local/gradle/bin:/usr/local/clang-3.5.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/travis/.phpenv/bin:/home/travis/.phpenv/bin kitchen diagnose --all"
-  - sudo -E -u $USER kitchen diagnose --all
+#  - sudo -E su $USER -c "kitchen diagnose --all"
+#  - sudo -E -u $USER kitchen diagnose --all
 
 script:
 #  - KITCHEN_LOCAL_YAML=.kitchen.local.yml bundle exec kitchen verify ${INSTANCE}
