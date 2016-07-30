@@ -23,7 +23,7 @@ before_install:
 #  - sudo apt install lxd
   - echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" | sudo tee /etc/apt/sources.list.d/trusty-backports.list
   - sudo apt-get update
-  - sudo apt -t trusty-backports install lxd
+  - sudo apt -t trusty-backports -y install lxd
   # Pull container
 #  - lxc remote add images images.linuxcontainers.org
   - lxc remote list
