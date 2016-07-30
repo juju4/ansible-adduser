@@ -19,11 +19,15 @@ env:
     version: 3.4
 
 before_install:
+  - env
+  - pwd
+  - find -ls
 ## No Xenial, https://github.com/travis-ci/travis-ci/issues/5821
 #  - sudo apt install lxd
   - echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" | sudo tee /etc/apt/sources.list.d/trusty-backports.list
   - sudo apt-get update
   - sudo apt -t trusty-backports -y install lxd
+  - sudo useradd -G lxc travis
   # Pull container
 #  - lxc remote add images images.linuxcontainers.org
   - lxc remote list
@@ -31,9 +35,6 @@ before_install:
   - 'lxc image copy images:/${distribution}/${version}/amd64 local: --alias=${distribution}-${version}'
   - gem install kitchen
   - gem install kitchen-lxd
-  - env
-  - pwd
-  - find -ls
   - cat /etc/default/lxd-bridge
 
 script:
