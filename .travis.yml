@@ -1,65 +1,42 @@
 ---
-## from https://github.com/geerlingguy/ansible-role-apache/blob/master/.travis.yml
+dist: trusty
 sudo: required
+rvm:
+  - 2.2
 
 env:
   - distribution: centos
     version: 6
-    init: /sbin/init
-    run_opts: ""
   - distribution: centos
     version: 7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   - distribution: ubuntu
     version: 16.04
-    init: /lib/systemd/systemd
-    run_opts: ""
   - distribution: ubuntu
     version: 14.04
-    init: /sbin/init
-    run_opts: ""
   - distribution: ubuntu
     version: 12.04
-    init: /sbin/init
-    run_opts: ""
-
-services:
-  - docker
+  - distribution: alpine
+    version: 3.4
 
 before_install:
-  # - sudo apt-get update
+## No Xenial, https://github.com/travis-ci/travis-ci/issues/5821
+#  - sudo apt install lxd
+  - sudo apt -t trusty-backports install lxd
   # Pull container
-  - 'sudo docker pull ${distribution}:${version}'
+#  - lxc remote add images images.linuxcontainers.org
+  - lxc remote list
+  - lxc image list
+  - 'lxc image copy images:/${distribution}/${version}/amd64 local: --alias=${distribution}-${version}'
+  - gem install kitchen
+  - gem install kitchen-lxd
   - env
   - pwd
   - find -ls
-  # Customize container
-  - 'sudo docker build --rm=true --file=test/travis/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible test'
+  - cat /etc/default/lxd-bridge
 
 script:
-  - container_id=$(mktemp)
-    # Run container in detached state
-  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/adduser:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
-
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible --version'
-
-  # Ansible syntax check.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/adduser/test/integration/default/default.yml --syntax-check'
-
-  # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/adduser/test/integration/default/default.yml'
-
-  # Test role idempotence.
-  - >
-    sudo docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/adduser/test/integration/default/default.yml
-    | tee /tmp/idempotency.log
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 1)
-
-  # Clean up
-  - 'sudo docker stop "$(cat ${container_id})"'
+#  - KITCHEN_LOCAL_YAML=.kitchen.local.yml bundle exec kitchen verify ${INSTANCE}
+  - kitchen verify ${INSTANCE} -l debug
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
