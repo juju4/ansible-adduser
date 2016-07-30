@@ -26,7 +26,7 @@ before_install:
 #  - sudo apt install lxd
   - echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" | sudo tee /etc/apt/sources.list.d/trusty-backports.list
   - sudo apt-get update -qq
-  - sudo apt -t trusty-backports -y install lxd
+  - sudo apt -t trusty-backports -y install lxd -q
 ## change of group implies logout+login to apply... can't do with travis = run as root (sic)
 ## https://github.com/travis-ci/travis-ci/issues/1839   or chain: sudo -E su $USER -c "..."
   - sudo usermod -G lxd travis
@@ -36,13 +36,15 @@ before_install:
   - sudo -E su $USER -c "lxc image list"
   - 'sudo -E su $USER -c "[ ${distribution} == ubuntu ] || lxc image copy images:/${distribution}/${version}/amd64 local: --alias=${distribution}-${version}"'
   - sudo pip install ansible
-  - sudo gem install kitchen
-  - sudo gem install kitchen-ansible
-  - sudo gem install kitchen-lxd_cli
+  - gem install kitchen
+  - gem install kitchen-ansible
+  - gem install kitchen-lxd_cli
+  - gem list
+  - find /var/lib/gems $HOME/.gem /usr/local/rvm/gems /opt/chefdk/embedded/lib/ruby/gem -iname '*lxd_cli*'
   - sudo perl -pi -e 's@^LXD_IPV4_ADDR=""@LXD_IPV4_ADDR="10.252.116.1"@;s@^LXD_IPV4_NETMASK=""@LXD_IPV4_NETMASK="255.255.255.0"@;s@^LXD_IPV4_NETWORK=""@LXD_IPV4_NETWORK="10.252.116.1/24"@;s@^LXD_IPV4_DHCP_RANGE=""@LXD_IPV4_DHCP_RANGE="10.252.116.2,10.252.116.254"@;s@^LXD_IPV4_DHCP_MAX=""@LXD_IPV4_DHCP_MAX="252"@;' /etc/default/lxd-bridge
   - cat /etc/default/lxd-bridge
   - sudo service lxd-bridge restart
-  - wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb && sudo dpkg -i vagrant_1.8.5_x86_64.deb
+  - wget -q https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb && sudo dpkg -i vagrant_1.8.5_x86_64.deb
 
 script:
 #  - KITCHEN_LOCAL_YAML=.kitchen.local.yml bundle exec kitchen verify ${INSTANCE}
