@@ -21,6 +21,8 @@ env:
 before_install:
 ## No Xenial, https://github.com/travis-ci/travis-ci/issues/5821
 #  - sudo apt install lxd
+  - echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" | sudo tee /etc/apt/sources.list.d/trusty-backports.list
+  - sudo apt-get update
   - sudo apt -t trusty-backports install lxd
   # Pull container
 #  - lxc remote add images images.linuxcontainers.org
