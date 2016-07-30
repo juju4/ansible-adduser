@@ -28,19 +28,20 @@ before_install:
   - sudo apt-get update
   - sudo apt -t trusty-backports -y install lxd
 ## change of group implies logout+login to apply... can't do with travis = run as root (sic)
+## https://github.com/travis-ci/travis-ci/issues/1839   or chain: sudo -E su $USER -c "..."
   - sudo usermod -G lxd travis
   # Pull container
 #  - lxc remote add images images.linuxcontainers.org
-  - sudo lxc remote list
-  - sudo lxc image list
-  - 'sudo lxc image copy images:/${distribution}/${version}/amd64 local: --alias=${distribution}-${version}'
+  - sudo -E su $USER -c "lxc remote list"
+  - sudo -E su $USER -c "lxc image list"
+  - 'sudo -E su $USER -c "[ ${distribution} != ubuntu ] && lxc image copy images:/${distribution}/${version}/amd64 local: --alias=${distribution}-${version}"'
   - gem install kitchen
-  - gem install kitchen-lxd
+  - gem install kitchen-lxd_cli
   - cat /etc/default/lxd-bridge
 
 script:
 #  - KITCHEN_LOCAL_YAML=.kitchen.local.yml bundle exec kitchen verify ${INSTANCE}
-  - sudo kitchen verify ${INSTANCE} -l debug
+  - sudo -E su $USER -c "kitchen verify ${INSTANCE} -l debug"
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
