@@ -34,13 +34,15 @@ before_install:
 #  - lxc remote add images images.linuxcontainers.org
   - sudo -E su $USER -c "lxc remote list"
   - sudo -E su $USER -c "lxc image list"
-  - 'sudo -E su $USER -c "[ ${distribution} != ubuntu ] && lxc image copy images:/${distribution}/${version}/amd64 local: --alias=${distribution}-${version}"'
+  - 'sudo -E su $USER -c "[ ${distribution} == ubuntu ] || lxc image copy images:/${distribution}/${version}/amd64 local: --alias=${distribution}-${version}"'
   - gem install kitchen
   - gem install kitchen-lxd_cli
   - cat /etc/default/lxd-bridge
+  - wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb && sudo dpkg -i vagrant_1.8.5_x86_64.deb
 
 script:
 #  - KITCHEN_LOCAL_YAML=.kitchen.local.yml bundle exec kitchen verify ${INSTANCE}
+  - sudo -E su $USER -c "kitchen diagnose --all"
   - sudo -E su $USER -c "kitchen verify ${INSTANCE} -l debug"
 
 notifications:
