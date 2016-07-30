@@ -25,7 +25,7 @@ before_install:
 ## No Xenial, https://github.com/travis-ci/travis-ci/issues/5821
 #  - sudo apt install lxd
   - echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" | sudo tee /etc/apt/sources.list.d/trusty-backports.list
-  - sudo apt-get update
+  - sudo apt-get update -qq
   - sudo apt -t trusty-backports -y install lxd
 ## change of group implies logout+login to apply... can't do with travis = run as root (sic)
 ## https://github.com/travis-ci/travis-ci/issues/1839   or chain: sudo -E su $USER -c "..."
@@ -35,7 +35,9 @@ before_install:
   - sudo -E su $USER -c "lxc remote list"
   - sudo -E su $USER -c "lxc image list"
   - 'sudo -E su $USER -c "[ ${distribution} == ubuntu ] || lxc image copy images:/${distribution}/${version}/amd64 local: --alias=${distribution}-${version}"'
+  - pip install ansible
   - gem install kitchen
+  - gem install kitchen-ansible
   - gem install kitchen-lxd_cli
   - cat /etc/default/lxd-bridge
   - wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb && sudo dpkg -i vagrant_1.8.5_x86_64.deb
