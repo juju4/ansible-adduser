@@ -10,7 +10,7 @@ cd $location
 
 curl -sSL https://get.rvm.io | bash
 [ -f $HOME/.rvm/scripts/rvm ] && . $HOME/.rvm/scripts/rvm
-[ -f /usr/local/rvm ] && . /etc/profile.d/rvm.sh
+[ -d /usr/local/rvm ] && . /etc/profile.d/rvm.sh
 
 rvm install 2.0
 rvm use 2.0
