@@ -59,8 +59,8 @@ script:
     || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 1)
 
   # kitchen test
-  - 'sudo docker exec --tty "$(cat ${container_id})" bundle install --path ./gems'
-  - 'sudo docker exec --tty "$(cat ${container_id})" bundle exec rake spec'
+  - '[ X${version} != X12.04 ] && sudo docker exec --tty "$(cat ${container_id})" cd /etc/ansible/roles/adduser && bundle install --path ./gems'
+  - '[ X${version} != X12.04 ] && sudo docker exec --tty "$(cat ${container_id})" cd /etc/ansible/roles/adduser && bundle exec rake spec'
 
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
