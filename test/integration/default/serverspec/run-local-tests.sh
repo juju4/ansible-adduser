@@ -9,8 +9,8 @@ cd $location
 [ -f /etc/redhat-release ] && yum -y install which
 
 curl -sSL https://get.rvm.io | bash
-[ -f $HOME/.rvm/scripts/rvm ] && . $HOME/.rvm/scripts/rvm
-[ -d /usr/local/rvm ] && . /etc/profile.d/rvm.sh
+[ -f $HOME/.rvm/scripts/rvm ] && source $HOME/.rvm/scripts/rvm
+[ -d /usr/local/rvm ] && source /etc/profile.d/rvm.sh
 
 rvm install 2.0
 rvm use 2.0
