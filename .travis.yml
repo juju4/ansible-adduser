@@ -59,7 +59,7 @@ script:
     || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 1)
 
   # serverspec tests
-  - 'sudo docker exec --tty "$(cat ${container_id})" cd /etc/ansible/roles/adduser/test/integration/default/serverspec && sh -x ./run-local-tests.sh'
+  - 'sudo docker exec --tty "$(cat ${container_id})" /etc/ansible/roles/adduser/test/integration/default/serverspec/run-local-tests.sh'
 
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'

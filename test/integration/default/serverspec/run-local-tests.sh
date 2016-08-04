@@ -1,5 +1,8 @@
-#!/bin/sh
+#!/bin/sh -x
 ## get consistent ruby2+bundler env on each distribution
+
+location=`dirname "$0"`
+cd $location
 
 curl -sSL https://get.rvm.io | bash
 . $HOME/.rvm/scripts/rvm
