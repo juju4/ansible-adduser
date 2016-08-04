@@ -5,11 +5,13 @@ location=`dirname "$0"`
 cd $location
 
 ## docker environment in travis missing few utils
-[ -f /etc/debian_version ] && sudo apt-get install -y curl
-[ -f /etc/redhat-release ] && sudo yum -y install which
+[ -f /etc/debian_version ] && apt-get install -y curl
+[ -f /etc/redhat-release ] && yum -y install which
 
 curl -sSL https://get.rvm.io | bash
-. $HOME/.rvm/scripts/rvm
+[ -f $HOME/.rvm/scripts/rvm ] && . $HOME/.rvm/scripts/rvm
+[ -f /usr/local/rvm ] && . /etc/profile.d/rvm.sh
+
 rvm install 2.0
 rvm use 2.0
 rvm use 2.0 --default
