@@ -9,20 +9,19 @@ cd $location
 [ -f /etc/redhat-release ] && yum -y install which
 
 curl -sSL https://get.rvm.io | bash
-[ -f $HOME/.rvm/scripts/rvm ] && . $HOME/.rvm/scripts/rvm
-[ -d /usr/local/rvm ] && . /etc/profile.d/rvm.sh
+#[ -f $HOME/.rvm/scripts/rvm ] && . $HOME/.rvm/scripts/rvm
+#[ -d /usr/local/rvm ] && . /etc/profile.d/rvm.sh
 
 ## troubleshoot
 type rvm | head -1
 env
 
-export PATH=/usr/local/rvm/bin:$PATH
+#export PATH=/usr/local/rvm/bin:$PATH
 
-rvm install 2.0
-rvm use 2.0
-rvm use 2.0 --default
-gem install bundler
-bundle install --path ./gems
-export rvmsudo_secure_path=1
-rvmsudo bundle exec rake spec
+bash -l -c "rvm install 2.0"
+bash -l -c "rvm use 2.0"
+bash -l -c "rvm use 2.0 --default"
+bash -l -c "gem install bundler"
+bash -l -c "bundle install --path ./gems"
+bash -l -c "env rvmsudo_secure_path=1 rvmsudo bundle exec rake spec"
 
