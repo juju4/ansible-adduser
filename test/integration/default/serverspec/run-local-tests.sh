@@ -23,5 +23,9 @@ bash -l -c "rvm use 2.0"
 bash -l -c "rvm use 2.0 --default"
 bash -l -c "gem install bundler"
 bash -l -c "bundle install --path ./gems"
-bash -l -c "env rvmsudo_secure_path=1 rvmsudo bundle exec rake spec"
+if [ "X$USER" == "Xroot" ]; then
+    bash -l -c "bundle exec rake spec"
+else
+    bash -l -c "env rvmsudo_secure_path=1 rvmsudo bundle exec rake spec"
+fi
 
