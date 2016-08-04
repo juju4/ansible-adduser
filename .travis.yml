@@ -19,10 +19,11 @@ env:
     version: 14.04
     init: /sbin/init
     run_opts: ""
-  - distribution: ubuntu
-    version: 12.04
-    init: /sbin/init
-    run_opts: ""
+## "Tag 12.04 not found in repository docker.io/library/ubuntu", https://travis-ci.org/juju4/ansible-adduser/jobs/149833344 vs https://travis-ci.org/juju4/ansible-adduser/jobs/128717287
+#  - distribution: ubuntu
+#    version: 12.04
+#    init: /sbin/init
+#    run_opts: ""
 
 services:
   - docker
