@@ -69,6 +69,7 @@ before_install:
   - chmod -R go+w $PWD
 ## OR
   - sudo -E su $USER -c "lxc config show run-${distribution}-${version//./}"
+## FIXME! awk extraction is working in shell but not in travis... relying on global chmod as test ephemeral environment. DON'T USE IN PRODUCTION!
   - sudo -E su $USER -c "lxc config show run-${distribution}-${version//./} | awk -F'[\":,]' '/Hostid/ { print $13 }'"
   - CUID=`sudo -E su $USER -c "lxc config show run-${distribution}-${version//./} | awk -F'[\":,]' '/Hostid/ { print $13 }'"`
   - "echo setfacl -Rm user:$CUID:rwx ${PWD%/*}"
@@ -82,7 +83,7 @@ script:
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- env http_proxy= ansible-playbook -i inventory --connection=local --sudo -vvvv /etc/ansible/roles/adduser/test/integration/default/default.yml"
 ## FIXME! Travis request: Build config file had a parse error: "mapping values are not allowed in this context at line 72 column 321".
 #  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- env http_proxy= ansible-playbook -i inventory /etc/ansible/roles/adduser/test/integration/default/default.yml --connection=local --sudo | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 1)"
-  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- time env http_proxy= /etc/ansible/roles/adduser/test/integration/default/serverspec/run-local-tests.sh"
+  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- time env http_proxy= sh -x /etc/ansible/roles/adduser/test/integration/default/serverspec/run-local-tests.sh"
   - sudo -E su $USER -c "lxc stop run-${distribution}-${version//./}"
 
 notifications:
