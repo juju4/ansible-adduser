@@ -57,18 +57,20 @@ before_install:
   - '[ "X${distribution}" == "Xcentos" -a "X${version}" == "X6" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- env http_proxy= rpm -iUvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm" || true'
   - '[ "X${distribution}" == "Xcentos" -a "X${version}" == "X7" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- env http_proxy= rpm -iUvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm" || true'
   - '[ "X${distribution}" == "Xcentos" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- env http_proxy= yum update" || true'
-  - '[ "X${distribution}" == "Xcentos" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- env http_proxy= yum -y install python python-pip openssl-devel python-devel libffi-devel" || true'
+  - '[ "X${distribution}" == "Xcentos" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- env http_proxy= yum -y install python python-pip openssl-devel python-devel libffi-devel \"@Development tools\"" || true'
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- env http_proxy= pip install ansible"
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- ansible --version"
   - "echo localhost > inventory"
 ## enable ansible profiling (https://github.com/jlafon/ansible-profile)
-  - "printf '[defaults]\ncallback_whitelist = profile_tasks' > ansible.cfg"
-  - sudo -E su $USER -c "lxc file push inventory ansible.cfg run-${distribution}-${version//./}/root/"
+#  - "printf '[defaults]\ncallback_whitelist = profile_tasks' > ansible.cfg"
+#  - sudo -E su $USER -c "lxc file push inventory ansible.cfg run-${distribution}-${version//./}/root/"
+  - sudo -E su $USER -c "lxc file push inventory run-${distribution}-${version//./}/root/"
 ## these lines are necessary so lxc mount is read-write, https://github.com/lxc/lxd/issues/1879
 #  - chmod -R go+w $PWD
 ## OR
   - CUID=`sudo -E su $USER -c "lxc config show run-${distribution}-${version//./} | awk -F'[\":,]' '/Hostid/ { print $13 }'"`
-  - setfacl -Rm user:$CUID:rwx ${PWD%/*}
+  - "echo setfacl -Rm user:$CUID:rwx ${PWD%/*}"
+  - "setfacl -Rm user:$CUID:rwx ${PWD%/*}"
   - sudo -E su $USER -c "lxc config device add run-${distribution}-${version//./} sharedroles disk path=/etc/ansible/roles source=${PWD%/*}"
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- mount"
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- pwd"
