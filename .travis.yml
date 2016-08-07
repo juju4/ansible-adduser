@@ -47,10 +47,10 @@ before_install:
   - sudo -E su $USER -c "env"
   - sudo -E su $USER -c "lxc launch ${distribution}-${version} run-${distribution}-${version}"
 #  - sudo -E su $USER -c "lxc start run-${distribution}-${version}"
-  - [ "X${distribution}" == "Xubuntu" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- apt-get update || true"
-  - [ "X${distribution}" == "Xubuntu" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- apt-get -y install python python-apt aptitude python-pip libssl-dev || true"
-  - [ "X${distribution}" == "Xcentos" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- yum update || true"
-  - [ "X${distribution}" == "Xcentos" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- yum -y install python python-pip openssl-devel || true"
+  - '[ "X${distribution}" == "Xubuntu" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- apt-get update || true"'
+  - '[ "X${distribution}" == "Xubuntu" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- apt-get -y install python python-apt aptitude python-pip libssl-dev || true"'
+  - '[ "X${distribution}" == "Xcentos" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- yum update || true"'
+  - '[ "X${distribution}" == "Xcentos" ] && sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- yum -y install python python-pip openssl-devel || true"'
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- pip install ansible"
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version} -- ansible --version"
   - "echo localhost > inventory"
