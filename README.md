@@ -46,11 +46,24 @@ adduser_public_keys:
 
 ## Continuous integration
 
-you can test this role with test kitchen.
-In the role folder, run
+This role has a travis basic test (for github), more advanced with kitchen and also a Vagrantfile (test/vagrant).
+Default kitchen config (.kitchen.yml) is lxd-based, while (.kitchen.vagrant.yml) is vagrant/virtualbox based.
+
+Once you ensured all necessary roles are present, You can test with:
 ```
+$ gem install kitchen-ansible kitchen-lxd_cli kitchen-sync kitchen-vagrant
+$ cd /path/to/roles/adduser
 $ kitchen verify
+$ kitchen login
+$ KITCHEN_YAML=".kitchen.vagrant.yml" kitchen verify
 ```
+or
+```
+$ cd /path/to/roles/adduser/test/vagrant
+$ vagrant up
+$ vagrant ssh
+```
+
 
 ## Troubleshooting & Known issues
 
