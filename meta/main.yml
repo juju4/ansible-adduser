@@ -12,17 +12,15 @@ galaxy_info:
   platforms:
   - name: Centos
     versions:
-     - 7.1
+     - 7
+     - 6
   - name: Ubuntu
     versions:
+    - xenial
     - trusty
     - precise
   - name: Debian
-    versions:
-  #
-  # Below are all categories currently available. Just as with
-  # the platforms above, uncomment those that apply to your role.
-  #
+  - name: Alpine
   categories:
   - system
   - ssh
