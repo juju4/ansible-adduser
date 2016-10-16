@@ -3,11 +3,12 @@
 sudo: required
 
 env:
-  - distribution: centos
-    version: 6
-    init: /sbin/init
-    run_opts: ""
-    ansible_version: 2.1.2.0
+## FIXME! 'RuntimeError: autoconf error' at 'pip install --upgrade pip'
+#  - distribution: centos
+#    version: 6
+#    init: /sbin/init
+#    run_opts: ""
+#    ansible_version: 2.1.2.0
   - distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
