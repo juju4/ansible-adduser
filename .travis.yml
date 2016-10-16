@@ -7,26 +7,37 @@ env:
     version: 6
     init: /sbin/init
     run_opts: ""
+    ansible_version: 2.1.2.0
   - distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    ansible_version: 2.1.2.0
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
     run_opts: ""
+    ansible_version: 2.1.2.0
+  - distribution: ubuntu
+    version: 16.04
+    init: /lib/systemd/systemd
+    run_opts: ""
+    ansible_version: 1.9.6
   - distribution: ubuntu
     version: 14.04
     init: /sbin/init
     run_opts: ""
+    ansible_version: 2.1.2.0
   - distribution: ubuntu
     version: 12.04
     init: /sbin/init
     run_opts: ""
+    ansible_version: 2.1.2.0
   - distribution: alpine
     version: 3.4
     init: /sbin/init
     run_opts: ""
+    ansible_version: 2.1.2.0
 
 services:
   - docker
@@ -46,6 +57,7 @@ script:
     # Run container in detached state
   - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/adduser:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
 
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm pip install ansible==${ansible_version}'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible --version'
 
   # Ansible syntax check.

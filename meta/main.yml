@@ -19,9 +19,7 @@ galaxy_info:
     - xenial
     - trusty
     - precise
-  - name: Debian
-  - name: Alpine
-  categories:
+  galaxy_tags:
   - system
   - ssh
 dependencies: []
