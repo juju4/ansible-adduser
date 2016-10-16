@@ -57,6 +57,7 @@ script:
     # Run container in detached state
   - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/adduser:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
 
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm apt -y install python-pip'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm pip install ansible==${ansible_version}'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible --version'
 
