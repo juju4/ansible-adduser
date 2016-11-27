@@ -69,7 +69,13 @@ $ vagrant ssh
 
 * under OpenBSD, leaving password field cause an issue.
 
+* ```repomd.xml does not match metalink for epel``` on Centos/Redhat
+uncomment baselist and comment mirrorlist in /etc/yum.repos.d/epel.repo
+(http://stackoverflow.com/questions/30949707/centos-6-6-errno-1-repomd-xml-does-not-match-metalink-for-updates-when-tryin)
+Centos6 might also need ansible 2.1 (not 2.2) because of ```ERROR! Unexpected Exception: 'module' object has no attribute 'HAVE_DECL_MPZ_POWM_SEC'```
+
 ## License
 
 BSD 2-clause
+
 
