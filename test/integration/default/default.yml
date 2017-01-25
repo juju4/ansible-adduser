@@ -3,5 +3,5 @@
 - hosts: all
 #- hosts: test-kitchen
   roles:
-    - adduser
+    - juju4.adduser
 

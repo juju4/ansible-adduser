@@ -5,25 +5,31 @@
   become: yes
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
 
-- name: Add user - Alpine Linux
-  command: "adduser -D {{ adduser_user_name }}"
-  become: yes
-  ignore_errors: true
+- block:
+    - name: Alpine | Add user
+      command: "adduser -D {{ adduser_user_name }} creates=/home/{{ adduser_user_name }}"
+      become: yes
+      ignore_errors: true
+    ## else newly created account is locked
+    - name: Alpine | Unlock user
+      command: "passwd -u {{ adduser_user_name }}"
+      ignore_errors: true
   when: ansible_os_family == "Alpine"
 
-- name: Add user - OpenBSD
+- name: OpenBSD | Add user
   user: name={{ adduser_user_name }} shell=/bin/ksh
   become: yes
   when: ansible_distribution == 'OpenBSD'
 
-- name: Add user - Darwin admin account
+## FIXME! not idempotent
+- name: darwin | Add user (admin)
   user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash groups=admin append=yes
   when: ansible_os_family == 'Darwin' and adduser_sudoroot is defined and adduser_sudoroot
   become: yes
 #- name: darwin | add user to admin group
 #  command: "dscl . append /Groups/admin GroupMembership {{ adduser_user_name }}"
 #  when: ansible_os_family == 'Darwin' and adduser_sudoroot is defined and adduser_sudoroot
-- name: Add user - Darwin std account
+- name: darwin | Add user (std)
   user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash
   when: ansible_os_family == 'Darwin' and not (adduser_sudoroot is defined and adduser_sudoroot)
   become: yes
