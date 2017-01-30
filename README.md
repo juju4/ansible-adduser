@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/juju4/ansible-adduser.svg?branch=master)](https://travis-ci.org/juju4/ansible-adduser)
-
+[![Build Status - Master](https://travis-ci.org/juju4/ansible-adduser.svg?branch=master)](https://travis-ci.org/juju4/ansible-adduser)
+[![Build Status - Devel](https://travis-ci.org/juju4/ansible-adduser.svg?branch=devel)](https://travis-ci.org/juju4/ansible-adduser/branches)
 # adduser ansible role
 
 A simple ansible role to add a unix user with its ssh key.
