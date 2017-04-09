@@ -65,7 +65,21 @@
 - stat: path=/etc/sudoers
   register: sudoers
 - name: Add user to sudoers
-  lineinfile: "dest=/etc/sudoers regexp='^{{ adduser_user_name }} ALL' line='{{ adduser_user_name }} ALL=(ALL) NOPASSWD: ALL' state=present"
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: "^{{ adduser_user_name }} ALL"
+    line: "{{ adduser_user_name }} ALL=(ALL) NOPASSWD: ALL"
+    state: present
   when: adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists
   become: yes
 
+- stat: path=/etc/doas.conf
+  register: doas
+- name: Add user to doas.conf
+  lineinfile:
+    dest: /etc/doas.conf
+    regexp: '^permit {{ adduser_user_name }} as '
+    line: 'permit {{ adduser_user_name }} as root'
+    state: present
+    create: yes
+  become: yes
