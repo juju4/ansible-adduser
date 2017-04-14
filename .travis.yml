@@ -13,7 +13,28 @@ env:
     version: 7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    ansible_version: 2.2.1.0
+    ansible_version: 2.3.0.0
+  - distribution: ubuntu
+    version: 16.04
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    ansible_version: 2.3.0.0
+  - distribution: ubuntu
+    version: 14.04
+    init: /sbin/init
+    run_opts: ""
+    ansible_version: 2.3.0.0
+  - distribution: ubuntu
+    version: 12.04
+    init: /sbin/init
+    run_opts: ""
+    ansible_version: 2.3.0.0
+  - distribution: alpine
+    version: 3.4
+    init: /sbin/init
+    run_opts: ""
+    ansible_version: 2.3.0.0
+## past ansible versions
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
@@ -30,21 +51,6 @@ env:
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 #    run_opts: ""
     ansible_version: 1.9.6
-  - distribution: ubuntu
-    version: 14.04
-    init: /sbin/init
-    run_opts: ""
-    ansible_version: 2.2.1.0
-  - distribution: ubuntu
-    version: 12.04
-    init: /sbin/init
-    run_opts: ""
-    ansible_version: 2.2.1.0
-  - distribution: alpine
-    version: 3.4
-    init: /sbin/init
-    run_opts: ""
-    ansible_version: 2.2.1.0
 
 services:
   - docker

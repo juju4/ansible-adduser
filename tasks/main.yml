@@ -83,3 +83,5 @@
     state: present
     create: yes
   become: yes
+  when: adduser_sudoroot is defined and adduser_sudoroot and doas.stat.exists
+
