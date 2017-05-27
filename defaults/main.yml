@@ -4,8 +4,14 @@ adduser_user_name: deploy
 adduser_user_home: '/home/deploy'
 adduser_user_home_perms: '0700'
 adduser_user_comments: ""
-adduser_sudoroot: true
+adduser_sudoroot: false
 adduser_password: 'please_change_me!'
+#adduser_shell: '/bin/bash'
+## default expires account after 6m? only linux and freebsd
+#adduser_expires: 15552000
+#adduser_expires: ''
+## wheel/admin group are handled directly if sudoroot true
+adduser_groups: []
 
 ## FIXME! not managing empty var, better put dummy/empty file
 adduser_public_keys:

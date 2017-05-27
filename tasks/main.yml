@@ -1,7 +1,12 @@
 ---
 
-- name: Add user
-  user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash
+- name: Add user "{{ adduser_user_name }}"
+  user:
+    name: "{{ adduser_user_name }}"
+    password: "{{ adduser_password }}"
+    comment: "{{ adduser_user_comments }}"
+    shell: "{{ adduser_shell | default('/bin/bash') }}"
+    expires: "{{ adduser_expires }}"
   become: yes
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
 
@@ -19,31 +24,35 @@
   when: ansible_os_family == "Alpine"
 
 - name: OpenBSD | Add user
-  user: name={{ adduser_user_name }} shell=/bin/ksh
+  user:
+    name: "{{ adduser_user_name }}"
+    shell: "{{ adduser_shell | default('/bin/ksh') }}"
   become: yes
   when: ansible_distribution == 'OpenBSD'
 
 ## FIXME! not idempotent
-- name: darwin | Add user (admin)
-  user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash groups=admin append=yes
-  when: ansible_os_family == 'Darwin' and adduser_sudoroot is defined and adduser_sudoroot
-  become: yes
-#- name: darwin | add user to admin group
-#  command: "dscl . append /Groups/admin GroupMembership {{ adduser_user_name }}"
-#  when: ansible_os_family == 'Darwin' and adduser_sudoroot is defined and adduser_sudoroot
-- name: darwin | Add user (std)
-  user: name={{ adduser_user_name }} password="{{ adduser_password }}" comment="{{ adduser_user_comments }}" shell=/bin/bash
-  when: ansible_os_family == 'Darwin' and not (adduser_sudoroot is defined and adduser_sudoroot)
+- name: darwin | Add user
+  user:
+    name: "{{ adduser_user_name }}"
+    password: "{{ adduser_password }}"
+    comment: "{{ adduser_user_comments }}"
+    shell: "{{ adduser_shell | default('/bin/bash') }}"
+  when: ansible_os_family == 'Darwin'
   become: yes
 
 - name: check home has correct permissions
-  file: "dest={{ adduser_user_home }} owner={{ adduser_user_name }} mode={{ adduser_user_home_perms }} state=directory"
+  file:
+    dest: "{{ adduser_user_home }}"
+    owner: "{{ adduser_user_name }}"
+    mode: "{{ adduser_user_home_perms }}"
+    state: directory
   become: yes
 
 - debug: var=adduser_public_keys
 - name: Add authorized keys for {{ adduser_user_name }} user
   authorized_key:
-    "user='{{ adduser_user_name }}' key='{{ item }}'"
+    user: "{{ adduser_user_name }}"
+    key: "{{ item }}"
   with_file: "{{ adduser_public_keys }}"
   when: adduser_public_keys is defined and adduser_public_keys != "" and adduser_sshkey_options is not defined
   become: yes
@@ -64,14 +73,28 @@
 
 - stat: path=/etc/sudoers
   register: sudoers
-- name: Add user to sudoers
-  lineinfile:
-    dest: /etc/sudoers
-    regexp: "^{{ adduser_user_name }} ALL"
-    line: "{{ adduser_user_name }} ALL=(ALL) NOPASSWD: ALL"
-    state: present
+- block:
+    - set_fact:
+        final_groups: "{{ adduser_groups }} + [ 'admin' ]"
+      when: ansible_os_family == "Debian"
+    - set_fact:
+        final_groups: "{{ adduser_groups }} + [ 'wheel' ]"
+      when: ansible_os_family == "RedHat"
+    - name: add user directly in sudoers if no defined admin group
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: "^{{ adduser_user_name }} ALL"
+        line: "{{ adduser_user_name }} ALL=(ALL) ALL"
+        state: present
+        become: yes
+      when: not (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
   when: adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists
-  become: yes
+
+- name: add user to groups
+  user:
+    name: "{{ adduser_user_name }}"
+    append: yes
+    groups: "{{ final_groups | join(',') }}"
 
 - stat: path=/etc/doas.conf
   register: doas
