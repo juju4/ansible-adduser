@@ -95,6 +95,13 @@
     name: "{{ adduser_user_name }}"
     append: yes
     groups: "{{ final_groups | default(adduser_groups) | join(',') }}"
+  when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
+- name: Alpine | Add user to group
+  command: "addgroup {{ adduser_user_name }} {{ item }}"
+  with_items: "{{ final_groups | default(adduser_groups) }}"
+  become: yes
+  ignore_errors: true
+  when: ansible_os_family == "Alpine"
 
 - stat: path=/etc/doas.conf
   register: doas
