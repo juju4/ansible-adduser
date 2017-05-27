@@ -94,7 +94,7 @@
   user:
     name: "{{ adduser_user_name }}"
     append: yes
-    groups: "{{ final_groups | join(',') }}"
+    groups: "{{ final_groups | default(adduser_groups) | join(',') }}"
 
 - stat: path=/etc/doas.conf
   register: doas
