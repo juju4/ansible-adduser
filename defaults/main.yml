@@ -8,7 +8,7 @@ adduser_sudoroot: false
 adduser_password: 'please_change_me!'
 #adduser_shell: '/bin/bash'
 ## default expires account after 6m? only linux and freebsd
-#adduser_expires: 15552000
+adduser_expires: 15552000
 #adduser_expires: ''
 ## wheel/admin group are handled directly if sudoroot true
 adduser_groups: []

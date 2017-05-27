@@ -6,7 +6,7 @@
     password: "{{ adduser_password }}"
     comment: "{{ adduser_user_comments }}"
     shell: "{{ adduser_shell | default('/bin/bash') }}"
-    expires: "{{ adduser_expires | default(None) }}"
+    expires: "{{ adduser_expires }}"
   become: yes
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
 
