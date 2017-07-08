@@ -30,7 +30,7 @@ env:
     run_opts: ""
     ansible_version: 2.3.0.0
   - distribution: alpine
-    version: 3.4
+    version: 3.6
     init: /sbin/init
     run_opts: ""
     ansible_version: 2.3.0.0
