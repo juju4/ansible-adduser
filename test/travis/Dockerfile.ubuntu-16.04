@@ -8,4 +8,5 @@ RUN apt-get update
 RUN apt-get install -y python sudo python-pip
 
 # Install Ansible inventory file
+RUN mkdir /etc/ansible
 RUN echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
