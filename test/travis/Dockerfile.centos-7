@@ -14,7 +14,8 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install Ansible
 RUN yum -y install epel-release
-RUN yum -y install git sudo python-pip
+RUN yum -y install git sudo python-pip python-devel libffi-devel
+RUN yum -y groupinstall 'Development Tools'
 RUN yum clean all
 
 # Disable requiretty
