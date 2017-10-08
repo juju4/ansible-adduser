@@ -10,6 +10,8 @@ A simple ansible role to add a unix user with its ssh key.
 It was tested on the following versions:
  * 1.9
  * 2.0 (required for Windows)
+ * 2.3
+ * 2.4
 
 ### Operating systems
 
@@ -24,7 +26,7 @@ For example
 ```
 - host: myhost
   roles:
-    - adduser
+    - juju4.adduser
 ```
 
 you probably want to review variables
@@ -52,14 +54,14 @@ Default kitchen config (.kitchen.yml) is lxd-based, while (.kitchen.vagrant.yml)
 Once you ensured all necessary roles are present, You can test with:
 ```
 $ gem install kitchen-ansible kitchen-lxd_cli kitchen-sync kitchen-vagrant
-$ cd /path/to/roles/adduser
+$ cd /path/to/roles/juju4.adduser
 $ kitchen verify
 $ kitchen login
 $ KITCHEN_YAML=".kitchen.vagrant.yml" kitchen verify
 ```
 or
 ```
-$ cd /path/to/roles/adduser/test/vagrant
+$ cd /path/to/roles/juju4.adduser/test/vagrant
 $ vagrant up
 $ vagrant ssh
 ```
@@ -77,5 +79,4 @@ Centos6 might also need ansible 2.1 (not 2.2) because of ```ERROR! Unexpected Ex
 ## License
 
 BSD 2-clause
-
 
