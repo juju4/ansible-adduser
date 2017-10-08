@@ -12,44 +12,58 @@ env:
   - distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    ansible_version: 2.3.0.0
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    suite: default
+    ansible_version: 2.4.0.0
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    ansible_version: 2.3.0.0
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    suite: default
+    ansible_version: 2.4.0.0
   - distribution: ubuntu
     version: 14.04
     init: /sbin/init
     run_opts: ""
-    ansible_version: 2.3.0.0
+    suite: default
+    ansible_version: 2.4.0.0
   - distribution: ubuntu
     version: 12.04
     init: /sbin/init
     run_opts: ""
-    ansible_version: 2.3.0.0
+    suite: default
+    ansible_version: 2.4.0.0
   - distribution: alpine
     version: 3.6
     init: /sbin/init
     run_opts: ""
-    ansible_version: 2.3.0.0
+    suite: default
+    ansible_version: 2.4.0.0
 ## past ansible versions
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    suite: default
+    ansible_version: 2.3.0.0
+  - distribution: ubuntu
+    version: 16.04
+    init: /lib/systemd/systemd
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    suite: default
     ansible_version: 2.2.1.0
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    suite: default
     ansible_version: 2.1.2.0
 ## ansible module block requires 2.0+
 #  - distribution: ubuntu
 #    version: 16.04
 #    init: /lib/systemd/systemd
-#    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+#    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+#    suite: default
 #    ansible_version: 1.9.6
 
 services:
@@ -63,6 +77,7 @@ before_install:
   - pwd
   - find -ls
   - "[ -f get-dependencies.sh ] && sh -x get-dependencies.sh"
+  - cp test/travis/initctl_faker test/
   # Customize container
   - 'sudo docker build --rm=true --file=test/travis/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible test'
 
@@ -76,23 +91,26 @@ script:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible --version'
 
   # Ansible syntax check.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.adduser/test/integration/default/default.yml --syntax-check'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.adduser/test/integration/${suite}/default.yml --syntax-check'
 
   # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.adduser/test/integration/default/default.yml'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.adduser/test/integration/${suite}/default.yml'
 
   # Test role idempotence.
 ## known fail for alpine - password unlock
   - >
-    sudo docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.adduser/test/integration/default/default.yml
+    sudo docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.adduser/test/integration/${suite}/default.yml
     | tee /tmp/idempotency.log
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
 
+after_failure:
+  - 'docker exec "$(cat ${container_id})" journalctl -xe --no-pager'
+
+after_script:
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
-
