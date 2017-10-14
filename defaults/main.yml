@@ -9,8 +9,8 @@ adduser_sudoroot: false
 adduser_password: '$6$OajVCpYxMY$JcyxDnQmabAsoVORthM7/l/7MX3/UWic7SlS.qxwYJ5l4a.0nuDqsaPqOwJgvQw9SymTR0dq8gIBuZHdoSDpj0'
 adduser_password_update: on_create
 #adduser_shell: '/bin/bash'
-## default expires account after 6m? only linux and freebsd
-adduser_expires: 15552000
+## default expires account now after 6m+random up to 10d? only linux and freebsd
+adduser_expires: "{{ ansible_date_time.epoch|int + 15552000 + 864000|random(step=86400) }}"
 #adduser_expires: ''
 ## wheel/admin group are handled directly if sudoroot true
 adduser_groups: []
