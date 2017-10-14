@@ -4,6 +4,7 @@
   user:
     name: "{{ adduser_user_name }}"
     password: "{{ adduser_password }}"
+    update_password: "{{ adduser_password_update }}"
     comment: "{{ adduser_user_comments }}"
     shell: "{{ adduser_shell | default('/bin/bash') }}"
     expires: "{{ adduser_expires }}"
@@ -35,6 +36,7 @@
   user:
     name: "{{ adduser_user_name }}"
     password: "{{ adduser_password }}"
+    update_password: "{{ adduser_password_update }}"
     comment: "{{ adduser_user_comments }}"
     shell: "{{ adduser_shell | default('/bin/bash') }}"
   when: ansible_os_family == 'Darwin'
@@ -87,6 +89,8 @@
         line: "{{ adduser_user_name }} ALL=(ALL) ALL"
         state: present
         become: yes
+        backup: yes
+        validate: 'visudo -cf %s'
       when: not (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
   when: adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists
 

@@ -5,7 +5,9 @@ adduser_user_home: '/home/deploy'
 adduser_user_home_perms: '0700'
 adduser_user_comments: ""
 adduser_sudoroot: false
-adduser_password: 'please_change_me!'
+# echo 'please_change_me!' | mkpasswd --method=sha-512 -s
+adduser_password: '$6$OajVCpYxMY$JcyxDnQmabAsoVORthM7/l/7MX3/UWic7SlS.qxwYJ5l4a.0nuDqsaPqOwJgvQw9SymTR0dq8gIBuZHdoSDpj0'
+adduser_password_update: on_create
 #adduser_shell: '/bin/bash'
 ## default expires account after 6m? only linux and freebsd
 adduser_expires: 15552000
