@@ -27,12 +27,13 @@ env:
     run_opts: ""
     suite: default
     ansible_version: 2.4.0.0
-  - distribution: ubuntu
-    version: 12.04
-    init: /sbin/init
-    run_opts: ""
-    suite: default
-    ansible_version: 2.4.0.0
+# pip install ansible: No distributions at all found for pip, https://travis-ci.org/juju4/ansible-adduser/jobs/294548299
+#  - distribution: ubuntu
+#    version: 12.04
+#    init: /sbin/init
+#    run_opts: ""
+#    suite: default
+#    ansible_version: 2.4.0.0
   - distribution: alpine
     version: 3.6
     init: /sbin/init
