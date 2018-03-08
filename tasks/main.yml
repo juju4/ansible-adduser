@@ -3,11 +3,11 @@
 - name: Add user "{{ adduser_user_name }}"
   user:
     name: "{{ adduser_user_name }}"
-    password: "{{ adduser_password }}"
+    password: "{{ adduser_password | default(omit)}}"
     update_password: "{{ adduser_password_update }}"
-    comment: "{{ adduser_user_comments }}"
+    comment: "{{ adduser_user_comments | default(omit) }}"
     shell: "{{ adduser_shell | default('/bin/bash') }}"
-    expires: "{{ adduser_expires }}"
+    expires: "{{ adduser_expires | default(omit) }}"
   become: yes
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
 
@@ -35,9 +35,9 @@
 - name: darwin | Add user
   user:
     name: "{{ adduser_user_name }}"
-    password: "{{ adduser_password }}"
+    password: "{{ adduser_password | default(omit) }}"
     update_password: "{{ adduser_password_update }}"
-    comment: "{{ adduser_user_comments }}"
+    comment: "{{ adduser_user_comments | default(omit) }}"
     shell: "{{ adduser_shell | default('/bin/bash') }}"
   when: ansible_os_family == 'Darwin'
   become: yes

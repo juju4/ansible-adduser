@@ -6,7 +6,7 @@ adduser_user_home_perms: '0700'
 adduser_user_comments: ""
 adduser_sudoroot: false
 # echo 'please_change_me!' | mkpasswd --method=sha-512 -s
-adduser_password: '$6$OajVCpYxMY$JcyxDnQmabAsoVORthM7/l/7MX3/UWic7SlS.qxwYJ5l4a.0nuDqsaPqOwJgvQw9SymTR0dq8gIBuZHdoSDpj0'
+#adduser_password: '$6$OajVCpYxMY$JcyxDnQmabAsoVORthM7/l/7MX3/UWic7SlS.qxwYJ5l4a.0nuDqsaPqOwJgvQw9SymTR0dq8gIBuZHdoSDpj0'
 adduser_password_update: on_create
 #adduser_shell: '/bin/bash'
 ## default expires account now after 6m+random up to 10d? only linux and freebsd
