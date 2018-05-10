@@ -14,19 +14,19 @@ env:
     init: /usr/lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.4.0.0
+    ansible_version: 2.5.2.0
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.4.0.0
+    ansible_version: 2.5.2.0
   - distribution: ubuntu
     version: 14.04
     init: /sbin/init
     run_opts: ""
     suite: default
-    ansible_version: 2.4.0.0
+    ansible_version: 2.5.2.0
 # pip install ansible: No distributions at all found for pip, https://travis-ci.org/juju4/ansible-adduser/jobs/294548299
 #  - distribution: ubuntu
 #    version: 12.04
@@ -39,26 +39,32 @@ env:
     init: /sbin/init
     run_opts: ""
     suite: default
-    ansible_version: 2.4.0.0
+    ansible_version: 2.5.2.0
 ## past ansible versions
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.3.0.0
+    ansible_version: 2.4.4.0
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.2.1.0
+    ansible_version: 2.3.3.0
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.1.2.0
+    ansible_version: 2.2.3.0
+  - distribution: ubuntu
+    version: 16.04
+    init: /lib/systemd/systemd
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    suite: default
+    ansible_version: 2.1.6.0
 ## ansible module block requires 2.0+
 #  - distribution: ubuntu
 #    version: 16.04
