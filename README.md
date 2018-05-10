@@ -12,11 +12,11 @@ It was tested on the following versions:
  * 2.0 (required for Windows)
  * 2.3
  * 2.4
+ * 2.5
 
 ### Operating systems
 
-Tested with vagrant on Ubuntu 14.04 and OpenBSD 5.8.
-Verified with kitchen against ubuntu14, centos7.
+Tested on Ubuntu 14.04, 16.04, 18.04, Centos 6, 7 and OpenBSD 5.8.
 
 ## Example Playbook
 
@@ -42,7 +42,7 @@ adduser_public_keys:
 - dummykey.pub
 ```
 * adduser_user_name: username to add
-* adduser_password: please use ansible vault to store your real password
+* adduser_password: input should be hash except for darwin. please use ansible vault to store your real password
 * adduser_public_keys: list of corresponding authorized keys
 
 
