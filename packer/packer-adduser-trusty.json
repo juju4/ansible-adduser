@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "do_api_token": "{{env `DO_TOKEN`}}"
+  },
   "provisioners": [
     {
       "type": "shell",
@@ -15,7 +18,8 @@
       "playbook_file": "../test/integration/default/default.yml",
       "role_paths": [
         "/etc/ansible/roles/juju4.adduser"
-      ]
+      ],
+      "extra_arguments": [ "--become" ]
     },
     {
       "type": "shell",
@@ -56,7 +60,7 @@
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "packer-ubuntu-14.04-amd64",
+      "vm_name": "packer-adduser-ubuntu-14.04-amd64",
       "vboxmanage": [
         [
           "modifyvm",
@@ -97,24 +101,33 @@
       ],
       "iso_checksum_type": "sha256",
       "iso_checksum": "946a6077af6f5f95a51f82fdc44051c7aa19f9cfc5f737954845a6050543d7c2",
-      "output_directory": "packer-ubuntu-14.04-amd64-vmware",
+      "output_directory": "packer-adduser-ubuntu-14.04-amd64-vmware",
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
       "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "tools_upload_flavor": "linux",
-      "vm_name": "packer-ubuntu-14.04-amd64",
+      "vm_name": "packer-adduser-ubuntu-14.04-amd64",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "memsize": "512",
         "numvcpus": "2"
       }
+    },
+    {
+      "type": "digitalocean",
+      "api_token": "{{user `do_api_token`}}",
+      "image": "ubuntu-18.04-x64",
+      "region": "nyc2",
+      "size": "512mb",
+      "droplet_name": "adduser",
+      "snapshot_name": "packer-adduser-{{isotime \"2006-01-02\"}}"
     }
   ],
   "post-processors": [
     {
-      "output": "builds/{{.Provider}}-adduser-ubuntu1404-{{isotime \"2006-01-02\"}}.box",
+      "output": "builds/{{.Provider}}-adduser-ubuntu-14.04-{{isotime \"2006-01-02\"}}.box",
       "type": "vagrant"
     }
   ]
