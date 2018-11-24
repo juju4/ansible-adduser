@@ -3,7 +3,7 @@
 - name: Add user "{{ adduser_user_name }}"
   user:
     name: "{{ adduser_user_name }}"
-    password: "{{ adduser_password | default(omit)}}"
+    password: "{{ adduser_password | default(omit) }}"
     update_password: "{{ adduser_password_update }}"
     comment: "{{ adduser_user_comments | default(omit) }}"
     shell: "{{ adduser_shell | default('/bin/bash') }}"
@@ -69,17 +69,23 @@
 
 - name: SSH authorized_keys {{ adduser_user_name }}
   file:
-    dest={{ adduser_user_home }}/.ssh owner={{ adduser_user_name }} mode=700 state=directory
+    dest: "{{ adduser_user_home }}/.ssh"
+    owner: "{{ adduser_user_name }}"
+    mode: '0700'
+    state: directory
   become: yes
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin'
 
-- stat: path=/etc/sudoers
+- name: Get /etc/sudoers stat
+  stat: path=/etc/sudoers
   register: sudoers
 - block:
-    - set_fact:
+    - name: Debian | set groups
+      set_fact:
         final_groups: "{{ adduser_groups }} + [ 'admin' ]"
       when: ansible_os_family == "Debian"
-    - set_fact:
+    - name: RedHat | set groups
+      set_fact:
         final_groups: "{{ adduser_groups }} + [ 'wheel' ]"
       when: ansible_os_family == "RedHat"
     - name: add user directly in sudoers if no defined admin group
@@ -107,7 +113,8 @@
   ignore_errors: true
   when: ansible_os_family == "Alpine"
 
-- stat: path=/etc/doas.conf
+- name: Get /etc/doas.conf stat
+  stat: path=/etc/doas.conf
   register: doas
 - name: Add user to doas.conf
   lineinfile:
@@ -118,4 +125,3 @@
     create: yes
   become: yes
   when: adduser_sudoroot is defined and adduser_sudoroot and doas.stat.exists
-
