@@ -41,7 +41,7 @@ env:
 #    suite: default
 #    ansible_version: 2.4.0.0
   - distribution: alpine
-    version: 3.6
+    version: 3.9
     init: /sbin/init
     run_opts: ""
     suite: default
