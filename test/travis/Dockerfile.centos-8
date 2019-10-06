@@ -14,7 +14,8 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install Ansible
 RUN dnf -y install epel-release
-RUN dnf -y install git sudo python-pip python3-pip
+RUN dnf -y install git sudo python3-pip
+RUN ln -s /usr/bin/pip3 /usr/bin/pip
 #RUN pip3 install ansible
 RUN dnf -y groupinstall 'Development Tools'
 RUN dnf clean all
