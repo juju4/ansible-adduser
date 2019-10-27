@@ -52,6 +52,12 @@ env:
     run_opts: ""
     suite: default
     ansible_version: 2.8.1
+  - distribution: ubuntu
+    version: 18.04
+    init: /lib/systemd/systemd
+    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
+    suite: default-nopasswd
+    ansible_version: 2.8.1
 ## past ansible versions
   - distribution: ubuntu
     version: 16.04
@@ -109,6 +115,8 @@ after_failure:
   - 'docker exec "$(cat ${container_id})" journalctl -xe --no-pager'
 
 after_script:
+  - 'docker exec "$(cat ${container_id})" cat /etc/passwd'
+  - 'docker exec "$(cat ${container_id})" cat /etc/sudoers'
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
 

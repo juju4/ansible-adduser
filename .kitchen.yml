@@ -38,3 +38,8 @@ suites:
   - name: default
     run_list:
     attributes:
+  - name: default-nopasswd
+    run_list:
+    attributes:
+    includes:
+      - ubuntu-18.04
