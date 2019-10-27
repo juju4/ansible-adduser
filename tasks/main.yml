@@ -94,10 +94,20 @@
         regexp: "^{{ adduser_user_name }} ALL"
         line: "{{ adduser_user_name }} ALL=(ALL) ALL"
         state: present
-        become: yes
         backup: yes
         validate: 'visudo -cf %s'
+      become: yes
       when: not (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
+    - name: allow nopasswd statement
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: "^{{ adduser_user_name }} ALL="
+        line: "{{ adduser_user_name }} ALL=(ALL) NOPASSWD: {{ adduser_sudoroot_nopasswd_cmd | default('/usr/bin/whoami') }}"
+        state: present
+        backup: yes
+        validate: 'visudo -cf %s'
+      become: yes
+      when: adduser_sudoroot_nopasswd
   when: adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists
 
 - name: add user to groups

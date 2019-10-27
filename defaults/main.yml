@@ -5,6 +5,11 @@ adduser_user_home: '/home/deploy'
 adduser_user_home_perms: '0700'
 adduser_user_comments: ""
 adduser_sudoroot: false
+# if possible, better to use pam-ssh-agent-auth / libpam-ssh-agent-auth
+adduser_sudoroot_nopasswd: false
+# remember that many command can be use to get a shell (more, find, vim, tcpdump...)
+adduser_sudoroot_nopasswd_cmd: '/usr/bin/whoami, /bin/cat'
+#adduser_sudoroot_nopasswd_cmd: 'ALL'
 # echo 'please_change_me!' | mkpasswd --method=sha-512 -s
 #adduser_password: '$6$OajVCpYxMY$JcyxDnQmabAsoVORthM7/l/7MX3/UWic7SlS.qxwYJ5l4a.0nuDqsaPqOwJgvQw9SymTR0dq8gIBuZHdoSDpj0'
 adduser_password_update: on_create
