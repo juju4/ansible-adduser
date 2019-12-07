@@ -117,6 +117,7 @@ after_failure:
 after_script:
   - 'docker exec "$(cat ${container_id})" cat /etc/passwd'
   - 'docker exec "$(cat ${container_id})" cat /etc/sudoers'
+  - 'docker exec "$(cat ${container_id})" cat /etc/ansible/ansible.cfg'
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
 
