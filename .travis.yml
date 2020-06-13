@@ -14,19 +14,19 @@ env:
     init: /usr/lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.8.1
+    ansible_version: 2.9.9
   - distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.8.1
+    ansible_version: 2.9.9
   - distribution: ubuntu
     version: 20.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.8.1
+    ansible_version: 2.9.9
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
@@ -36,19 +36,19 @@ env:
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.8.1
+    ansible_version: 2.9.9
   - distribution: ubuntu
     version: 16.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.8.1
+    ansible_version: 2.9.9
   - distribution: ubuntu
     version: 14.04
     init: /sbin/init
     run_opts: ""
     suite: default
-    ansible_version: 2.8.1
+    ansible_version: 2.9.9
 # pip install ansible: No distributions at all found for pip, https://travis-ci.org/juju4/ansible-adduser/jobs/294548299
 #  - distribution: ubuntu
 #    version: 12.04
@@ -61,26 +61,26 @@ env:
     init: /sbin/init
     run_opts: ""
     suite: default
-    ansible_version: 2.8.1
+    ansible_version: 2.9.9
   - distribution: ubuntu
     version: 18.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default-nopasswd
-    ansible_version: 2.8.1
+    ansible_version: 2.9.9
 ## past ansible versions
   - distribution: ubuntu
-    version: 16.04
+    version: 18.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.7.11
+    ansible_version: 2.8.12
   - distribution: ubuntu
-    version: 16.04
+    version: 18.04
     init: /lib/systemd/systemd
     run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
     suite: default
-    ansible_version: 2.6.17
+    ansible_version: 2.7.18
 
 services:
   - docker
