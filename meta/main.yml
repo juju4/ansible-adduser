@@ -18,6 +18,7 @@ galaxy_info:
      - 6
   - name: Ubuntu
     versions:
+    - focal
     - bionic
     - xenial
     - trusty

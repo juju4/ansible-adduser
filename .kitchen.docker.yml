@@ -25,6 +25,7 @@ provisioner:
   https_proxy: <%= ENV['https_proxy'] %>
 
 platforms:
+  - name: ubuntu-20.04
   - name: ubuntu-18.04
     driver_config:
 # https://github.com/test-kitchen/kitchen-docker/issues/285
