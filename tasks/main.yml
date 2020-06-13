@@ -82,7 +82,7 @@
 - block:
     - name: Debian | set groups
       set_fact:
-        final_groups: "{{ adduser_groups }} + [ 'admin' ]"
+        final_groups: "{{ adduser_groups }} + [ 'adm' ]"
       when: ansible_os_family == "Debian"
     - name: RedHat | set groups
       set_fact:
