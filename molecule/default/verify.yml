@@ -1,0 +1,24 @@
+---
+
+- name: Verify
+  hosts: adduser
+  tasks:
+  - name: Fetch content of /home/deploy/.ssh/authorized_keys
+    slurp:
+      src: /home/deploy/.ssh/authorized_keys
+    register: akeys
+  - name: Validate akeys
+    assert:
+      that: >
+        "'ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGH foo@bar.local' in akeys['content'] | b64decode"
+
+  - name: Validate account settings
+    command: chage -l deploy
+    changed_when: false
+    register: chage
+  - name: Validate akeys
+    assert:
+      that: >
+        "'Account expires' in chage.stdout and
+        not chage.stdout is match('Account expires.*never') and
+        not chage.stdout is match('Last password change.*: password must be changed')"
