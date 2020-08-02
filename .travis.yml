@@ -1,138 +1,29 @@
 ---
-## from https://github.com/geerlingguy/ansible-role-apache/blob/master/.travis.yml
-sudo: required
+language: python
+services: docker
 
 env:
-## FIXME! 'RuntimeError: autoconf error' at 'pip install --upgrade pip'
-#  - distribution: centos
-#    version: 6
-#    init: /sbin/init
-#    run_opts: ""
-#    ansible_version: 2.1.2.0
-  - distribution: centos
-    version: 8
-    init: /usr/lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default
-    ansible_version: 2.9.9
-  - distribution: centos
-    version: 7
-    init: /usr/lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default
-    ansible_version: 2.9.9
-  - distribution: ubuntu
-    version: 20.04
-    init: /lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default
-    ansible_version: 2.9.9
-  - distribution: ubuntu
-    version: 16.04
-    init: /lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default
-    ansible_version: 2.9.9
-  - distribution: ubuntu
-    version: 18.04
-    init: /lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default
-    ansible_version: 2.9.9
-  - distribution: ubuntu
-    version: 16.04
-    init: /lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default
-    ansible_version: 2.9.9
-  - distribution: ubuntu
-    version: 14.04
-    init: /sbin/init
-    run_opts: ""
-    suite: default
-    ansible_version: 2.9.9
-# pip install ansible: No distributions at all found for pip, https://travis-ci.org/juju4/ansible-adduser/jobs/294548299
-#  - distribution: ubuntu
-#    version: 12.04
-#    init: /sbin/init
-#    run_opts: ""
-#    suite: default
-#    ansible_version: 2.4.0.0
-  - distribution: alpine
-    version: 3.9
-    init: /sbin/init
-    run_opts: ""
-    suite: default
-    ansible_version: 2.9.9
-  - distribution: ubuntu
-    version: 18.04
-    init: /lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default-nopasswd
-    ansible_version: 2.9.9
-## past ansible versions
-  - distribution: ubuntu
-    version: 18.04
-    init: /lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default
-    ansible_version: 2.8.12
-  - distribution: ubuntu
-    version: 18.04
-    init: /lib/systemd/systemd
-    run_opts: "'--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'"
-    suite: default
-    ansible_version: 2.7.18
+  global:
+    - MOLECULE_NO_LOG: "false"
+  matrix:
+    - MOLECULE_DISTRO: centos:8
+    - MOLECULE_DISTRO: centos:7
+    - MOLECULE_DISTRO: ubuntu:20.04
+    - MOLECULE_DISTRO: ubuntu:18.04
+    - MOLECULE_DISTRO: ubuntu:16.04
+    - MOLECULE_DISTRO: debian:10
+    - MOLECULE_DISTRO: alpine:3.12
 
-services:
-  - docker
+install:
+  # Install test dependencies.
+  - pip install molecule docker ansible-lint flake8 testinfra
 
-before_install:
-  # - sudo apt-get update
-  # Pull container
-  - 'sudo docker pull ${distribution}:${version}'
-  - env
-  - pwd
-  - find -ls
-  - "[ -f get-dependencies.sh ] && sh -x get-dependencies.sh"
-  - cp test/travis/initctl_faker test/
-  # Customize container
-  - 'sudo docker build --rm=true --file=test/travis/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible test'
+before_script:
+  - cd ../ && mv ansible-adduser juju4.adduser
+  - cd juju4.adduser
 
 script:
-  - container_id=$(mktemp)
-    # Run container in detached state
-  - 'sudo docker run --detach --volume="${PWD%/*}":/etc/ansible/roles:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
-
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm pip install --upgrade pip'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm pip install ansible==${ansible_version}'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible --version'
-
-  # Ansible syntax check.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.adduser/test/integration/${suite}/default.yml --syntax-check'
-
-  # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.adduser/test/integration/${suite}/default.yml'
-
-  # Test role idempotence.
-## known fail for alpine - password unlock
-  - >
-    sudo docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/juju4.adduser/test/integration/${suite}/default.yml
-    | tee /tmp/idempotency.log
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
-
-after_failure:
-  - 'docker exec "$(cat ${container_id})" journalctl -xe --no-pager'
-
-after_script:
-  - 'docker exec "$(cat ${container_id})" cat /etc/passwd'
-  - 'docker exec "$(cat ${container_id})" cat /etc/group'
-  - 'docker exec "$(cat ${container_id})" cat /etc/sudoers'
-  - 'docker exec "$(cat ${container_id})" cat /etc/ansible/ansible.cfg'
-  # Clean up
-  - 'sudo docker stop "$(cat ${container_id})"'
+  - molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
