@@ -6,7 +6,7 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint -x 206
+  ansible-lint -x 204
   flake8
 platforms:
   - name: instance
