@@ -14,7 +14,9 @@
 ## try to keep compatibility with 1.9.6
 #- block:
 - name: Alpine | Add user
-  command: "adduser -D {{ adduser_user_name }} creates=/home/{{ adduser_user_name }}"
+  command: "adduser -D {{ adduser_user_name }}"
+  args:
+    creates: "/home/{{ adduser_user_name }}"
   become: yes
   ignore_errors: true
   when: ansible_os_family == "Alpine"
