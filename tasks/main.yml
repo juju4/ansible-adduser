@@ -96,6 +96,7 @@
         regexp: "^{{ adduser_user_name }} ALL"
         line: "{{ adduser_user_name }} ALL=(ALL) ALL"
         state: present
+        mode: '0440'
         backup: yes
         validate: 'visudo -cf %s'
       become: yes
@@ -107,6 +108,7 @@
         line: "{{ adduser_user_name }} ALL=(ALL) NOPASSWD: {{ adduser_sudoroot_nopasswd_cmd | default('/usr/bin/whoami') }}"
         state: present
         backup: yes
+        mode: '0440'
         validate: 'visudo -cf %s'
       become: yes
       when: adduser_sudoroot_nopasswd
@@ -134,6 +136,7 @@
     regexp: '^permit {{ adduser_user_name }} as '
     line: 'permit {{ adduser_user_name }} as root'
     state: present
+    mode: '0440'
     create: yes
   become: yes
   when: adduser_sudoroot is defined and adduser_sudoroot and doas.stat.exists
