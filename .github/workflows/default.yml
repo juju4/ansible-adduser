@@ -39,7 +39,7 @@ jobs:
         pip install molecule docker ansible-lint flake8 testinfra
     - name: rename folder with galaxy role name
       run: |
-        cd ../ && mv ansible-adduser juju4.adduser
+        cd ../ && mv ansible-adduser juju4.adduser && cd juju4.adduser
     - name: run test
       run: |
         molecule test
