@@ -1,8 +1,8 @@
 [![Build Status - Master](https://travis-ci.org/juju4/ansible-adduser.svg?branch=master)](https://travis-ci.org/juju4/ansible-adduser)
 [![Build Status - Devel](https://travis-ci.org/juju4/ansible-adduser.svg?branch=devel)](https://travis-ci.org/juju4/ansible-adduser/branches)
 
-[![Actions Status - Master](https://github.com/juju4/adduser/workflows/default/badge.svg)](https://github.com/juju4/adduser/actions?query=default)
-[![Actions Status - Devel](https://github.com/juju4/adduser/workflows/default/badge.svg?branch=devel)](https://github.com/juju4/adduser/actions?query=default)
+[![Actions Status - Master](https://github.com/juju4/ansible-adduser/workflows/default/badge.svg)](https://github.com/juju4/ansible-adduser/actions?query=default)
+[![Actions Status - Devel](https://github.com/juju4/ansible-adduser/workflows/default/badge.svg?branch=devel)](https://github.com/juju4/ansible-adduser/actions?query=devel)
 
 # adduser ansible role
 
