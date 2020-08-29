@@ -29,6 +29,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        path: juju4.adduser
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -37,12 +39,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install molecule docker ansible-lint flake8 testinfra
-    - name: rename folder with galaxy role name
-      run: |
-        cd ../ && mv ansible-adduser juju4.adduser && cd juju4.adduser
     - name: run test
       run: |
-        molecule test
+        pwd
+        find -ls
+        cd $GITHUB_WORKSPACE/juju4.adduser && molecule test
       env:
         PY_COLORS: '1'
         ANSIBLE_FORCE_COLOR: '1'
