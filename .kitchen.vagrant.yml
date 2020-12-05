@@ -10,31 +10,22 @@ provisioner:
   name: ansible_playbook
   roles_path: ../
   hosts: all
-#  ansible_verbose: true
+  # ansible_verbose: true
   ansible_verbose: false
   ansible_verbosity: 3
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   ansible_cfg_path: test/vagrant/ansible.cfg
   require_ansible_omnibus: true
-#  require_chef_for_busser: false
+  # require_chef_for_busser: false
   enable_yum_epel: true
   ansible_connection: ssh
-#  name: chef_solo
+  # name: chef_solo
 
 platforms:
   - name: ubuntu-20.04
   - name: ubuntu-18.04
   - name: ubuntu-16.04
-  - name: ubuntu-14.04
-  - name: ubuntu-12.04
-## FIXME! bash: ansible-playbook: command not found
-#  - name: debian-6.0.10
-#  - name: debian-7.0.
   - name: centos-7.1
-#  - name: centos-6.6
-## FIXME! The box failed to unpackage properly. Please verify that the box file you're trying to add is not corrupted and try again. The output from attempting to unpackage (if any):
-  - name: centos-6.7
-#  - name: centos-5.11
 
 suites:
   - name: default

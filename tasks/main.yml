@@ -11,8 +11,6 @@
   become: yes
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
 
-## try to keep compatibility with 1.9.6
-#- block:
 - name: Alpine | Add user
   command: "adduser -D {{ adduser_user_name }}"
   args:

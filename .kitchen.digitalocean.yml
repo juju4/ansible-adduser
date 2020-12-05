@@ -1,8 +1,8 @@
 ---
 ## Before
-#export DIGITALOCEAN_ACCESS_TOKEN=""
-#curl -X GET https://api.digitalocean.com/v2/account/keys -H "Authorization: Bearer $DIGITALOCEAN_ACCESS_TOKEN"
-#export DIGITALOCEAN_SSH_KEY_IDS=""
+# export DIGITALOCEAN_ACCESS_TOKEN=""
+# curl -X GET https://api.digitalocean.com/v2/account/keys -H "Authorization: Bearer $DIGITALOCEAN_ACCESS_TOKEN"
+# export DIGITALOCEAN_SSH_KEY_IDS=""
 driver:
   name: digitalocean
 
@@ -10,21 +10,21 @@ driver_config:
   region: nyc1
   size: 512mb
 
-#transport:
-#  name: sftp
+# transport:
+#   name: sftp
 
 provisioner:
   name: ansible_playbook
   roles_path: ../
   hosts: all
-#  ansible_verbose: true
+  # ansible_verbose: true
   ansible_verbose: false
   ansible_verbosity: 3
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   ansible_cfg_path: test/vagrant/ansible.cfg
-#  require_chef_omnibus: false
+  # require_chef_omnibus: false
   require_ansible_omnibus: true
-#  require_chef_for_busser: false
+  # require_chef_for_busser: false
   enable_yum_epel: true
   ansible_connection: ssh
 

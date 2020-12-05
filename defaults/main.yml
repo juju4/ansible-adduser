@@ -9,21 +9,21 @@ adduser_sudoroot: false
 adduser_sudoroot_nopasswd: false
 # remember that many command can be use to get a shell (more, find, vim, tcpdump...)
 adduser_sudoroot_nopasswd_cmd: '/usr/bin/whoami, /bin/cat'
-#adduser_sudoroot_nopasswd_cmd: 'ALL'
+# adduser_sudoroot_nopasswd_cmd: 'ALL'
 # echo 'please_change_me!' | mkpasswd --method=sha-512 -s
-#adduser_password: '$6$OajVCpYxMY$JcyxDnQmabAsoVORthM7/l/7MX3/UWic7SlS.qxwYJ5l4a.0nuDqsaPqOwJgvQw9SymTR0dq8gIBuZHdoSDpj0'
+# adduser_password: '$6$OajVCpYxMY$JcyxDnQmabAsoVORthM7/l/7MX3/UWic7SlS.qxwYJ5l4a.0nuDqsaPqOwJgvQw9SymTR0dq8gIBuZHdoSDpj0'
 adduser_password_update: on_create
-#adduser_shell: '/bin/bash'
+# adduser_shell: '/bin/bash'
 ## default expires account now after 6m+random up to 10d? only linux and freebsd
 adduser_expires: "{{ ansible_date_time.epoch|int + 15552000 + 864000|random(step=86400) }}"
-#adduser_expires: ''
+# adduser_expires: ''
 ## wheel/admin group are handled directly if sudoroot true
 adduser_groups: []
 
 ## FIXME! not managing empty var, better put dummy/empty file
 adduser_public_keys:
-- dummykey.pub
-#- /path/to/key2.pub
+  - dummykey.pub
+#  - /path/to/key2.pub
 
 ## prepend ?
-#adduser_sshkey_options: 'no-port-forwarding,from="10.0.1.1"'
+# adduser_sshkey_options: 'no-port-forwarding,from="10.0.1.1"'
