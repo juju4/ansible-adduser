@@ -66,6 +66,12 @@ $ cd /path/to/roles/juju4.adduser/test/vagrant
 $ vagrant up
 $ vagrant ssh
 ```
+or
+```
+$ pip install molecule docker
+$ molecule test
+$ MOLECULE_DISTRO=ubuntu:18.04 molecule test --destroy=never
+```
 
 
 ## Troubleshooting & Known issues
