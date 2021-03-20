@@ -50,7 +50,8 @@
     state: directory
   become: yes
 
-- debug: var=adduser_public_keys
+- name: Debug | adduser_public_keys var
+  debug: var=adduser_public_keys
 - name: Add authorized keys for {{ adduser_user_name }} user
   authorized_key:
     user: "{{ adduser_user_name }}"
