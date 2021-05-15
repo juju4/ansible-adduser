@@ -86,4 +86,3 @@ Centos6 might also need ansible 2.1 (not 2.2) because of ```ERROR! Unexpected Ex
 ## License
 
 BSD 2-clause
-

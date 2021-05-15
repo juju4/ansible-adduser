@@ -20,4 +20,3 @@ RUN echo localhost > inventory
 # ==> Executing Ansible...
 RUN ansible-playbook -i inventory /etc/ansible/roles/adduser/test/integration/default/default.yml \
       --connection=local --sudo
-
