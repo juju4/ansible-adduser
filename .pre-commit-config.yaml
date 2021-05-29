@@ -17,3 +17,9 @@ repos:
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
+  - repo: git@github.com:Yelp/detect-secrets
+    rev: v1.1.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        # exclude: .*/tests/.*
