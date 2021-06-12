@@ -26,7 +26,7 @@ RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 # Install Ansible inventory file
 RUN install -d -m 755 /etc/ansible
 RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
-RUN echo "[defaults]\ncallback_whitelist = profile_tasks, timer" > /etc/ansible/ansible.cfg
+RUN echo "[defaults]\ncallback_enabled = profile_tasks, timer" > /etc/ansible/ansible.cfg
 
 VOLUME ["/sys/fs/cgroup"]
 CMD ["/usr/sbin/init"]

@@ -10,4 +10,4 @@ RUN ln -s /usr/bin/pip3 /usr/bin/pip
 # Install Ansible inventory file
 RUN mkdir /etc/ansible
 RUN echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
-RUN echo "[defaults]\ncallback_whitelist = profile_tasks, timer" > /etc/ansible/ansible.cfg
+RUN echo "[defaults]\ncallback_enabled = profile_tasks, timer" > /etc/ansible/ansible.cfg
