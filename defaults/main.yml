@@ -15,7 +15,9 @@ adduser_sudoroot_nopasswd_cmd: '/usr/bin/whoami, /bin/cat'
 adduser_password_update: on_create
 # adduser_shell: '/bin/bash'
 ## default expires account now after 6m+random up to 10d? only linux and freebsd
-adduser_expires: "{{ ansible_date_time.epoch|int + 15552000 + 864000|random(step=86400) }}"
+# adduser_expires: "{{ ansible_date_time.epoch|int + 15552000 + 864000|random(step=86400) }}"
+# 2024/01/01 fixed time for idempotence
+adduser_expires: 1704070800
 # adduser_expires: ''
 ## wheel/admin group are handled directly if sudoroot true
 adduser_groups: []
