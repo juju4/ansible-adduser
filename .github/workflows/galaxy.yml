@@ -8,12 +8,18 @@ on:
     tags:
       - '*'
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
+        with:
+          path: juju4.adduser
+  release:
+    needs:
+      - build
+    steps:
       - name: galaxy
-        uses: robertdebock/galaxy-action@1.1.0
+        uses: robertdebock/galaxy-action@1.1.1
         with:
           galaxy_api_key: ${{ secrets.galaxy_api_key }}
