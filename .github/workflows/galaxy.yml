@@ -4,6 +4,9 @@ name: Ansible Galaxy release
 on:
   release:
     types: [created, edited, published, released]
+  push:
+    tags:
+      - '*'
 jobs:
   release:
     runs-on: ubuntu-latest
