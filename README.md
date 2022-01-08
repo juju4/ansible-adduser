@@ -70,7 +70,7 @@ or
 ```
 $ pip install molecule docker
 $ molecule test
-$ MOLECULE_DISTRO=ubuntu:18.04 molecule test --destroy=never
+$ MOLECULE_DISTRO=ubuntu:20.04 molecule test --destroy=never
 ```
 
 
