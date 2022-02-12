@@ -16,12 +16,12 @@
   args:
     creates: "/home/{{ adduser_user_name }}"
   become: yes
-  ignore_errors: true
+  failed_when: false
   when: ansible_os_family == "Alpine"
 ## else newly created account is locked
 - name: Alpine | Unlock user
   command: "passwd -u {{ adduser_user_name }}"
-  ignore_errors: true
+  failed_when: false
   when: ansible_os_family == "Alpine"
 
 - name: OpenBSD | Add user
@@ -123,7 +123,7 @@
   command: "addgroup {{ adduser_user_name }} {{ item }}"
   with_items: "{{ final_groups | default(adduser_groups) }}"
   become: yes
-  ignore_errors: true
+  failed_when: false
   when: ansible_os_family == "Alpine"
 
 - name: Get /etc/doas.conf stat
