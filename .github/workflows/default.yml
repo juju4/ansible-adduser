@@ -26,7 +26,7 @@ jobs:
           - 'ubuntu:16.04'
           - 'debian:10'
     env:
-      ANSIBLE_CALLBACK_ENABLED: profile_tasks
+      ANSIBLE_CALLBACKS_ENABLED: profile_tasks
       MOLECULE_NO_LOG: "false"
 
     steps:
