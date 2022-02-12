@@ -18,7 +18,8 @@ jobs:
         # python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
         python-version: [3.8]
         molecule_distro:
-          - 'centos:8'
+          - 'redhat/ubi8'
+          - 'rockylinux:8'
           - 'centos:7'
           - 'ubuntu:20.04'
           - 'ubuntu:18.04'
