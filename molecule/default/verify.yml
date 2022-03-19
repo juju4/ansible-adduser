@@ -4,20 +4,20 @@
   hosts: adduser
   tasks:
     - name: Fetch content of /home/deploy/.ssh/authorized_keys
-      slurp:
+      ansible.builtin.slurp:
         src: /home/deploy/.ssh/authorized_keys
       register: akeys
     - name: Validate akeys
-      assert:
+      ansible.builtin.assert:
         that: >
           "'ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGH foo@bar.local' in akeys['content'] | b64decode"
 
     - name: Validate account settings
-      command: chage -l deploy
+      ansible.builtin.command: chage -l deploy
       changed_when: false
       register: chage
     - name: Validate akeys
-      assert:
+      ansible.builtin.assert:
         that: >
           "'Account expires' in chage.stdout and
           not chage.stdout is match('Account expires.*never') and
