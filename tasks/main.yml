@@ -1,7 +1,7 @@
 ---
 
 - name: Add user "{{ adduser_user_name }}"
-  user:
+  ansible.builtin.user:
     name: "{{ adduser_user_name }}"
     password: "{{ adduser_password | default(omit) }}"
     update_password: "{{ adduser_password_update }}"
@@ -12,7 +12,7 @@
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
 
 - name: Alpine | Add user
-  command: "adduser -D {{ adduser_user_name }}"
+  ansible.builtin.command: "adduser -D {{ adduser_user_name }}"
   args:
     creates: "/home/{{ adduser_user_name }}"
   become: yes
@@ -20,12 +20,12 @@
   when: ansible_os_family == "Alpine"
 ## else newly created account is locked
 - name: Alpine | Unlock user
-  command: "passwd -u {{ adduser_user_name }}"
+  ansible.builtin.command: "passwd -u {{ adduser_user_name }}"
   failed_when: false
   when: ansible_os_family == "Alpine"
 
 - name: OpenBSD | Add user
-  user:
+  ansible.builtin.user:
     name: "{{ adduser_user_name }}"
     shell: "{{ adduser_shell | default('/bin/ksh') }}"
   become: yes
@@ -33,7 +33,7 @@
 
 ## FIXME! not idempotent
 - name: darwin | Add user
-  user:
+  ansible.builtin.user:
     name: "{{ adduser_user_name }}"
     password: "{{ adduser_password | default(omit) }}"
     update_password: "{{ adduser_password_update }}"
@@ -43,7 +43,7 @@
   become: yes
 
 - name: check home has correct permissions
-  file:
+  ansible.builtin.file:
     dest: "{{ adduser_user_home }}"
     owner: "{{ adduser_user_name }}"
     mode: "{{ adduser_user_home_perms }}"
@@ -51,16 +51,16 @@
   become: yes
 
 - name: Debug | adduser_public_keys var
-  debug: var=adduser_public_keys
+  ansible.builtin.debug: var=adduser_public_keys
 - name: Add authorized keys for {{ adduser_user_name }} user
-  authorized_key:
+  ansible.builtin.authorized_key:
     user: "{{ adduser_user_name }}"
     key: "{{ item }}"
   with_file: "{{ adduser_public_keys }}"
   when: adduser_public_keys is defined and adduser_public_keys != [] and adduser_sshkey_options is not defined
   become: yes
 - name: Add authorized keys for {{ adduser_user_name }} user - key_options
-  authorized_key:
+  ansible.builtin.authorized_key:
     user: "{{ adduser_user_name }}"
     key: "{{ item }}"
     key_options: "{{ adduser_sshkey_options }}"
@@ -69,7 +69,7 @@
   become: yes
 
 - name: SSH authorized_keys {{ adduser_user_name }}
-  file:
+  ansible.builtin.file:
     dest: "{{ adduser_user_home }}/.ssh"
     owner: "{{ adduser_user_name }}"
     mode: '0700'
@@ -78,19 +78,19 @@
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin'
 
 - name: Get /etc/sudoers stat
-  stat: path=/etc/sudoers
+  ansible.builtin.stat: path=/etc/sudoers
   register: sudoers
 - block:
     - name: Debian | set groups
-      set_fact:
+      ansible.builtin.set_fact:
         final_groups: "{{ adduser_groups }} + [ 'adm' ]"
       when: ansible_os_family == "Debian"
     - name: RedHat | set groups
-      set_fact:
+      ansible.builtin.set_fact:
         final_groups: "{{ adduser_groups }} + [ 'wheel' ]"
       when: ansible_os_family == "RedHat"
     - name: add user directly in sudoers if no defined admin group
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/sudoers
         regexp: "^{{ adduser_user_name }} ALL"
         line: "{{ adduser_user_name }} ALL=(ALL) ALL"
@@ -101,7 +101,7 @@
       become: yes
       when: not (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
     - name: allow nopasswd statement
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/sudoers
         regexp: "^{{ adduser_user_name }} ALL="
         line: "{{ adduser_user_name }} ALL=(ALL) NOPASSWD: {{ adduser_sudoroot_nopasswd_cmd | default('/usr/bin/whoami') }}"
@@ -114,23 +114,23 @@
   when: adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists
 
 - name: add user to groups
-  user:
+  ansible.builtin.user:
     name: "{{ adduser_user_name }}"
     append: yes
     groups: "{{ final_groups | default(adduser_groups) | join(',') }}"
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
 - name: Alpine | Add user to group
-  command: "addgroup {{ adduser_user_name }} {{ item }}"
+  ansible.builtin.command: "addgroup {{ adduser_user_name }} {{ item }}"
   with_items: "{{ final_groups | default(adduser_groups) }}"
   become: yes
   failed_when: false
   when: ansible_os_family == "Alpine"
 
 - name: Get /etc/doas.conf stat
-  stat: path=/etc/doas.conf
+  ansible.builtin.stat: path=/etc/doas.conf
   register: doas
 - name: Add user to doas.conf
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/doas.conf
     regexp: '^permit {{ adduser_user_name }} as '
     line: 'permit {{ adduser_user_name }} as root'
