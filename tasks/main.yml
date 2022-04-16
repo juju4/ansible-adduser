@@ -59,6 +59,8 @@
   with_file: "{{ adduser_public_keys }}"
   when: adduser_public_keys is defined and adduser_public_keys != [] and adduser_sshkey_options is not defined
   become: yes
+  # Either user must exist or you must provide full path to key file in check mode
+  check_mode: no
 - name: Add authorized keys for {{ adduser_user_name }} user - key_options
   ansible.builtin.authorized_key:
     user: "{{ adduser_user_name }}"
@@ -67,6 +69,7 @@
   with_file: "{{ adduser_public_keys }}"
   when: adduser_public_keys is defined and adduser_public_keys != [] and adduser_sshkey_options is defined
   become: yes
+  check_mode: no
 
 - name: SSH authorized_keys {{ adduser_user_name }}
   ansible.builtin.file:
