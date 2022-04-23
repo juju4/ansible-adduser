@@ -19,17 +19,17 @@ jobs:
       - name: Install dependencies
         run: |
           set -x
-          curl -OL https://github.com/americanexpress/earlybird/releases/latest/download/go-earlybird-linux
-          chmod 700 go-earlybird-linux
-          mkdir ~/.go-earlybird
-          cd ~/.go-earlybird
-          curl -O https://raw.githubusercontent.com/americanexpress/earlybird/main/config/earlybird.json
+          # curl -OL https://github.com/americanexpress/earlybird/releases/latest/download/go-earlybird-linux
+          # chmod 700 go-earlybird-linux
+          # mkdir ~/.go-earlybird
+          # cd ~/.go-earlybird
+          # curl -O https://raw.githubusercontent.com/americanexpress/earlybird/main/config/earlybird.json
           # if source build
-          #git clone https://github.com/americanexpress/earlybird.git
-          #cd earlybird && ./build.sh && sudo ./install.sh
+          git clone https://github.com/americanexpress/earlybird.git
+          cd earlybird && ./build.sh && sudo ./install.sh
       - name: Earlybird update
         run: |
-          ./go-earlybird-linux -update
+          go-earlybird -update
       - name: Earlybird scan
         run: |
-          ./go-earlybird-linux --path=.
+          go-earlybird --path=.
