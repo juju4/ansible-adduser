@@ -1,5 +1,11 @@
 ---
 rules:
+  # Generic to most ansible role repo
+  - Codes:
+      - 3014
+    FileExtensions:
+      - "LICENSE"
+    Description: Ignore LICENSE email
   - Codes:
       - 3015
     FileExtensions:
@@ -8,13 +14,30 @@ rules:
   - Codes:
       - 3019
     FileExtensions:
+      - ".md"
       - ".yml"
       - ".rb"
       - ".rst"
+      - ".sh"
+      - "Gemfile"
     Description: Ignore a false positive url in ansible yml tasks' files or serverspec files.
+  # Contextual to ansible role
+  - Codes:
+      - 3014
+    Pattern: "foo@bar.loca"
+    FileExtensions:
+      - ".pub"
+      - ".rb"
+      - ".yml"
+    Description: Ignore test email
+  - Codes:
+      - 3057
+    FileExtensions:
+      - ".md"
+    Description: Ignore example password
   - Codes:
       - 3062
-    Pattern: "adduser_expires"
+    Pattern: "18934596610"
     FileExtensions:
       - ".yml"
     Description: Ignore a false positive National ID in ansible yml tasks' files or serverspec files.

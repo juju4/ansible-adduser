@@ -1,2 +1,7 @@
 .git
+.gitignore
+galaxy.yml
 .secrets.baseline
+.pre-commit-config.yaml
+falsepositives-ansible.yaml
+falsepositives-packer.yaml
