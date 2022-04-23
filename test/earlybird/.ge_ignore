@@ -1,7 +1,6 @@
-.git
-.gitignore
-galaxy.yml
-.secrets.baseline
-.pre-commit-config.yaml
-falsepositives-ansible.yaml
-falsepositives-packer.yaml
+**/.git
+**/.gitignore
+**/.github/workflows/galaxy.yml
+**/.secrets.baseline
+**/.pre-commit-config.yaml
+**/test/earlybird/*
