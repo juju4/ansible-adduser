@@ -1,21 +1,20 @@
 ---
 rules:
-- Codes:
-    - 3015
-  FileExtensions:
-    - ".yml"
-  Description: Ignore a false positive IPv4 in ansible yml files.
-- Codes:
-    - 3019
-  FileExtensions:
-    - ".yml"
-    - ".rb"
-    - ".rst"
-  Description: Ignore a false positive url in ansible yml tasks' files or serverspec files.
-- Codes:
-    - 3062
-  Pattern: "adduser_expires"
-  FileExtensions:
-    - ".yml"
-  Description: Ignore a false positive National ID in ansible yml tasks' files or serverspec files.
-
+  - Codes:
+      - 3015
+    FileExtensions:
+      - ".yml"
+    Description: Ignore a false positive IPv4 in ansible yml files.
+  - Codes:
+      - 3019
+    FileExtensions:
+      - ".yml"
+      - ".rb"
+      - ".rst"
+    Description: Ignore a false positive url in ansible yml tasks' files or serverspec files.
+  - Codes:
+      - 3062
+    Pattern: "adduser_expires"
+    FileExtensions:
+      - ".yml"
+    Description: Ignore a false positive National ID in ansible yml tasks' files or serverspec files.
