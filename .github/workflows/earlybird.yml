@@ -16,6 +16,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Environment
+        run: |
+          pwd
+          env
+          find -ls
       - name: Install dependencies
         run: |
           set -x
@@ -29,6 +34,7 @@ jobs:
           cd earlybird && ./build.sh && sudo ./install.sh
           cp -R config/* ~/.go-earlybird/
           cd ..
+          pwd
           cp test/earlybird/.ge_ignore ~/
           cp test/earlybird/falsepositives* ~/.go-earlybird/falsepositives/
       - name: Earlybird update
