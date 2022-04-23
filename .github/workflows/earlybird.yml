@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           set -x
-          curl -O https://github.com/americanexpress/earlybird/releases/latest/download/go-earlybird-linux
+          curl -OL https://github.com/americanexpress/earlybird/releases/latest/download/go-earlybird-linux
           chmod 700 go-earlybird-linux
           mkdir ~/.go-earlybird
           cd ~/.go-earlybird
