@@ -28,6 +28,7 @@ jobs:
           git clone https://github.com/americanexpress/earlybird.git
           cd earlybird && ./build.sh && sudo ./install.sh
           cp -R config/* ~/.go-earlybird/
+          cd ..
           cp test/earlybird/.ge_ignore ~/
           cp test/earlybird/falsepositives* ~/.go-earlybird/falsepositives/
       - name: Earlybird update
