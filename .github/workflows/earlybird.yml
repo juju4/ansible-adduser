@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: |
+          set -x
           curl -O https://github.com/americanexpress/earlybird/releases/latest/download/go-earlybird-linux
           mkdir ~/.go-earlybird
           cd ~/.go-earlybird
@@ -27,7 +28,7 @@ jobs:
           #cd earlybird && ./build.sh && sudo ./install.sh
       - name: Earlybird update
         run: |
-          go-earlybird-linux -update
+          ./go-earlybird-linux -update
       - name: Earlybird scan
         run: |
-          go-earlybird-linux --path=.
+          ./go-earlybird-linux --path=.
