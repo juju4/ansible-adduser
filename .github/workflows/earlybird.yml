@@ -27,6 +27,7 @@ jobs:
           # if source build
           git clone https://github.com/americanexpress/earlybird.git
           cd earlybird && ./build.sh && sudo ./install.sh
+          cp -R config/* ~/.go-earlybird/
       - name: Earlybird update
         run: |
           go-earlybird -update
