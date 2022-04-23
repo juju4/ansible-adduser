@@ -1,0 +1,33 @@
+---
+# EarlyBird is a sensitive data detection tool capable of scanning source code repositories for clear text password violations, PII, outdated cryptography methods, key files and more.
+# https://github.com/americanexpress/earlybird
+name: earlybird
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          curl -O https://github.com/americanexpress/earlybird/releases/latest/download/go-earlybird-linux
+          mkdir ~/.go-earlybird
+          cd ~/.go-earlybird
+          curl -O https://raw.githubusercontent.com/americanexpress/earlybird/main/config/earlybird.json
+          # if source build
+          #git clone https://github.com/americanexpress/earlybird.git
+          #cd earlybird && ./build.sh && sudo ./install.sh
+      - name: Earlybird update
+        run: |
+          go-earlybird-linux -update
+      - name: Earlybird scan
+        run: |
+          go-earlybird-linux --path=.
