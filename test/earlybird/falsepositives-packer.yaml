@@ -1,0 +1,21 @@
+---
+rules:
+- Codes:
+    - 3062
+  Pattern: "iso_checksum"
+  FileExtensions:
+    - ".json"
+  Description: Ignore a false positive id in packer json files.
+- Codes:
+    - 3001
+  Pattern: "ssh_password"
+  FileExtensions:
+    - ".json"
+  Description: Ignore a default password in packer json files.
+- Codes:
+    - 3019
+  Pattern: "url=http"
+  FileExtensions:
+    - ".json"
+  Description: Ignore a false positive url in packer files.
+
