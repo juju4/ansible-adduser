@@ -21,9 +21,9 @@ jobs:
           set -x
           # curl -OL https://github.com/americanexpress/earlybird/releases/latest/download/go-earlybird-linux
           # chmod 700 go-earlybird-linux
-          # mkdir ~/.go-earlybird
-          # cd ~/.go-earlybird
-          # curl -O https://raw.githubusercontent.com/americanexpress/earlybird/main/config/earlybird.json
+          mkdir ~/.go-earlybird
+          cd ~/.go-earlybird
+          curl -O https://raw.githubusercontent.com/americanexpress/earlybird/main/config/earlybird.json
           # if source build
           git clone https://github.com/americanexpress/earlybird.git
           cd earlybird && ./build.sh && sudo ./install.sh
