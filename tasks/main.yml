@@ -51,9 +51,10 @@
   become: yes
 
 - name: Debug | adduser_public_keys var
-  ansible.builtin.debug: var=adduser_public_keys
-- name: Add authorized keys for {{ adduser_user_name }} user
-  ansible.builtin.authorized_key:
+  ansible.builtin.debug:
+    var: adduser_public_keys
+- name: Add authorized keys for user
+  ansible.posix.authorized_key:
     user: "{{ adduser_user_name }}"
     key: "{{ item }}"
   with_file: "{{ adduser_public_keys }}"
