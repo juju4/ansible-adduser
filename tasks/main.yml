@@ -86,7 +86,8 @@
 - name: Get /etc/sudoers stat
   ansible.builtin.stat: path=/etc/sudoers
   register: sudoers
-- block:
+- name: sudo
+  block:
     - name: Debian | set groups
       ansible.builtin.set_fact:
         final_groups: "{{ adduser_groups }} + [ 'adm' ]"
