@@ -90,11 +90,11 @@
   block:
     - name: Debian | set groups
       ansible.builtin.set_fact:
-        final_groups: "{{ adduser_groups }} + [ 'adm' ]"
+        final_groups: "{{ adduser_groups + [ 'adm' ] }}"
       when: ansible_os_family == "Debian"
     - name: RedHat | set groups
       ansible.builtin.set_fact:
-        final_groups: "{{ adduser_groups }} + [ 'wheel' ]"
+        final_groups: "{{ adduser_groups + [ 'wheel' ] }}"
       when: ansible_os_family == "RedHat"
     - name: add user directly in sudoers if no defined admin group
       ansible.builtin.lineinfile:
