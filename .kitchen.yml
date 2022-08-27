@@ -21,11 +21,10 @@ provisioner:
   ansible_connection: ssh
 
 platforms:
+  - name: ubuntu-22.04
   - name: ubuntu-20.04
   - name: ubuntu-18.04
-  - name: ubuntu-16.04
-  - name: ubuntu-14.04
-  - name: ubuntu-12.04
+  - name: centos-8
   - name: centos-7
 
 suites:
@@ -36,4 +35,4 @@ suites:
     run_list:
     attributes:
     includes:
-      - ubuntu-18.04
+      - ubuntu-22.04
