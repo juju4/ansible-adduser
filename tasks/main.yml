@@ -32,7 +32,7 @@
   when: ansible_distribution == 'OpenBSD'
 
 ## FIXME! not idempotent
-- name: darwin | Add user
+- name: Darwin | Add user
   ansible.builtin.user:
     name: "{{ adduser_user_name }}"
     password: "{{ adduser_password | default(omit) }}"
@@ -42,7 +42,7 @@
   when: ansible_os_family == 'Darwin'
   become: yes
 
-- name: check home has correct permissions
+- name: Check home has correct permissions
   ansible.builtin.file:
     dest: "{{ adduser_user_home }}"
     owner: "{{ adduser_user_name }}"
@@ -86,17 +86,17 @@
 - name: Get /etc/sudoers stat
   ansible.builtin.stat: path=/etc/sudoers
   register: sudoers
-- name: sudo
+- name: Sudo
   block:
     - name: Debian | set groups
       ansible.builtin.set_fact:
-        final_groups: "{{ adduser_groups + [ 'adm' ] }}"
+        final_groups: "{{ adduser_groups + ['adm'] }}"
       when: ansible_os_family == "Debian"
     - name: RedHat | set groups
       ansible.builtin.set_fact:
-        final_groups: "{{ adduser_groups + [ 'wheel' ] }}"
+        final_groups: "{{ adduser_groups + ['wheel'] }}"
       when: ansible_os_family == "RedHat"
-    - name: add user directly in sudoers if no defined admin group
+    - name: Add user directly in sudoers if no defined admin group
       ansible.builtin.lineinfile:
         dest: /etc/sudoers
         regexp: "^{{ adduser_user_name }} ALL"
@@ -107,7 +107,7 @@
         validate: 'visudo -cf %s'
       become: yes
       when: not (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
-    - name: allow nopasswd statement
+    - name: Allow nopasswd statement
       ansible.builtin.lineinfile:
         dest: /etc/sudoers
         regexp: "^{{ adduser_user_name }} ALL="
@@ -120,7 +120,7 @@
       when: adduser_sudoroot_nopasswd
   when: adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists
 
-- name: add user to groups
+- name: Add user to groups
   ansible.builtin.user:
     name: "{{ adduser_user_name }}"
     append: yes
