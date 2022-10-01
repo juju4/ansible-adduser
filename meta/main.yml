@@ -5,6 +5,7 @@ galaxy_info:
   description: Add unix user with optional authorized keys and sudo
   license: BSD
   min_ansible_version: '1.9'
+  standalone: true
   platforms:
     - name: EL
       versions:
