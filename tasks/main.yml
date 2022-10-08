@@ -84,7 +84,8 @@
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin'
 
 - name: Get /etc/sudoers stat
-  ansible.builtin.stat: path=/etc/sudoers
+  ansible.builtin.stat:
+    path: /etc/sudoers
   register: sudoers
 - name: Sudo
   when: adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists
@@ -134,7 +135,8 @@
   when: ansible_os_family == "Alpine"
 
 - name: Get /etc/doas.conf stat
-  ansible.builtin.stat: path=/etc/doas.conf
+  ansible.builtin.stat:
+    path: /etc/doas.conf
   register: doas
 - name: Add user to doas.conf
   ansible.builtin.lineinfile:
