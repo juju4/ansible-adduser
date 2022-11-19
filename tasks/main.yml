@@ -64,7 +64,7 @@
   check_mode: no
   ignore_errors: "{{ ansible_check_mode }}"
 - name: Add authorized keys with key_options for user - {{ adduser_user_name }}
-  ansible.builtin.authorized_key:
+  ansible.posix.authorized_key:
     user: "{{ adduser_user_name }}"
     key: "{{ item }}"
     key_options: "{{ adduser_sshkey_options }}"
