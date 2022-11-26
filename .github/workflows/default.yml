@@ -8,6 +8,8 @@ on:
   schedule:  # run weekly, every monday 01:00
     - cron: '0 1 * * 1'
 
+permissions: {}
+
 jobs:
   build:
 
