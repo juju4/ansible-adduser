@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: You're having technical issues
+description: You're having technical issues
 title: "Bug: "
 labels: ["bug", "triage needed"]
 body:
