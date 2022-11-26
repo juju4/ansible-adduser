@@ -17,6 +17,7 @@ Please use one of below process to report a vulnerability to the project:
 - [x] GitHub issue "Report a security issue":
 <!-- Coordinated Disclosure: can use Google Forms, O365 Forms or similar -->
 - [x] [Web Form](https://docs.google.com/forms/d/1alWCY1VAekedhOCuP6lW-ZylsjkGKsrrDApHk36Kqe4)
+- [x] [GitHub Private vulnerability reporting](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability)
 - [ ] Email
 - [ ] Bug Bounty
 
