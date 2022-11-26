@@ -22,7 +22,7 @@ body:
     validations:
       required: true
   - type: textarea
-    id: solution
+    id: context
     attributes:
       label: More context
       description: Suggest a reason for the bug or how to fix it.
