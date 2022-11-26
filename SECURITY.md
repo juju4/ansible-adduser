@@ -14,17 +14,19 @@ When applicable, Security Advisories will be created inside GitHub following [Cr
 Please use one of below process to report a vulnerability to the project:
 
 <!-- Full Disclosure -->
-  [x] GitHub issue "Report a security issue":
+- [x] GitHub issue "Report a security issue":
 <!-- Coordinated Disclosure: can use Google Forms, O365 Forms or similar -->
-  [x] [Web Form](https://docs.google.com/forms/d/1alWCY1VAekedhOCuP6lW-ZylsjkGKsrrDApHk36Kqe4)
-  [ ] Email
-  [ ] Bug Bounty
+- [x] [Web Form](https://docs.google.com/forms/d/1alWCY1VAekedhOCuP6lW-ZylsjkGKsrrDApHk36Kqe4)
+- [ ] Email
+- [ ] Bug Bounty
 
 If issue is critical and not public, please use the web form.
 You can use [First.org Common Vulnerability Scoring System Version 3.0 Calculator](https://www.first.org/cvss/calculator/3.0) to score vulnerability.
+
 Do not forget to tell us if and how you want to be acknowledged.
 
 This project follows an immediate (public issue) or 30-days (web form) disclosure timeline.
+
 This project won't request CVE(s).
 
 ## Bug Bounty or Vulnerability Disclosure Program.
