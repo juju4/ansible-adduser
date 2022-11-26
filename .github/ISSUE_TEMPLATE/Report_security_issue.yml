@@ -1,6 +1,5 @@
----
 name: Report a security issue
-about: You found a security issue
+description: You found a security issue
 title: "Security: "
 labels: ["security", "triage needed"]
 body:

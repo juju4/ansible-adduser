@@ -1,6 +1,5 @@
----
 name: Feature request
-about: You're having an idea to improve this project
+description: You're having an idea to improve this project
 title: "Feature request: "
 labels: ["feature request", "triage needed"]
 body:
