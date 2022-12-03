@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v4.4.0
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
@@ -13,7 +13,7 @@ repos:
       - id: double-quote-string-fixer
       - id: requirements-txt-fixer
   - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v6.8.0
+    rev: v6.9.0
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
@@ -24,7 +24,7 @@ repos:
         args: ['--baseline', '.secrets.baseline']
         # exclude: .*/tests/.*
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.1
+    rev: v2.2.2
     hooks:
       - id: codespell
         args: [-I, .codespellignore]
