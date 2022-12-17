@@ -118,6 +118,8 @@
         backup: yes
         mode: '0440'
         validate: 'visudo -cf %s'
+      environment:
+        PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       become: yes
       when: adduser_sudoroot_nopasswd
 
