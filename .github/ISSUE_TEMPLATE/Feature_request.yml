@@ -8,13 +8,6 @@ body:
     attributes:
       value: |
         Thanks for taking the time to share your idea.
-  - type: input
-    id: title
-    attributes:
-      label: Title
-      placeholder: short summary
-    validations:
-      required: true
   - type: textarea
     id: description
     attributes:

@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to report this issue.
+        Thanks for taking the time to report this issue. If issue is sensitive, please use web form or GitHub private vulnerability reporting as per SECURITY.md.
   - type: input
     id: contact
     attributes:
