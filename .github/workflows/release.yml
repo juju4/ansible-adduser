@@ -1,0 +1,33 @@
+---
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: string
+        required: true
+      annotation:
+        type: string
+        required: false
+
+permissions: {}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Release
+        uses: plu5/automatic-releases-with-sha-action@main
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: ${{ inputs.tag }}
+          tag_annotation: ${{ inputs.annotation }}
+          prerelease: false
+          files: '*'
