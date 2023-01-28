@@ -10,8 +10,15 @@ repos:
       - id: check-json
       - id: detect-private-key
       - id: check-case-conflict
-      - id: double-quote-string-fixer
       - id: requirements-txt-fixer
+      - id: check-ast
+      - id: check-shebang-scripts-are-executable
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-xml
+      # - id: detect-aws-credentials
+      - id: check-docstring-first
   - repo: https://github.com/ansible-community/ansible-lint.git
     rev: v6.10.2
     hooks:
