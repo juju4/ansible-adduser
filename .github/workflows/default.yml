@@ -13,6 +13,8 @@ permissions: {}
 jobs:
   build:
 
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental }}
     strategy:
