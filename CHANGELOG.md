@@ -1,5 +1,12 @@
 ## Unreleased
 
+* ci(release): Revert "add release workflow - plu5/automatic-releases-with-sha-action"
+
+## 1.6.1 (2023-01-28)
+
+* ci(release): apply on all tags
+* ci(galaxy): regroup in a single job
+
 ## 1.6.0 (2023-01-28)
 
 * ci(release): add release workflow
