@@ -1,5 +1,8 @@
 ## Unreleased
 
+* ci(release): add release workflow
+* ci(pre-commit): more hooks, review hooks order
+* fix: add PATH environment for debian-11 visudo
 * feat: add commitzen to enforce conventional_commits
 * chore(pre-commit): autoupdate
 * chore(yamllint): fix
