@@ -19,17 +19,6 @@ repos:
       - id: check-xml
       # - id: detect-aws-credentials
       - id: check-docstring-first
-  - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v6.10.2
-    hooks:
-      - id: ansible-lint
-        files: \.(yaml|yml)$
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.4.0
-    hooks:
-      - id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
-        # exclude: .*/tests/.*
   - repo: https://github.com/codespell-project/codespell
     rev: v2.2.2
     hooks:
@@ -40,3 +29,14 @@ repos:
     hooks:
       - id: commitizen
         stages: [commit-msg]
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        # exclude: .*/tests/.*
+  - repo: https://github.com/ansible-community/ansible-lint.git
+    rev: v6.10.2
+    hooks:
+      - id: ansible-lint
+        files: \.(yaml|yml)$
