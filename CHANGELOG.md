@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 1.6.0 (2023-01-28)
+
 * ci(release): add release workflow
 * ci(pre-commit): more hooks, review hooks order
 * fix: add PATH environment for debian-11 visudo
