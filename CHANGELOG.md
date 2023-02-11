@@ -1,5 +1,11 @@
 ## Unreleased
 
+* docs(ISSUE_TEMPLATE): add good community note from trufflehog project
+* ci: add github release notes config
+* ci: add dependabot workflow to update github actions
+* ci: add gitleaks and trufflehog in lint workflow and pre-commit
+* chore: remove legacy Dockerfile
+* ci: Secure workflows - token permissions read-only (PR#4 from juju4/step-security/secure-workflows)
 * ci(release): Revert "add release workflow - plu5/automatic-releases-with-sha-action"
 
 ## 1.6.1 (2023-01-28)
