@@ -21,7 +21,7 @@ jobs:
       ANSIBLE_EXTRA_VARS: ""
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: juju4.adduser
       - name: Set up Python
