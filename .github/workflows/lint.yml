@@ -21,11 +21,11 @@ jobs:
       ANSIBLE_ROLE: juju4.adduser
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: ${{ env.ANSIBLE_ROLE }}
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - name: Install dependencies
@@ -72,7 +72,7 @@ jobs:
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-lint
         if: ${{ always() }}
       - name: TruffleHog OSS check
-        uses: trufflesecurity/trufflehog@8df9db6eccea0d1a24a41d5f248ef759dc24993e
+        uses: trufflesecurity/trufflehog@67784f69283dac04ebc813bbd67e2aa8c45279a5
         with:
           path: ${{ env.ANSIBLE_ROLE }}
           base: ${{ github.event.repository.default_branch }}
