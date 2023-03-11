@@ -73,6 +73,10 @@ jobs:
           pwd
           env
           find -ls
+      - name: Galaxy dependencies
+        run: |
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-galaxy install --timeout 120 --verbose -r molecule/default/requirements.yml
+        continue-on-error: true
       - name: run test
         run: |
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && molecule test
