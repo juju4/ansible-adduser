@@ -1,4 +1,4 @@
 ---
 warn_list:
   - experimental
-  - syntax-check
+  - syntax-check[specific]
