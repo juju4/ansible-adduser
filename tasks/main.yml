@@ -19,7 +19,7 @@
   failed_when: false
   when: ansible_os_family == "Alpine"
 ## else newly created account is locked
-- name: Alpine | Unlock user
+- name: Alpine | Unlock user  # noqa no-changed-when
   ansible.builtin.command: "passwd -u {{ adduser_user_name }}"
   failed_when: false
   when: ansible_os_family == "Alpine"
@@ -129,7 +129,7 @@
     append: yes
     groups: "{{ final_groups | default(adduser_groups) | join(',') }}"
   when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
-- name: Alpine | Add user to group
+- name: Alpine | Add user to group  # noqa no-changed-when
   ansible.builtin.command: "addgroup {{ adduser_user_name }} {{ item }}"
   with_items: "{{ final_groups | default(adduser_groups) }}"
   become: yes
