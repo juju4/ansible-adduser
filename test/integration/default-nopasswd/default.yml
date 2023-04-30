@@ -1,6 +1,7 @@
 ---
 
-- hosts: all
+- name: Test Integration playbook
+  hosts: all
   vars:
     adduser_sudoroot_nopasswd: true
   roles:

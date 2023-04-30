@@ -1,6 +1,7 @@
 ---
 
-- hosts: all
+- name: Test Integration playbook
+  hosts: all
   environment:
     http_proxy: "{{ lookup('env', 'http_proxy') }}"
     https_proxy: "{{ lookup('env', 'https_proxy') }}"
