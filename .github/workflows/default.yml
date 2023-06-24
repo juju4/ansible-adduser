@@ -70,6 +70,9 @@ jobs:
         continue-on-error: true
       - name: Environment
         run: |
+          set -x
+          ansible --version
+          ansible-config dump --only-changed -t all
           pwd
           env
           find -ls
