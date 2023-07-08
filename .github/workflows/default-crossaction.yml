@@ -24,12 +24,6 @@ jobs:
             host: ubuntu-latest
             experimental: true
 
-          - name: openbsd
-            architecture: arm64
-            version: '7.3'
-            host: ubuntu-latest
-            experimental: true
-
           - name: netbsd
             architecture: x86-64
             version: '9.3'
