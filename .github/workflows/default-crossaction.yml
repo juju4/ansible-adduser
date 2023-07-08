@@ -61,10 +61,17 @@ jobs:
             set -x
             whoami
             # freebsd
-            sudo pkg install python3 || true
+            sudo env ASSUME_ALWAYS_YES=YES pkg bootstrap || true
+            sudo pkg install -y python3 || true
             sudo pkg info || true
+            # netbsd
+            export PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
+            export PKG_PATH="https://cdn.NetBSD.org/pub/pkgsrc/packages"
+            export PKG_PATH="$PKG_PATH/OPSYS/ARCH/VERSIONS/All/"
+            sudo pkg_add pkgin || true
+            sudo pkgin install python311 || true
             # openbsd
-            doas pkg_add -r python || true
+            doas pkg_add -rIvx python3 || true
             python --version
             python -m pip install --upgrade pip
             pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible
