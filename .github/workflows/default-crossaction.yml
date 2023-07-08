@@ -69,11 +69,11 @@ jobs:
             export PKG_PATH="https://cdn.NetBSD.org/pub/pkgsrc/packages"
             export PKG_PATH="$PKG_PATH/OPSYS/ARCH/VERSIONS/All/"
             sudo pkg_add pkgin || true
-            sudo pkgin install python311 || true
+            sudo pkgin -y install python311 || true
             # openbsd
             doas pkg_add -rIvx python3 || true
-            python --version
-            python -m pip install --upgrade pip
+            python3 --version
+            python3 -m pip install --upgrade pip
             pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible
             mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
             ansible --version
