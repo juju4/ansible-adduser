@@ -73,7 +73,7 @@ jobs:
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-lint
         if: ${{ always() }}
       - name: TruffleHog OSS check
-        uses: trufflesecurity/trufflehog@e856a6890d0da5a218f4f9283500b80043884641
+        uses: trufflesecurity/trufflehog@6bd48583ae960fe2208e031d06860b62509eb3ca
         with:
           path: ${{ env.ANSIBLE_ROLE }}
           head: HEAD
@@ -81,7 +81,7 @@ jobs:
         if: ${{ always() }}
       - name: Run Checkov action
         id: checkov
-        uses: bridgecrewio/checkov-action@299eb97a45637587d7bcb9c96347d3ead6b4364b
+        uses: bridgecrewio/checkov-action@d6a007e728acbcb127d43cb3e2723a2e1c3a9ed5
         with:
           directory: ${{ env.ANSIBLE_ROLE }}
           soft_fail: true
