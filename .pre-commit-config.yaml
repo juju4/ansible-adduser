@@ -25,7 +25,7 @@ repos:
       - id: codespell
         args: [-I, .codespellignore]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 3.6.0
+    rev: 3.7.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -51,7 +51,7 @@ repos:
         language: system
         stages: ["commit", "push"]
   - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v6.17.2
+    rev: v6.18.0
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
