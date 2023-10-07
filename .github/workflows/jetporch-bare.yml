@@ -34,9 +34,10 @@ jobs:
         run: |
           set -x
           sudo apt-get update || true
-          sudo apt-get install -y rustc cargo make gcc libssl-dev pkg-config || true
-          sudo cargo install cargo-binstall
-          sudo cargo binstall jetp
+          sudo apt-get install -y make gcc libssl-dev pkg-config || true
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+          cargo install cargo-binstall
+          cargo binstall jetp
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE
           [ -f get-dependencies.sh ] && sh -x get-dependencies.sh
           { echo '[defaults]'; echo 'callbacks_enabled = profile_tasks, timer'; echo 'roles_path = ../'; echo 'ansible_python_interpreter: /usr/bin/python3'; } >> ansible.cfg
