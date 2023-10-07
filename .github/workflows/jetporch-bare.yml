@@ -32,8 +32,10 @@ jobs:
           python-version: '3.x'
       - name: Install dependencies
         run: |
+          set -x
           sudo apt-get update || true
           sudo apt-get install -y rustc cargo make gcc libssl-dev pkg-config || true
+          sudo cargo install cargo-binstall
           sudo cargo binstall jetp
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE
           [ -f get-dependencies.sh ] && sh -x get-dependencies.sh
