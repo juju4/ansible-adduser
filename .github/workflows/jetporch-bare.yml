@@ -37,7 +37,7 @@ jobs:
           sudo apt-get install -y make gcc libssl-dev pkg-config || true
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           cargo install cargo-binstall
-          cargo binstall jetp
+          cargo binstall --no-confirm jetp
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE
           [ -f get-dependencies.sh ] && sh -x get-dependencies.sh
           { echo '[defaults]'; echo 'callbacks_enabled = profile_tasks, timer'; echo 'roles_path = ../'; echo 'ansible_python_interpreter: /usr/bin/python3'; } >> ansible.cfg
