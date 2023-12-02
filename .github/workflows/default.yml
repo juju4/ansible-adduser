@@ -36,8 +36,6 @@ jobs:
             experimental: false
           - molecule_distro: 'ubuntu:18.04'
             experimental: false
-          - molecule_distro: 'ubuntu:16.04'
-            experimental: false
           - molecule_distro: 'debian:10'
             experimental: false
     env:
