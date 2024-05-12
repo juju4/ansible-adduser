@@ -76,7 +76,6 @@ jobs:
         uses: trufflesecurity/trufflehog@ea4d9d2d32f45e77893ecb6338d7c6bd7cddb3ec
         with:
           path: ${{ env.ANSIBLE_ROLE }}
-          head: HEAD
           extra_args: --debug --only-verified
         if: ${{ always() }}
       - name: Run Checkov action
