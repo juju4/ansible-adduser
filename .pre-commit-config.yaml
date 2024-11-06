@@ -41,7 +41,7 @@ repos:
         name: Gitleaks
         entry: bash -c 'gitleaks detect --source . -v'
         language: system
-        stages: ["commit", "push"]
+        stages: ["pre-commit", "pre-push"]
       - id: trufflehog
         name: TruffleHog
         description: Detect secrets in your data.
@@ -49,7 +49,7 @@ repos:
         # For running trufflehog in docker, use the following entry instead:
         # entry: bash -c 'docker run --rm -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --since-commit HEAD --only-verified --fail'
         language: system
-        stages: ["commit", "push"]
+        stages: ["pre-commit", "pre-push"]
   - repo: https://github.com/ansible-community/ansible-lint.git
     rev: v24.6.1
     hooks:
