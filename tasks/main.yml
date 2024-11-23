@@ -122,7 +122,19 @@
         PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       become: yes
       when: adduser_sudoroot_nopasswd
+- name: Set
+  when:
+    - not (adduser_sudoroot is defined and adduser_sudoroot and sudoers.stat.exists)
+  block:
+    - name: Set groups
+      ansible.builtin.set_fact:
+        final_groups: "{{ adduser_groups }}"
 
+- name: Ensure groups exist
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ adduser_groups }}"
 - name: Add user to groups
   ansible.builtin.user:
     name: "{{ adduser_user_name }}"
