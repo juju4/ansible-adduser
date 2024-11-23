@@ -83,6 +83,8 @@ uncomment baselist and comment mirrorlist in /etc/yum.repos.d/epel.repo
 (http://stackoverflow.com/questions/30949707/centos-6-6-errno-1-repomd-xml-does-not-match-metalink-for-updates-when-tryin)
 Centos6 might also need ansible 2.1 (not 2.2) because of ```ERROR! Unexpected Exception: 'module' object has no attribute 'HAVE_DECL_MPZ_POWM_SEC'```
 
+* Adding ssh key task still seen as successful even if failed because a key was not readable, path incorrect or else. need to review log with verbosity 1.
+
 ## License
 
 BSD 2-clause
