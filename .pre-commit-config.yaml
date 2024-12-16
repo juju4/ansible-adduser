@@ -51,7 +51,7 @@ repos:
         language: system
         stages: ["pre-commit", "pre-push"]
   - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v24.10.0
+    rev: v24.12.2
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
