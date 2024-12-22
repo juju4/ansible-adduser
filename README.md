@@ -9,15 +9,11 @@ A simple ansible role to add a unix user with its ssh key.
 
 ### Ansible
 It was tested on the following versions:
- * 1.9
- * 2.0 (required for Windows)
- * 2.3
- * 2.4
- * 2.5
+ * 2.10-17
 
 ### Operating systems
 
-Tested on Ubuntu 14.04, 16.04, 18.04, Centos 6, 7 and OpenBSD 5.8.
+Tested on Ubuntu 24.04, 22.04, 20.04, Centos/Rockylinux 9.
 
 ## Example Playbook
 
@@ -70,7 +66,7 @@ or
 ```
 $ pip install molecule docker
 $ molecule test
-$ MOLECULE_DISTRO=ubuntu:20.04 molecule test --destroy=never
+$ MOLECULE_DISTRO=ubuntu:24.04 molecule test --destroy=never
 ```
 
 
