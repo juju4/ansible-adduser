@@ -92,7 +92,7 @@
   block:
     - name: Debian | set groups
       ansible.builtin.set_fact:
-        final_groups: "{{ adduser_groups + ['adm'] }}"
+        final_groups: "{{ adduser_groups + ['sudo'] }}"
       when: ansible_os_family == "Debian"
     - name: RedHat | set groups
       ansible.builtin.set_fact:
