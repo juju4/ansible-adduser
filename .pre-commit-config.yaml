@@ -35,6 +35,10 @@ repos:
       - id: detect-secrets
         args: ['--baseline', '.secrets.baseline']
         # exclude: .*/tests/.*
+  - repo: https://github.com/aristanetworks/j2lint.git
+    rev: v1.1.0
+    hooks:
+      - id: j2lint
   - repo: local
     hooks:
       - id: gitleaks
