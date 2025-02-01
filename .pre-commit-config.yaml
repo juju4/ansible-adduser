@@ -20,12 +20,12 @@ repos:
       # - id: detect-aws-credentials
       - id: check-docstring-first
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
+    rev: v2.4.1
     hooks:
       - id: codespell
         args: [-I, .codespellignore]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.1.0
+    rev: v4.1.1
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -55,7 +55,7 @@ repos:
         language: system
         stages: ["pre-commit", "pre-push"]
   - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v25.1.0
+    rev: v25.1.1
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
