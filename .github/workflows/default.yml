@@ -93,7 +93,7 @@ jobs:
         continue-on-error: true
       - name: run test
         run: |
-          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && molecule test --scenario-name ${SUITE}
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && molecule test --scenario-name ${ANSIBLE_SUITE}
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
