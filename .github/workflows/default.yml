@@ -22,11 +22,14 @@ jobs:
       max-parallel: 4
       matrix:
         include:
+          - molecule_distro: 'almalinux:10-kitten-minimal'
+            experimental: false
+            suite: default
           - molecule_distro: 'rockylinux:9'
             experimental: false
             suite: default
-          - molecule_distro: 'redhat/ubi8'
-            experimental: true
+          - molecule_distro: 'rockylinux:9'
+            experimental: false
             suite: default
           - molecule_distro: 'rockylinux:8'
             experimental: false
