@@ -70,8 +70,6 @@ jobs:
             export PKG_PATH="$PKG_PATH/OPSYS/ARCH/VERSIONS/All/"
             sudo pkg_add pkgin || true
             sudo pkgin -y install python311 py311-pip rust openssl || true
-            # openbsd
-            sudo pkg_add -rIvx python3 py3-pip rust || true
             which python || true
             which python3 || true
             which python311 || true
@@ -100,3 +98,54 @@ jobs:
             cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS}
             # Idempotency
             cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS} | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
+        if: ${{ matrix.os.name }} != 'openbsd'
+
+      - name: Test on ${{ matrix.os.name }}
+        uses: cross-platform-actions/action@fe0167d8082ac584754ef3ffb567fded22642c7d
+        env:
+          ANSIBLE_CALLBACKS_ENABLED: profile_tasks
+          ANSIBLE_ROLE: juju4.adduser
+          ANSIBLE_EXTRA_VARS: ''
+          ANSIBLE_FORCE_COLOR: '1'
+          PY_COLORS: '1'
+        with:
+          environment_variables: ANSIBLE_CALLBACKS_ENABLED ANSIBLE_ROLE ANSIBLE_EXTRA_VARS ANSIBLE_FORCE_COLOR PY_COLORS
+          operating_system: ${{ matrix.os.name }}
+          architecture: ${{ matrix.os.architecture }}
+          version: ${{ matrix.os.version }}
+          shell: bash
+          memory: 5G
+          cpu_count: 4
+          run: |
+            set -x
+            whoami
+            # openbsd
+            sudo pkg_add -rIvx python3 py3-pip rust ansible ansible-lint || true
+            which python || true
+            which python3 || true
+            which python311 || true
+            which python3.11 || true
+            which pip || true
+            which pip3 || true
+            which pip3.11 || true
+            python3 --version || true
+            python3 -m pip install --upgrade pip || true
+            python3.11 --version || true
+            python3.11 -m pip install --upgrade pip || true
+            export PATH=$PATH:/home/runner/.local/bin
+            mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
+            pip show ansible
+            which ansible
+            ansible --version
+            ansible-config dump --only-changed -t all
+            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-galaxy install --timeout 120 --verbose -r molecule/default/requirements.yml
+            ln -s . juju4.adduser
+            # Environment
+            uname -a
+            pwd
+            env
+            # Run
+            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS}
+            # Idempotency
+            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS} | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
+        if: ${{ matrix.os.name }} == 'openbsd'
