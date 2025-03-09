@@ -98,7 +98,7 @@ jobs:
             cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS}
             # Idempotency
             cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS} | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
-        if: ${{ matrix.os.name }} != 'openbsd'
+        if: ${{ matrix.os.name != 'openbsd' }}
 
       - name: Test on ${{ matrix.os.name }}
         uses: cross-platform-actions/action@fe0167d8082ac584754ef3ffb567fded22642c7d
@@ -148,4 +148,4 @@ jobs:
             cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS}
             # Idempotency
             cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS} | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
-        if: ${{ matrix.os.name }} == 'openbsd'
+        if: ${{ matrix.os.name == 'openbsd' }}
