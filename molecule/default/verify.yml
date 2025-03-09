@@ -1,7 +1,7 @@
 ---
 
 - name: Verify
-  hosts: adduser
+  hosts: "{{ playbook_hosts | default('all') }}"
   tasks:
     - name: Fetch content of /home/deploy/.ssh/authorized_keys
       ansible.builtin.slurp:
