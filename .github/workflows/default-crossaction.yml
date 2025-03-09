@@ -20,23 +20,23 @@ jobs:
         os:
           - name: freebsd
             architecture: x86-64
-            version: '13.2'
+            version: '14.2'
             host: ubuntu-latest
             experimental: true
 
           - name: netbsd
             architecture: x86-64
-            version: '9.3'
+            version: '10.1'
             host: ubuntu-latest
             experimental: true
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: ${{ env.ANSIBLE_ROLE }}
 
       - name: Test on ${{ matrix.os.name }}
-        uses: cross-platform-actions/action@6e970dd060e5c52887de47775b3cf2079aae0c69
+        uses: cross-platform-actions/action@fe0167d8082ac584754ef3ffb567fded22642c7d
         env:
           ANSIBLE_CALLBACKS_ENABLED: profile_tasks
           ANSIBLE_ROLE: juju4.adduser
@@ -56,7 +56,7 @@ jobs:
             whoami
             # freebsd
             sudo env ASSUME_ALWAYS_YES=YES pkg bootstrap || true
-            sudo pkg install -y python3 py-pip || true
+            sudo pkg install -y python3 py311-pip || true
             sudo pkg info || true
             # netbsd
             export PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
@@ -69,8 +69,14 @@ jobs:
             which python || true
             which python3 || true
             which python311 || true
+            which python3.11 || true
+            which pip || true
+            which pip3 || true
+            which pip3.11 || true
             python3 --version
             python3 -m pip install --upgrade pip
+            python3.11 --version
+            python3.11 -m pip install --upgrade pip
             pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible
             mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
             ansible --version
