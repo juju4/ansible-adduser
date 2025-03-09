@@ -30,6 +30,12 @@ jobs:
             host: ubuntu-latest
             experimental: true
 
+          - name: openbsd
+            architecture: x86-64
+            version: '7.6'
+            host: ubuntu-latest
+            experimental: true
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -63,9 +69,9 @@ jobs:
             export PKG_PATH="https://cdn.NetBSD.org/pub/pkgsrc/packages"
             export PKG_PATH="$PKG_PATH/OPSYS/ARCH/VERSIONS/All/"
             sudo pkg_add pkgin || true
-            sudo pkgin -y install python311 py311-pip || true
+            sudo pkgin -y install python311 py311-pip rust || true
             # openbsd
-            doas pkg_add -rIvx python3 || true
+            doas pkg_add -rIvx python3 py3-pip rust || true
             which python || true
             which python3 || true
             which python311 || true
