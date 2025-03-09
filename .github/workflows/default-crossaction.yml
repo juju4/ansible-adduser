@@ -56,7 +56,7 @@ jobs:
             whoami
             # freebsd
             sudo env ASSUME_ALWAYS_YES=YES pkg bootstrap || true
-            sudo pkg install -y python3 py311-pip || true
+            sudo pkg install -y python3 py311-pip rust || true
             sudo pkg info || true
             # netbsd
             export PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
@@ -73,10 +73,10 @@ jobs:
             which pip || true
             which pip3 || true
             which pip3.11 || true
-            python3 --version
-            python3 -m pip install --upgrade pip
-            python3.11 --version
-            python3.11 -m pip install --upgrade pip
+            python3 --version || true
+            python3 -m pip install --upgrade pip || true
+            python3.11 --version || true
+            python3.11 -m pip install --upgrade pip || true
             pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible
             mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
             ansible --version
