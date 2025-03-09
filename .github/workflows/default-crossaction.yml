@@ -28,13 +28,13 @@ jobs:
             architecture: x86-64
             version: '10.1'
             host: ubuntu-latest
-            experimental: true
+            experimental: false
 
           - name: openbsd
             architecture: x86-64
             version: '7.6'
             host: ubuntu-latest
-            experimental: true
+            experimental: false
 
     steps:
       - uses: actions/checkout@v4
