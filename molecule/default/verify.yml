@@ -24,8 +24,8 @@
           not chage.stdout is match('Account expires.*never') and
           not chage.stdout is match('Last password change.*: password must be changed')"
       when: ansible_system == "Linux"
-    - name: OpenBSD | user info
+    - name: {Net,Open}BSD | user info
       ansible.builtin.command: userinfo deploy
       changed_when: false
       failed_when: false
-      when: ansible_system == "OpenBSD"
+      when: ansible_system == "OpenBSD" or ansible_system == "NetBSD"
