@@ -38,5 +38,13 @@
     - name: Debug | var ansible_virtualization_type
       ansible.builtin.debug:
         var: ansible_virtualization_type
+    - name: NetBSD | Set fact
+      ansible.builtin.set_fact:
+        adduser_shell: /bin/sh
+      when: ansible_distribution == 'NetBSD'
+    - name: OpenBSD | Set fact
+      ansible.builtin.set_fact:
+        adduser_shell: /bin/sh
+      when: ansible_distribution == 'OpenBSD'
   roles:
     - juju4.adduser
