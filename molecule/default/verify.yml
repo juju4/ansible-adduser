@@ -15,6 +15,7 @@
     - name: Validate account settings
       ansible.builtin.command: chage -l deploy
       changed_when: false
+      failed_when: false
       register: chage
     - name: Validate akeys
       ansible.builtin.assert:
@@ -22,3 +23,9 @@
           "'Account expires' in chage.stdout and
           not chage.stdout is match('Account expires.*never') and
           not chage.stdout is match('Last password change.*: password must be changed')"
+      when: ansible_system == "Linux"
+    - name: OpenBSD | user info
+      ansible.builtin.command: userinfo deploy
+      changed_when: false
+      failed_when: false
+      when: ansible_system == "OpenBSD"
