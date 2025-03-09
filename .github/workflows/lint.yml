@@ -22,11 +22,11 @@ jobs:
       SUITE: default
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: ${{ env.ANSIBLE_ROLE }}
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Install dependencies
@@ -37,8 +37,6 @@ jobs:
           pip3 install ansible
           pip3 show ansible
           ls -l $HOME/.local/bin || true
-          ls -l /opt/hostedtoolcache/Python/3.9.1/x64/bin || true
-          echo "/opt/hostedtoolcache/Python/3.9.1/x64/bin" >> $GITHUB_PATH
           ansible --version
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE
           [ -f molecule/${SUITE}/requirements.yml ] && ansible-galaxy install -r molecule/${SUITE}/requirements.yml
@@ -73,15 +71,14 @@ jobs:
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-lint
         if: ${{ always() }}
       - name: TruffleHog OSS check
-        uses: trufflesecurity/trufflehog@e856a6890d0da5a218f4f9283500b80043884641
+        uses: trufflesecurity/trufflehog@7dc056a193116ba8d82154bf0549381c8fb8545c
         with:
           path: ${{ env.ANSIBLE_ROLE }}
-          head: HEAD
           extra_args: --debug --only-verified
         if: ${{ always() }}
       - name: Run Checkov action
         id: checkov
-        uses: bridgecrewio/checkov-action@299eb97a45637587d7bcb9c96347d3ead6b4364b
+        uses: bridgecrewio/checkov-action@5b9a80d87687cf43fda4b7e9893e21d31d6eed4a
         with:
           directory: ${{ env.ANSIBLE_ROLE }}
           soft_fail: true
