@@ -1,7 +1,7 @@
 ---
 
 - name: Verify
-  hosts: adduser
+  hosts: "{{ playbook_hosts | default('all') }}"
   tasks:
     - name: Fetch content of /home/deploy/.ssh/authorized_keys
       ansible.builtin.slurp:
@@ -15,6 +15,7 @@
     - name: Validate account settings
       ansible.builtin.command: chage -l deploy
       changed_when: false
+      failed_when: false
       register: chage
     - name: Validate akeys
       ansible.builtin.assert:
@@ -22,3 +23,9 @@
           "'Account expires' in chage.stdout and
           not chage.stdout is match('Account expires.*never') and
           not chage.stdout is match('Last password change.*: password must be changed')"
+      when: ansible_system == "Linux"
+    - name: Net+Open BSD | user info
+      ansible.builtin.command: userinfo deploy
+      changed_when: false
+      failed_when: false
+      when: ansible_system == "OpenBSD" or ansible_system == "NetBSD"
