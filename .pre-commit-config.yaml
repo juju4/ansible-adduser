@@ -61,3 +61,5 @@ repos:
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
+        additional_dependencies:
+          - ansible
