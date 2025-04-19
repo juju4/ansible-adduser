@@ -77,6 +77,8 @@ jobs:
             which pip || true
             which pip3 || true
             which pip3.11 || true
+            which pip-3.11 || true
+            [ -f /bin/pip-3.11 ] && ln -s /bin/pip-3.11 /usr/local/bin/pip
             python3 --version || true
             python3 -m pip install --upgrade pip || true
             python3.11 --version || true
