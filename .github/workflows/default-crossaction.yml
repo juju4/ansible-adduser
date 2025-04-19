@@ -77,6 +77,8 @@ jobs:
             which pip || true
             which pip3 || true
             which pip3.11 || true
+            which pip-3.11 || true
+            [ -f /usr/pkg/bin/pip-3.11 ] && sudo ln -s /usr/pkg/bin/pip-3.11 /usr/bin/pip
             python3 --version || true
             python3 -m pip install --upgrade pip || true
             python3.11 --version || true
