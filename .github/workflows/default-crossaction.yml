@@ -28,7 +28,7 @@ jobs:
             architecture: x86-64
             version: '10.1'
             host: ubuntu-latest
-            experimental: false
+            experimental: true
 
           - name: openbsd
             architecture: x86-64
