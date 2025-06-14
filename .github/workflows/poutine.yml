@@ -1,0 +1,26 @@
+---
+name: GitHub SAST
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # tag=v4.2.2
+      - name: poutine - GitHub Actions SAST
+        uses: boostsecurityio/poutine-action@84c0a0d32e8d57ae12651222be1eb15351429228  # tag=v0.15.2
+      - name: Upload poutine SARIF file
+        uses: github/codeql-action/upload-sarif@60168efe1c415ce0f5521ea06d5c2062adbeed1b  # tag=v3.28.17
+        with:
+          category: poutine-ci
+          sarif_file: poutine.sarif
