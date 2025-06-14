@@ -41,6 +41,14 @@ repos:
     rev: v1.1.0
     hooks:
       - id: j2lint
+  - repo: https://github.com/jackdewinter/pymarkdown
+    rev: e4be0b2c785e3a169b20bcbfe91dbc3db76b592f
+    hooks:
+      - id: pymarkdown
+        args:
+          - -d
+          - MD013
+          - scan
   - repo: local
     hooks:
       - id: gitleaks
