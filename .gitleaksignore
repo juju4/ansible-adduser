@@ -7,3 +7,4 @@
 27c8587768bcb956218f406e0ab896c8951378fd:.secrets.baseline:generic-api-key:164
 27c8587768bcb956218f406e0ab896c8951378fd:.secrets.baseline:generic-api-key:172
 43e0d9003e7a6d0cf3c019c60381e455704f5efc:packer/do_digitalocean.pem:private-key:1
+d8dee5ea8a9754692cd92ed2fa3c58cba797a945:.secrets.baseline:generic-api-key:130
