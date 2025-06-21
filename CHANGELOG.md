@@ -1,3 +1,5 @@
+# Changelog
+
 ## Unreleased
 
 * docs(ISSUE_TEMPLATE): add good community note from trufflehog project
