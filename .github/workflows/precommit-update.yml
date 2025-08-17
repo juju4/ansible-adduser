@@ -1,7 +1,6 @@
 name: precommit-update
 
 on:
-  push:
   workflow_dispatch:
   # Run monthly
   schedule:
