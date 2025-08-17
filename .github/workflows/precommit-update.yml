@@ -9,6 +9,9 @@ on:
 permissions:
   contents: read
 
+env:
+  GITLEAKS_VERSION: 8.28.0
+
 jobs:
   precommit:
     name: precommit-update
@@ -32,6 +35,17 @@ jobs:
       - name: Run pre-commit autoupdate
         run: pre-commit autoupdate
 
+      - name: Install gitleaks
+        run: |
+          cd /tmp/
+          curl -sSfLO https://github.com/gitleaks/gitleaks/releases/download/v$GITLEAKS_VERSION/gitleaks_$GITLEAKS_VERSION_linux_x64.tar.gz
+          tar xzf gitleaks_*_linux_x64.tar.gz
+          sudo install -m 755 gitleaks /usr/local/bin/
+        continue-on-error: true
+      - name: Install trufflehog
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+        continue-on-error: true
       - name: Run pre-commit
         run: pre-commit run -a
         continue-on-error: true
