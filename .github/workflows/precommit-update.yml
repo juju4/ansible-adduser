@@ -1,0 +1,45 @@
+name: precommit-update
+
+on:
+  push:
+  workflow_dispatch:
+  # Run monthly
+  schedule:
+    - cron: 0 2 1 * *
+
+permissions:
+  contents: read
+
+jobs:
+  precommit:
+    name: precommit-update
+    runs-on: ubuntu-latest
+    # To create PR
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # tag=v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # tag=v5.6.0
+        with:
+          python-version: '3.x'
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Run pre-commit autoupdate
+        run: pre-commit autoupdate
+
+      - name: Run pre-commit
+        run: pre-commit run -a
+        continue-on-error: true
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e  # tag=v7.0.8
+        with:
+          title: "ci(pre-commit): autoupdate"
+          commit-message: "Automatic pre-commit update"
+          branch: "precommit-update"
