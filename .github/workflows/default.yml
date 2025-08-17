@@ -34,10 +34,10 @@ jobs:
           - molecule_distro: 'ubuntu:22.04'
             experimental: false
             suite: default
-          - molecule_distro: 'debian:12'
+          - molecule_distro: 'debian:13'
             experimental: false
             suite: default
-          - molecule_distro: 'debian:11'
+          - molecule_distro: 'debian:12'
             experimental: false
             suite: default
     env:
