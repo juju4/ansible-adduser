@@ -28,7 +28,7 @@ jobs:
             architecture: x86-64
             version: '10.1'
             host: ubuntu-latest
-            experimental: false
+            experimental: true
 
           - name: openbsd
             architecture: x86-64
@@ -37,12 +37,12 @@ jobs:
             experimental: false
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # tag=v5.0.0
         with:
           path: ${{ env.ANSIBLE_ROLE }}
 
       - name: Test on ${{ matrix.os.name }}
-        uses: cross-platform-actions/action@fe0167d8082ac584754ef3ffb567fded22642c7d
+        uses: cross-platform-actions/action@e8a7b572196ff79ded1979dc2bb9ee67d1ddb252
         env:
           ANSIBLE_CALLBACKS_ENABLED: profile_tasks
           ANSIBLE_ROLE: juju4.adduser
@@ -77,6 +77,8 @@ jobs:
             which pip || true
             which pip3 || true
             which pip3.11 || true
+            which pip-3.11 || true
+            [ -f /usr/pkg/bin/pip-3.11 ] && sudo ln -s /usr/pkg/bin/pip-3.11 /usr/bin/pip
             python3 --version || true
             python3 -m pip install --upgrade pip || true
             python3.11 --version || true
@@ -103,7 +105,7 @@ jobs:
         if: ${{ matrix.os.name != 'openbsd' }}
 
       - name: Test on ${{ matrix.os.name }}
-        uses: cross-platform-actions/action@fe0167d8082ac584754ef3ffb567fded22642c7d
+        uses: cross-platform-actions/action@e8a7b572196ff79ded1979dc2bb9ee67d1ddb252
         env:
           ANSIBLE_CALLBACKS_ENABLED: profile_tasks
           ANSIBLE_ROLE: juju4.adduser
