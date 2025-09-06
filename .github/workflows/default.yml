@@ -52,8 +52,10 @@ jobs:
         with:
           egress-policy: block
           allowed-endpoints: >
+            ash.mirrors.clouvider.net:80
             auth.docker.io:443
             distro.ibiblio.org:80
+            dl.rockylinux.org:80
             files.pythonhosted.org:443
             fosszone.csd.auth.gr:443
             fosszone.csd.auth.gr:80
@@ -67,6 +69,7 @@ jobs:
             github.com:443
             mir01.syntis.net:443
             miroir.univ-lorraine.fr:443
+            mirror-mci.yuki.net.uk:80
             mirror.a1.mk:443
             mirror.accum.se:443
             mirror.bahnhof.net:443
@@ -87,14 +90,20 @@ jobs:
             mirror.prolocation.net:443
             mirror.puzzle.ch:443
             mirror.raiolanetworks.com:443
+            mirror.rnet.missouri.edu:80
+            mirror.servaxnet.com:80
+            mirror.siena.edu:80
             mirror.slu.cz:443
             mirror.team-host.ru:443
             mirror.telepoint.bg:443
             mirror.uv.es:443
+            mirror.web-ster.com:443
             mirror.yandex.ru:443
             mirror1.hs-esslingen.de:443
             mirrors.dotsrc.org:443
+            mirrors.egr.msu.edu:80
             mirrors.hostiserver.com:443
+            mirrors.iu13.net:80
             mirrors.melbourne.co.uk:443
             mirrors.neterra.net:443
             mirrors.nxthost.com:443
@@ -102,6 +111,7 @@ jobs:
             mirrors.rit.edu:80
             mirrors.rockylinux.org:443
             mirrors.xtom.de:443
+            pit.mirror.jurassicinnovations.com:80
             plug-mirror.rcac.purdue.edu:443
             production.cloudflare.docker.com:443
             pypi.org:443
@@ -118,6 +128,14 @@ jobs:
             rocky-linux-europe-west6.production.gcp.mirrors.ctrliq.cloud:443
             rocky-linux-europe-west8.production.gcp.mirrors.ctrliq.cloud:443
             rocky-linux-europe-west9.production.gcp.mirrors.ctrliq.cloud:80
+            rocky-linux-us-central1.production.gcp.mirrors.ctrliq.cloud:80
+            rocky-linux-us-east1.production.gcp.mirrors.ctrliq.cloud:80
+            rocky-linux-us-east4.production.gcp.mirrors.ctrliq.cloud:80
+            rocky-linux-us-east5.production.gcp.mirrors.ctrliq.cloud:80
+            rocky-linux-us-west1.production.gcp.mirrors.ctrliq.cloud:80
+            rocky-linux-us-west3.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-us-west4.production.gcp.mirrors.ctrliq.cloud:80
+            rocky.mirror.shastacoe.net:80
             rocky.reloumirrors.net:443
             rocky.task.gda.pl:443
             rocky.task.gda.pl:80
