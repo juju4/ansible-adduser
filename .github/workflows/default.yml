@@ -55,16 +55,78 @@ jobs:
             auth.docker.io:443
             distro.ibiblio.org:80
             files.pythonhosted.org:443
+            fosszone.csd.auth.gr:443
+            fosszone.csd.auth.gr:80
+            ftp.agdsn.de:443
+            ftp.cc.uoc.gr:443
+            ftp.fau.de:443
+            ftp.halifax.rwth-aachen.de:443
+            ftp.linux.cz:443
+            ftp.lysator.liu.se:443
+            ftp.sh.cvut.cz:443
             github.com:443
+            mir01.syntis.net:443
+            miroir.univ-lorraine.fr:443
+            mirror.a1.mk:443
+            mirror.accum.se:443
+            mirror.bahnhof.net:443
             mirror.chpc.utah.edu:80
             mirror.cs.vt.edu:80
+            mirror.eu.ossplanet.net:443
+            mirror.hosthink.net:443
+            mirror.in2p3.fr:443
+            mirror.init7.net:443
+            mirror.karneval.cz:443
+            mirror.leitecastro.com:443
+            mirror.leitecastro.com:80
+            mirror.netsite.dk:443
+            mirror.netzwerge.de:443
+            mirror.nl.altushost.com:443
+            mirror.nsc.liu.se:443
+            mirror.plusline.net:443
+            mirror.prolocation.net:443
+            mirror.puzzle.ch:443
+            mirror.raiolanetworks.com:443
+            mirror.slu.cz:443
+            mirror.team-host.ru:443
+            mirror.telepoint.bg:443
+            mirror.uv.es:443
+            mirror.yandex.ru:443
+            mirror1.hs-esslingen.de:443
+            mirrors.dotsrc.org:443
+            mirrors.hostiserver.com:443
+            mirrors.melbourne.co.uk:443
+            mirrors.neterra.net:443
+            mirrors.nxthost.com:443
+            mirrors.pidginhost.com:443
             mirrors.rit.edu:80
             mirrors.rockylinux.org:443
+            mirrors.xtom.de:443
             plug-mirror.rcac.purdue.edu:443
             production.cloudflare.docker.com:443
             pypi.org:443
+            quantum-mirror.hu:443
             raw.githubusercontent.com:443
             registry-1.docker.io:443
+            rocky-linux-europe-central2.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-europe-north1.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-europe-southwest1.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-europe-west1.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-europe-west2.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-europe-west3.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-europe-west4.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-europe-west6.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-europe-west8.production.gcp.mirrors.ctrliq.cloud:443
+            rocky-linux-europe-west9.production.gcp.mirrors.ctrliq.cloud:80
+            rocky.reloumirrors.net:443
+            rocky.task.gda.pl:443
+            rocky.task.gda.pl:80
+            rockylinux.hi.no:443
+            rockylinux.mirror.intermax.nl:443
+            rockylinux.mirrors.ovh.net:443
+            rockylinux.mirrorservice.org:443
+            rockylinux.netforce.hosting:443
+            rockylinux.volia.net:443
             us.mirrors.cicku.me:443
       - name: Checkout code
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # tag=v5.0.0
