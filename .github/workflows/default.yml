@@ -52,8 +52,11 @@ jobs:
         with:
           egress-policy: block
           allowed-endpoints: >
+            almalinux-kitten.osuosl.org:80
+            almalinux-mirror.yucca.net:80
             archive.ubuntu.com:80
             ash.mirrors.clouvider.net:80
+            atl.mirrors.ezscale.cloud:80
             auth.docker.io:443
             deb.debian.org:80
             distro.ibiblio.org:80
@@ -73,12 +76,18 @@ jobs:
             mir01.syntis.net:443
             miroir.univ-lorraine.fr:443
             mirror-mci.yuki.net.uk:80
+            mirror.0x626b.com:80
             mirror.a1.mk:443
             mirror.accum.se:443
+            mirror.az31.cloudpropeller.com:80
             mirror.bahnhof.net:443
             mirror.chpc.utah.edu:80
+            mirror.cloudpropeller.com:80
             mirror.cs.vt.edu:80
             mirror.eu.ossplanet.net:443
+            mirror.facebook.net:80
+            mirror.fcix.net:80
+            mirror.grid.uchicago.edu:80
             mirror.hosthink.net:443
             mirror.in2p3.fr:443
             mirror.init7.net:443
@@ -113,6 +122,7 @@ jobs:
             mirrors.pidginhost.com:443
             mirrors.rit.edu:80
             mirrors.rockylinux.org:443
+            mirrors.sonic.net:80
             mirrors.xtom.de:443
             pit.mirror.jurassicinnovations.com:80
             plug-mirror.rcac.purdue.edu:443
