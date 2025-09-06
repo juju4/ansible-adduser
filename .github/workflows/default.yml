@@ -52,8 +52,10 @@ jobs:
         with:
           egress-policy: block
           allowed-endpoints: >
+            archive.ubuntu.com:80
             ash.mirrors.clouvider.net:80
             auth.docker.io:443
+            deb.debian.org:80
             distro.ibiblio.org:80
             dl.rockylinux.org:80
             files.pythonhosted.org:443
@@ -67,6 +69,7 @@ jobs:
             ftp.lysator.liu.se:443
             ftp.sh.cvut.cz:443
             github.com:443
+            kitten.mirrors.almalinux.org:443
             mir01.syntis.net:443
             miroir.univ-lorraine.fr:443
             mirror-mci.yuki.net.uk:80
@@ -145,6 +148,7 @@ jobs:
             rockylinux.mirrorservice.org:443
             rockylinux.netforce.hosting:443
             rockylinux.volia.net:443
+            security.ubuntu.com:80
             us.mirrors.cicku.me:443
       - name: Checkout code
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # tag=v5.0.0
