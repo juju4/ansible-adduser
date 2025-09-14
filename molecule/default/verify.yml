@@ -9,8 +9,8 @@
       register: akeys
     - name: Validate akeys
       ansible.builtin.assert:
-        that: >
-          "'ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGH foo@bar.local' in akeys['content'] | b64decode"
+        that:
+          - "'ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGH foo@bar.local' in akeys['content'] | b64decode"
 
     - name: Validate account settings
       ansible.builtin.command: chage -l deploy
@@ -19,10 +19,10 @@
       register: chage
     - name: Validate akeys
       ansible.builtin.assert:
-        that: >
-          "'Account expires' in chage.stdout and
-          not chage.stdout is match('Account expires.*never') and
-          not chage.stdout is match('Last password change.*: password must be changed')"
+        that:
+          - "'Account expires' in chage.stdout"
+          - "not chage.stdout is match('Account expires.*never')"
+          - "not chage.stdout is match('Last password change.*: password must be changed')"
       when: ansible_system == "Linux"
     - name: Net+Open BSD | user info
       ansible.builtin.command: userinfo deploy
