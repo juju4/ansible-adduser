@@ -1,6 +1,28 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
-  ]
+    "config:best-practices"
+  ],
+  "packageRules": [
+    {
+      "description": "Automerge non-major updates",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "minimumReleaseAge": "1 day"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": true,
+    "assignees": ["@renovate-tests"],
+    "groupName": null,
+    "schedule": [],
+    "dependencyDashboardApproval": false,
+    "minimumReleaseAge": null,
+    "rangeStrategy": "update-lockfile",
+    "commitMessageSuffix": "[SECURITY]",
+    "branchTopic": "{{{datasource}}}-{{{depNameSanitized}}}-vulnerability",
+    "prCreation": "immediate",
+    "vulnerabilityFixStrategy": "lowest"
+  }
 }
