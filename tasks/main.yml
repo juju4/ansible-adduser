@@ -9,7 +9,11 @@
     shell: "{{ adduser_shell | default('/bin/bash') }}"
     expires: "{{ adduser_expires | default(omit) }}"
   become: yes
-  when: ansible_distribution != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
+  when:
+    - ansible_os_family != "Alpine"
+    - ansible_distribution != 'FreeBSD'
+    - ansible_distribution != 'OpenBSD'
+    - ansible_os_family != 'Darwin'
 
 - name: Alpine | Add user
   ansible.builtin.command: "adduser -D {{ adduser_user_name }}"
@@ -23,6 +27,17 @@
   ansible.builtin.command: "passwd -u {{ adduser_user_name }}"
   failed_when: false
   when: ansible_os_family == "Alpine"
+
+- name: FreeBSD | Add user
+  ansible.builtin.user:
+    name: "{{ adduser_user_name }}"
+    password: "{{ adduser_password | default(omit) }}"
+    update_password: "{{ adduser_password_update }}"
+    comment: "{{ adduser_user_comments | default(omit) }}"
+    shell: "{{ adduser_shell | default('/bin/sh') }}"
+    # expires: "{{ adduser_expires | default(omit) }}"
+  become: yes
+  when: ansible_distribution == 'FreeBSD'
 
 - name: OpenBSD | Add user
   ansible.builtin.user:
