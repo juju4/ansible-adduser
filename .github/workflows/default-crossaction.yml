@@ -22,13 +22,13 @@ jobs:
             architecture: x86-64
             version: '14.2'
             host: ubuntu-latest
-            experimental: true
+            experimental: false
 
           - name: netbsd
             architecture: x86-64
             version: '10.1'
             host: ubuntu-latest
-            experimental: true
+            experimental: false
 
           - name: openbsd
             architecture: x86-64
