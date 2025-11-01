@@ -15,6 +15,7 @@
         "lockFileMaintenance"
       ],
       "automerge": true,
+      "addLabels": ["automerge"],
       "minimumReleaseAge": "1 day"
     }
   ],
@@ -47,5 +48,8 @@
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
-  ]
+  ],
+  "pre-commit": {
+    "enabled": true
+  }
 }
