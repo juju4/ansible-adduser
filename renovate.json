@@ -17,6 +17,17 @@
       "automerge": true,
       "addLabels": ["automerge"],
       "minimumReleaseAge": "1 day"
+    },
+    {
+      "matchManagers": [
+        "github-actions",
+        "docker",
+        "custom.regex",
+        "ansible",
+        "node",
+        "python"
+      ],
+      "groupName": "{{manager}}"
     }
   ],
   "vulnerabilityAlerts": {
