@@ -49,6 +49,11 @@ repos:
           - -d
           - MD013
           - scan
+  - repo: https://github.com/renovatebot/pre-commit-hooks
+    rev: 41.168.4
+    hooks:
+      - id: renovate-config-validator
+        args: [--strict]
   - repo: local
     hooks:
       # https://github.com/pre-commit/pre-commit-hooks/issues/683
