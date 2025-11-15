@@ -20,7 +20,7 @@ jobs:
         os:
           - name: freebsd
             architecture: x86-64
-            version: '14.2'
+            version: '14.3'
             host: ubuntu-latest
             experimental: false
 
@@ -32,7 +32,8 @@ jobs:
 
           - name: openbsd
             architecture: x86-64
-            version: '7.6'
+            version: '7.8'
+            python_version: '3.12'
             host: ubuntu-latest
             experimental: false
 
@@ -80,9 +81,7 @@ jobs:
             which pip-3.11 || true
             [ -f /usr/pkg/bin/pip-3.11 ] && sudo ln -s /usr/pkg/bin/pip-3.11 /usr/bin/pip
             python3 --version || true
-            python3 -m pip install --upgrade pip || true
             python3.11 --version || true
-            python3.11 -m pip install --upgrade pip || true
             export PATH=$PATH:/home/runner/.local/bin
             pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible
             mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
@@ -112,8 +111,9 @@ jobs:
           ANSIBLE_EXTRA_VARS: ''
           ANSIBLE_FORCE_COLOR: '1'
           PY_COLORS: '1'
+          PYTHON_VERSION: ${{ matrix.python_version }}"
         with:
-          environment_variables: ANSIBLE_CALLBACKS_ENABLED ANSIBLE_ROLE ANSIBLE_EXTRA_VARS ANSIBLE_FORCE_COLOR PY_COLORS
+          environment_variables: ANSIBLE_CALLBACKS_ENABLED ANSIBLE_ROLE ANSIBLE_EXTRA_VARS ANSIBLE_FORCE_COLOR PY_COLORS PYTHON_VERSION
           operating_system: ${{ matrix.os.name }}
           architecture: ${{ matrix.os.architecture }}
           version: ${{ matrix.os.version }}
@@ -124,18 +124,17 @@ jobs:
             set -x
             whoami
             # openbsd
-            sudo pkg_add -rIvx python3 py3-pip rust ansible ansible-lint || true
+            sudo pkg_add -rIvx python3 py3-pip rust || true
+            sudo pkg_add -rIvx ansible ansible-lint || true
             which python || true
             which python3 || true
             which python311 || true
-            which python3.11 || true
+            which "python$PYTHON_VERSION" || true
             which pip || true
             which pip3 || true
-            which pip3.11 || true
+            which "pip$PYTHON_VERSION" || true
             python3 --version || true
-            python3 -m pip install --upgrade pip || true
-            python3.11 --version || true
-            python3.11 -m pip install --upgrade pip || true
+            "python$PYTHON_VERSION" --version || true
             export PATH=$PATH:/home/runner/.local/bin
             mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
             pip show ansible
