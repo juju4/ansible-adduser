@@ -43,7 +43,7 @@ jobs:
           path: ${{ env.ANSIBLE_ROLE }}
 
       - name: Test on ${{ matrix.os.name }}
-        uses: cross-platform-actions/action@ea726d530dccdfcb938df8b87a9bc1cdea564019
+        uses: cross-platform-actions/action@46e8d7fb25520a8d6c64fd2b7a1192611da98eda
         env:
           ANSIBLE_CALLBACKS_ENABLED: profile_tasks
           ANSIBLE_ROLE: juju4.adduser
@@ -104,7 +104,7 @@ jobs:
         if: ${{ matrix.os.name != 'openbsd' }}
 
       - name: Test on ${{ matrix.os.name }}
-        uses: cross-platform-actions/action@ea726d530dccdfcb938df8b87a9bc1cdea564019
+        uses: cross-platform-actions/action@46e8d7fb25520a8d6c64fd2b7a1192611da98eda
         env:
           ANSIBLE_CALLBACKS_ENABLED: profile_tasks
           ANSIBLE_ROLE: juju4.adduser
