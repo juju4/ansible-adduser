@@ -9,6 +9,10 @@ on:
     - cron: '0 1 * * 1'
   merge_group:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
 permissions: {}
 
 jobs:
