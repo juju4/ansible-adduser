@@ -83,7 +83,8 @@ jobs:
             python3 --version || true
             python3.11 --version || true
             export PATH=$PATH:/home/runner/.local/bin
-            pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible
+            pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible || true
+            pip-3.11 install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible || true
             mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
             pip show ansible
             which ansible
