@@ -1,11 +1,16 @@
 ---
 # https://github.com/marketplace/actions/cross-platform-action
-name: default-crossaction
+name: default-crossaction-monthly
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
+  schedule:  # run weekly, on the 10th of the month at 01:30 UTC
+    - cron: '30 1 10 * *'
+  merge_group:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
 
 permissions: {}
 
@@ -16,6 +21,8 @@ jobs:
     runs-on: ${{ matrix.os.host }}
     continue-on-error: ${{ matrix.os.experimental }}
     strategy:
+      fail-fast: false
+      max-parallel: 2
       matrix:
         os:
           - name: freebsd
