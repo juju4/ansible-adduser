@@ -8,6 +8,10 @@ on:
   schedule:  #  run weekly, every Monday 01:00
     - cron: '0 1 * * 1'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
 permissions: {}
 
 jobs:
