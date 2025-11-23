@@ -1,11 +1,16 @@
 ---
 # https://github.com/marketplace/actions/cross-platform-action
-name: default-crossaction
+name: default-crossaction-monthly
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
+  schedule:  # run weekly, on the 10th of the month at 01:30 UTC
+    - cron: '30 1 10 * *'
+  merge_group:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
 
 permissions: {}
 
@@ -16,11 +21,13 @@ jobs:
     runs-on: ${{ matrix.os.host }}
     continue-on-error: ${{ matrix.os.experimental }}
     strategy:
+      fail-fast: false
+      max-parallel: 2
       matrix:
         os:
           - name: freebsd
             architecture: x86-64
-            version: '14.2'
+            version: '14.3'
             host: ubuntu-latest
             experimental: false
 
@@ -32,17 +39,18 @@ jobs:
 
           - name: openbsd
             architecture: x86-64
-            version: '7.6'
+            version: '7.8'
+            python_version: '3.12'
             host: ubuntu-latest
             experimental: false
 
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # tag=v5.0.0
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3  # v6.0.0
         with:
           path: ${{ env.ANSIBLE_ROLE }}
 
       - name: Test on ${{ matrix.os.name }}
-        uses: cross-platform-actions/action@ea726d530dccdfcb938df8b87a9bc1cdea564019
+        uses: cross-platform-actions/action@46e8d7fb25520a8d6c64fd2b7a1192611da98eda
         env:
           ANSIBLE_CALLBACKS_ENABLED: profile_tasks
           ANSIBLE_ROLE: juju4.adduser
@@ -80,13 +88,13 @@ jobs:
             which pip-3.11 || true
             [ -f /usr/pkg/bin/pip-3.11 ] && sudo ln -s /usr/pkg/bin/pip-3.11 /usr/bin/pip
             python3 --version || true
-            python3 -m pip install --upgrade pip || true
             python3.11 --version || true
-            python3.11 -m pip install --upgrade pip || true
             export PATH=$PATH:/home/runner/.local/bin
-            pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible
+            pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible || true
+            pip show ansible || true
+            pip3.11 install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible || true
+            pip3.11 show ansible || true
             mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
-            pip show ansible
             which ansible
             ansible --version
             ansible-config dump --only-changed -t all
@@ -105,15 +113,16 @@ jobs:
         if: ${{ matrix.os.name != 'openbsd' }}
 
       - name: Test on ${{ matrix.os.name }}
-        uses: cross-platform-actions/action@ea726d530dccdfcb938df8b87a9bc1cdea564019
+        uses: cross-platform-actions/action@46e8d7fb25520a8d6c64fd2b7a1192611da98eda
         env:
           ANSIBLE_CALLBACKS_ENABLED: profile_tasks
           ANSIBLE_ROLE: juju4.adduser
           ANSIBLE_EXTRA_VARS: ''
           ANSIBLE_FORCE_COLOR: '1'
           PY_COLORS: '1'
+          PYTHON_VERSION: ${{ matrix.python_version }}"
         with:
-          environment_variables: ANSIBLE_CALLBACKS_ENABLED ANSIBLE_ROLE ANSIBLE_EXTRA_VARS ANSIBLE_FORCE_COLOR PY_COLORS
+          environment_variables: ANSIBLE_CALLBACKS_ENABLED ANSIBLE_ROLE ANSIBLE_EXTRA_VARS ANSIBLE_FORCE_COLOR PY_COLORS PYTHON_VERSION
           operating_system: ${{ matrix.os.name }}
           architecture: ${{ matrix.os.architecture }}
           version: ${{ matrix.os.version }}
@@ -124,18 +133,17 @@ jobs:
             set -x
             whoami
             # openbsd
-            sudo pkg_add -rIvx python3 py3-pip rust ansible ansible-lint || true
+            sudo pkg_add -rIvx python3 py3-pip rust || true
+            sudo pkg_add -rIvx ansible ansible-lint || true
             which python || true
             which python3 || true
             which python311 || true
-            which python3.11 || true
+            which "python$PYTHON_VERSION" || true
             which pip || true
             which pip3 || true
-            which pip3.11 || true
+            which "pip$PYTHON_VERSION" || true
             python3 --version || true
-            python3 -m pip install --upgrade pip || true
-            python3.11 --version || true
-            python3.11 -m pip install --upgrade pip || true
+            "python$PYTHON_VERSION" --version || true
             export PATH=$PATH:/home/runner/.local/bin
             mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
             pip show ansible

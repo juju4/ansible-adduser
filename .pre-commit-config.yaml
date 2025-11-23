@@ -27,7 +27,7 @@ repos:
       - id: codespell
         args: [-I, .codespellignore]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.9.1
+    rev: v4.10.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -50,7 +50,7 @@ repos:
           - MD013
           - scan
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 41.168.4
+    rev: 42.19.3
     hooks:
       - id: renovate-config-validator
         args: [--strict]
@@ -94,7 +94,7 @@ repos:
         language: system
         stages: ["pre-commit", "pre-push"]
   - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v25.9.2
+    rev: v25.11.0
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
