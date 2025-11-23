@@ -1,9 +1,11 @@
 ---
-name: dryrun-bare
+name: dryrun-bare-montly
 
 on:
-  push:
-  pull_request:
+  workflow_dispatch:
+  schedule:  # run on the 10th of the month at 01:00 UTC
+    - cron: '0 1 10 * *'
+  merge_group:
 
 permissions: {}
 
