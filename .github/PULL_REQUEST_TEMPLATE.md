@@ -40,6 +40,13 @@
 - [ ] I have added tests to cover my changes.
 - [ ] All new and existing tests passed including pre-commit and github actions.
 - [ ] Used in production.
+- Please honestly rate AI use with [AI Influence Level (AIL)](https://danielmiessler.com/blog/ai-influence-level-ail)
+  - [ ] AIL0 Human Created, No AI Involved
+  - [ ] AIL1 Human Created, Minor AI Assistance
+  - [ ] AIL2 Human Created, Major AI Augmentation
+  - [ ] AIL3 AI Created, Human Full Structure
+  - [ ] AIL4 AI Created, Human Basic Idea
+  - [ ] AIL5 AI Created, Little Human Involvement
 
 <!--
 https://www.talater.com/open-source-templates/#/page/1
