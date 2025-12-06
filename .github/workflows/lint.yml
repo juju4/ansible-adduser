@@ -27,7 +27,7 @@ jobs:
         with:
           path: ${{ env.ANSIBLE_ROLE }}
       - name: Set up Python
-        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c  # tag=v6.0.0
+        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548  # v6.1.0
         with:
           python-version: '3.13'
       - name: Install dependencies
@@ -72,14 +72,14 @@ jobs:
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-lint
         if: ${{ always() }}
       - name: TruffleHog OSS check
-        uses: trufflesecurity/trufflehog@0f2d8031a6c5e234ed48491728021de6a87590d6
+        uses: trufflesecurity/trufflehog@2d008a57d60ea41f6da2df57bbaec35ccd7752f9
         with:
           path: ${{ env.ANSIBLE_ROLE }}
           extra_args: --debug --only-verified
         if: ${{ always() }}
       - name: Run Checkov action
         id: checkov
-        uses: bridgecrewio/checkov-action@d146511ffb733a9a456c9ffc05cd462122037354
+        uses: bridgecrewio/checkov-action@02a4c5d6a02367e5ea493c34c26b094302fd3f61
         with:
           directory: ${{ env.ANSIBLE_ROLE }}
           soft_fail: true
