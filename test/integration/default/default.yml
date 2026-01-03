@@ -1,5 +1,4 @@
 ---
-
 - name: Test Integration playbook
   hosts: all
   environment:

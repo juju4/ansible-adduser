@@ -1,5 +1,4 @@
 ---
-
 - name: Converge
   hosts: all
   environment:
@@ -9,7 +8,7 @@
   remote_user: root
   vars:
     # if variable, will fail idempotency
-    adduser_expires: '1893459661000'
+    adduser_expires: "1893459661000"
   pre_tasks:
     - name: Ubuntu | Install python3
       ansible.builtin.raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3-minimal)
@@ -26,13 +25,13 @@
       when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] | int >= 16)
     - name: Ubuntu Bionic+, Redhat 8+ | Enforce python3 for ansible
       ansible.builtin.set_fact:
-        ansible_facts['python_interpreter:'] /usr/bin/python3
+        ansible_python_interpreter: /usr/bin/python3
       when: >
         (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] | int >= 16) or
         (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] | int >= 8)
     - name: Debian | Refresh apt cache
       ansible.builtin.apt:
-        update_cache: yes
+        update_cache: true
         cache_valid_time: 3600
       when: ansible_facts['os_family'] == "Debian"
     - name: Debug | var ansible_facts['virtualization_type']

@@ -1,5 +1,4 @@
 ---
-
 - name: Add user {{ adduser_user_name }}
   ansible.builtin.user:
     name: "{{ adduser_user_name }}"
@@ -8,7 +7,7 @@
     comment: "{{ adduser_user_comments | default(omit) }}"
     shell: "{{ adduser_shell | default('/bin/bash') }}"
     expires: "{{ adduser_expires | default(omit) }}"
-  become: yes
+  become: true
   when:
     - ansible_facts['os_family'] != "Alpine"
     - ansible_facts['distribution'] != 'FreeBSD'
@@ -19,11 +18,11 @@
   ansible.builtin.command: "adduser -D {{ adduser_user_name }}"
   args:
     creates: "/home/{{ adduser_user_name }}"
-  become: yes
+  become: true
   failed_when: false
   when: ansible_facts['os_family'] == "Alpine"
 ## else newly created account is locked
-- name: Alpine | Unlock user  # noqa no-changed-when
+- name: Alpine | Unlock user # noqa no-changed-when
   ansible.builtin.command: "passwd -u {{ adduser_user_name }}"
   failed_when: false
   when: ansible_facts['os_family'] == "Alpine"
@@ -36,14 +35,14 @@
     comment: "{{ adduser_user_comments | default(omit) }}"
     shell: "{{ adduser_shell | default('/bin/sh') }}"
     # expires: "{{ adduser_expires | default(omit) }}"
-  become: yes
+  become: true
   when: ansible_facts['distribution'] == 'FreeBSD'
 
 - name: OpenBSD | Add user
   ansible.builtin.user:
     name: "{{ adduser_user_name }}"
     shell: "{{ adduser_shell | default('/bin/ksh') }}"
-  become: yes
+  become: true
   when: ansible_facts['distribution'] == 'OpenBSD'
 
 ## FIXME! not idempotent
@@ -55,7 +54,7 @@
     comment: "{{ adduser_user_comments | default(omit) }}"
     shell: "{{ adduser_shell | default('/bin/bash') }}"
   when: ansible_facts['os_family'] == 'Darwin'
-  become: yes
+  become: true
 
 - name: Check home has correct permissions
   ansible.builtin.file:
@@ -63,7 +62,7 @@
     owner: "{{ adduser_user_name }}"
     mode: "{{ adduser_user_home_perms }}"
     state: directory
-  become: yes
+  become: true
 
 - name: Debug | adduser_public_keys var
   ansible.builtin.debug:
@@ -74,9 +73,9 @@
     key: "{{ item }}"
   with_file: "{{ adduser_public_keys }}"
   when: adduser_public_keys is defined and adduser_public_keys != [] and adduser_sshkey_options is not defined
-  become: yes
+  become: true
   # Either user must exist or you must provide full path to key file in check mode
-  check_mode: no
+  check_mode: false
   # noqa ignore-errors
   ignore_errors: "{{ ansible_check_mode }}"
 - name: Add authorized keys with key_options for user - {{ adduser_user_name }}
@@ -86,8 +85,8 @@
     key_options: "{{ adduser_sshkey_options }}"
   with_file: "{{ adduser_public_keys }}"
   when: adduser_public_keys is defined and adduser_public_keys != [] and adduser_sshkey_options is defined
-  become: yes
-  check_mode: no
+  become: true
+  check_mode: false
   # noqa ignore-errors
   ignore_errors: "{{ ansible_check_mode }}"
 
@@ -95,9 +94,9 @@
   ansible.builtin.file:
     dest: "{{ adduser_user_home }}/.ssh"
     owner: "{{ adduser_user_name }}"
-    mode: '0700'
+    mode: "0700"
     state: directory
-  become: yes
+  become: true
   when:
     - ansible_facts['distribution'] != 'OpenBSD'
     - ansible_facts['os_family'] != 'Darwin'
@@ -123,10 +122,10 @@
         regexp: "^{{ adduser_user_name }} ALL"
         line: "{{ adduser_user_name }} ALL=(ALL) ALL"
         state: present
-        mode: '0440'
-        backup: yes
-        validate: 'visudo -cf %s'
-      become: yes
+        mode: "0440"
+        backup: true
+        validate: "visudo -cf %s"
+      become: true
       when: not (ansible_facts['os_family'] == "Debian" or ansible_os_family == "RedHat")
     - name: Allow nopasswd statement
       ansible.builtin.lineinfile:
@@ -134,12 +133,12 @@
         regexp: "^{{ adduser_user_name }} ALL="
         line: "{{ adduser_user_name }} ALL=(ALL) NOPASSWD: {{ adduser_sudoroot_nopasswd_cmd | default('/usr/bin/whoami') }}"
         state: present
-        backup: yes
-        mode: '0440'
-        validate: 'visudo -cf %s'
+        backup: true
+        mode: "0440"
+        validate: "visudo -cf %s"
       environment:
         PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      become: yes
+      become: true
       when: adduser_sudoroot_nopasswd
 - name: Set
   when:
@@ -157,16 +156,16 @@
 - name: Add user to groups
   ansible.builtin.user:
     name: "{{ adduser_user_name }}"
-    append: yes
+    append: true
     groups: "{{ final_groups | default(adduser_groups) | join(',') }}"
   when:
     - ansible_facts['distribution'] != 'OpenBSD'
     - ansible_facts['os_family'] != 'Darwin'
     - ansible_facts['os_family'] != "Alpine"
-- name: Alpine | Add user to group  # noqa no-changed-when
+- name: Alpine | Add user to group # noqa no-changed-when
   ansible.builtin.command: "addgroup {{ adduser_user_name }} {{ item }}"
   with_items: "{{ final_groups | default(adduser_groups) }}"
-  become: yes
+  become: true
   failed_when: false
   when: ansible_facts['os_family'] == "Alpine"
 
@@ -177,10 +176,10 @@
 - name: Add user to doas.conf
   ansible.builtin.lineinfile:
     dest: /etc/doas.conf
-    regexp: '^permit {{ adduser_user_name }} as '
-    line: 'permit {{ adduser_user_name }} as root'
+    regexp: "^permit {{ adduser_user_name }} as "
+    line: "permit {{ adduser_user_name }} as root"
     state: present
-    mode: '0440'
-    create: yes
-  become: yes
+    mode: "0440"
+    create: true
+  become: true
   when: adduser_sudoroot is defined and adduser_sudoroot and doas.stat.exists

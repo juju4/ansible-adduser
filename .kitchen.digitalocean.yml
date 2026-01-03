@@ -1,5 +1,5 @@
 ---
-## Before
+# # Before
 # export DIGITALOCEAN_ACCESS_TOKEN=""
 # curl -X GET https://api.digitalocean.com/v2/account/keys -H "Authorization: Bearer $DIGITALOCEAN_ACCESS_TOKEN"
 # export DIGITALOCEAN_SSH_KEY_IDS=""

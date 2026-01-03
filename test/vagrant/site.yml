@@ -1,5 +1,4 @@
 ---
-
 - name: Test Vagrant playbook
   hosts: all
   roles:
