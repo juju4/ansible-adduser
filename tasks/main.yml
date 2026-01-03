@@ -78,7 +78,7 @@
   # Either user must exist or you must provide full path to key file in check mode
   check_mode: no
   # noqa ignore-errors
-  ignore_errors: "{{ ansible_facts['check_mode'] | default(false) }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 - name: Add authorized keys with key_options for user - {{ adduser_user_name }}
   ansible.posix.authorized_key:
     user: "{{ adduser_user_name }}"
@@ -89,7 +89,7 @@
   become: yes
   check_mode: no
   # noqa ignore-errors
-  ignore_errors: "{{ ansible_facts['check_mode'] }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: SSH authorized_keys {{ adduser_user_name }}
   ansible.builtin.file:
@@ -98,7 +98,9 @@
     mode: '0700'
     state: directory
   become: yes
-  when: ansible_facts['distribution'] != 'OpenBSD' and ansible_os_family != 'Darwin'
+  when:
+    - ansible_facts['distribution'] != 'OpenBSD'
+    - ansible_facts['os_family'] != 'Darwin'
 
 - name: Get /etc/sudoers stat
   ansible.builtin.stat:
@@ -157,7 +159,10 @@
     name: "{{ adduser_user_name }}"
     append: yes
     groups: "{{ final_groups | default(adduser_groups) | join(',') }}"
-  when: ansible_facts['distribution'] != 'OpenBSD' and ansible_os_family != 'Darwin' and ansible_os_family != "Alpine"
+  when:
+    - ansible_facts['distribution'] != 'OpenBSD'
+    - ansible_facts['os_family'] != 'Darwin'
+    - ansible_facts['os_family'] != "Alpine"
 - name: Alpine | Add user to group  # noqa no-changed-when
   ansible.builtin.command: "addgroup {{ adduser_user_name }} {{ item }}"
   with_items: "{{ final_groups | default(adduser_groups) }}"
