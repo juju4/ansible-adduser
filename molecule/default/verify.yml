@@ -17,7 +17,7 @@
       changed_when: false
       failed_when: false
       register: chage
-    - name: Validate akeys
+    - name: Validate chage
       ansible.builtin.assert:
         that:
           - "'Account expires' in chage.stdout"
