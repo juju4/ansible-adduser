@@ -42,7 +42,7 @@ repos:
     hooks:
       - id: j2lint
   - repo: https://github.com/jackdewinter/pymarkdown
-    rev: v0.9.33
+    rev: v0.9.34
     hooks:
       - id: pymarkdown
         args:
