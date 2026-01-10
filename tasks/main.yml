@@ -9,10 +9,10 @@
     expires: "{{ adduser_expires | default(omit) }}"
   become: true
   when:
-    - ansible_facts['os_family'] != "Alpine"
-    - ansible_facts['distribution'] != 'FreeBSD'
-    - ansible_facts['distribution'] != 'OpenBSD'
-    - ansible_facts['os_family'] != 'Darwin'
+    - ansible_os_family != "Alpine"
+    - ansible_distribution != 'FreeBSD'
+    - ansible_distribution != 'OpenBSD'
+    - ansible_os_family != 'Darwin'
 
 - name: Alpine | Add user
   ansible.builtin.command: "adduser -D {{ adduser_user_name }}"
@@ -25,7 +25,7 @@
 - name: Alpine | Unlock user # noqa no-changed-when
   ansible.builtin.command: "passwd -u {{ adduser_user_name }}"
   failed_when: false
-  when: ansible_facts['os_family'] == "Alpine"
+  when: ansible_os_family == "Alpine"
 
 - name: FreeBSD | Add user
   ansible.builtin.user:
@@ -36,14 +36,14 @@
     shell: "{{ adduser_shell | default('/bin/sh') }}"
     # expires: "{{ adduser_expires | default(omit) }}"
   become: true
-  when: ansible_facts['distribution'] == 'FreeBSD'
+  when: ansible_distribution == 'FreeBSD'
 
 - name: OpenBSD | Add user
   ansible.builtin.user:
     name: "{{ adduser_user_name }}"
     shell: "{{ adduser_shell | default('/bin/ksh') }}"
   become: true
-  when: ansible_facts['distribution'] == 'OpenBSD'
+  when: ansible_distribution == 'OpenBSD'
 
 ## FIXME! not idempotent
 - name: Darwin | Add user
@@ -53,7 +53,7 @@
     update_password: "{{ adduser_password_update }}"
     comment: "{{ adduser_user_comments | default(omit) }}"
     shell: "{{ adduser_shell | default('/bin/bash') }}"
-  when: ansible_facts['os_family'] == 'Darwin'
+  when: ansible_os_family == 'Darwin'
   become: true
 
 - name: Check home has correct permissions
@@ -98,8 +98,8 @@
     state: directory
   become: true
   when:
-    - ansible_facts['distribution'] != 'OpenBSD'
-    - ansible_facts['os_family'] != 'Darwin'
+    - ansible_distribution != 'OpenBSD'
+    - ansible_os_family != 'Darwin'
 
 - name: Get /etc/sudoers stat
   ansible.builtin.stat:
@@ -111,11 +111,11 @@
     - name: Debian | set groups
       ansible.builtin.set_fact:
         final_groups: "{{ adduser_groups + ['sudo'] }}"
-      when: ansible_facts['os_family'] == "Debian"
+      when: ansible_os_family == "Debian"
     - name: RedHat | set groups
       ansible.builtin.set_fact:
         final_groups: "{{ adduser_groups + ['wheel'] }}"
-      when: ansible_facts['os_family'] == "RedHat"
+      when: ansible_os_family == "RedHat"
     - name: Add user directly in sudoers if no defined admin group
       ansible.builtin.lineinfile:
         dest: /etc/sudoers
@@ -126,7 +126,7 @@
         backup: true
         validate: "visudo -cf %s"
       become: true
-      when: not (ansible_facts['os_family'] == "Debian" or ansible_os_family == "RedHat")
+      when: not (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
     - name: Allow nopasswd statement
       ansible.builtin.lineinfile:
         dest: /etc/sudoers
@@ -159,15 +159,15 @@
     append: true
     groups: "{{ final_groups | default(adduser_groups) | join(',') }}"
   when:
-    - ansible_facts['distribution'] != 'OpenBSD'
-    - ansible_facts['os_family'] != 'Darwin'
-    - ansible_facts['os_family'] != "Alpine"
+    - ansible_distribution != 'OpenBSD'
+    - ansible_os_family != 'Darwin'
+    - ansible_os_family != "Alpine"
 - name: Alpine | Add user to group # noqa no-changed-when
   ansible.builtin.command: "addgroup {{ adduser_user_name }} {{ item }}"
   with_items: "{{ final_groups | default(adduser_groups) }}"
   become: true
   failed_when: false
-  when: ansible_facts['os_family'] == "Alpine"
+  when: ansible_os_family == "Alpine"
 
 - name: Get /etc/doas.conf stat
   ansible.builtin.stat:
