@@ -76,7 +76,7 @@ jobs:
           curl -o requirements.txt "$settings_repo/requirements.txt"
           curl -o .ansible-lint "$settings_repo/.ansible-lint"
           curl -o .yamllint "$settings_repo/.yamllint"
-          curl -o ansible.cfg "$settings_repo/ansible.cfg"
+          curl -o ~/.ansible.cfg "$settings_repo/ansible.cfg"
           pip install -r requirements.txt
         continue-on-error: true
       - name: Environment
