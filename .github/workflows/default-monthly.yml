@@ -67,7 +67,7 @@ jobs:
             /var/_install
             /home/runner/.ansible
             /home/runner/.cache/molecule
-          key: cache-ansible-adduser-${{ steps.get-date.outputs.date }}
+          key: cache-ansible-${{ env.ANSIBLE_ROLE }}-${{ steps.get-date.outputs.date }}
       - name: Install dependencies
         run: |
           set -x
@@ -83,6 +83,8 @@ jobs:
           curl -o requirements.txt "$settings_repo/requirements.txt"
           curl -o .ansible-lint "$settings_repo/.ansible-lint"
           curl -o .yamllint "$settings_repo/.yamllint"
+          mkdir ~/.config/molecule
+          curl -o ~/.config/molecule/config.yml "$settings_repo/.config/molecule/config.yml"
           pip install -r requirements.txt
         continue-on-error: true
       - name: Environment

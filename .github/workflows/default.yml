@@ -60,7 +60,7 @@ jobs:
             /var/_install
             /home/runner/.ansible
             /home/runner/.cache/molecule
-          key: cache-ansible-adduser-${{ steps.get-date.outputs.date }}
+          key: cache-ansible-${{ env.ANSIBLE_ROLE }}-${{ steps.get-date.outputs.date }}
       - name: Install dependencies
         run: |
           set -x
