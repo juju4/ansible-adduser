@@ -52,7 +52,7 @@ jobs:
         with:
           python-version: '3.13'
       - name: Cache
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb  # v5.0.1
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7  # v5.0.2
         with:
           path: |
             /var/cache/apt/archives
@@ -76,7 +76,8 @@ jobs:
           curl -o requirements.txt "$settings_repo/requirements.txt"
           curl -o .ansible-lint "$settings_repo/.ansible-lint"
           curl -o .yamllint "$settings_repo/.yamllint"
-          curl -o ansible.cfg "$settings_repo/ansible.cfg"
+          mkdir ~/.config/molecule
+          curl -o ~/.config/molecule/config.yml "$settings_repo/.config/molecule/config.yml"
           pip install -r requirements.txt
         continue-on-error: true
       - name: Environment
