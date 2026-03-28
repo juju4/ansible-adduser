@@ -91,6 +91,11 @@ repos:
         # entry: bash -c 'docker run --rm -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --since-commit HEAD --only-verified --fail'
         language: system
         stages: ["pre-commit", "pre-push"]
+  - repo: https://github.com/betterleaks/betterleaks
+    rev: v1.1.1
+    hooks:
+      - id: betterleaks
+        stages: ["pre-commit", "pre-push"]
   - repo: https://github.com/ansible-community/ansible-lint.git
     rev: v26.1.1
     hooks:
