@@ -143,3 +143,8 @@ jobs:
           sudo cat /home/deploy/.ssh/authorized_keys || true
         if: ${{ always() }}
         continue-on-error: true
+      - name: After script - apt sources
+        run: |
+          sudo find /etc/apt/sources.list* -type f -name '*.list' -exec cat {} \;
+        if: ${{ always() }}
+        continue-on-error: true
