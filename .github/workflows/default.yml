@@ -30,7 +30,7 @@ jobs:
           - molecule_distro: 'almalinux:10-kitten'
             experimental: false
             suite: default
-          - molecule_distro: 'ubuntu:24.04'
+          - molecule_distro: 'ubuntu:26.04'
             experimental: false
             suite: default
           - molecule_distro: 'debian:13'
