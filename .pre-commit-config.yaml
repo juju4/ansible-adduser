@@ -92,7 +92,7 @@ repos:
         language: system
         stages: ["pre-commit", "pre-push"]
   - repo: https://github.com/betterleaks/betterleaks
-    rev: v1.1.1
+    rev: v1.1.2
     hooks:
       - id: betterleaks
         stages: ["pre-commit", "pre-push"]
