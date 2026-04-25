@@ -145,6 +145,11 @@ jobs:
         continue-on-error: true
       - name: After script - apt sources
         run: |
+          set -x
           sudo find /etc/apt/sources.list* -type f -name '*.list' -exec cat {} \;
+          sudo ls /etc/apt/sources.list.d/
+          sudo grep -rin dl.google.com /etc/
+          sudo grep -rin dl.google.com /var/log/
+          sudo apt update
         if: ${{ always() }}
         continue-on-error: true
