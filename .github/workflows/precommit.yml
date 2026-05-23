@@ -43,5 +43,6 @@ jobs:
         uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd  # tag=v3.0.1
         with:
           extra_args: --all-files --show-diff-on-failure
+        continue-on-error: true
       - name: Run prek
         uses: j178/prek-action@bdca6f102f98e2b4c7029491a53dfd366469e33d  # tag=v2.0.4
