@@ -28,7 +28,7 @@ jobs:
       - name: Install cosign
         uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6  # v4.1.2
         with:
-          cosign-release: "v2.5.0"
+          cosign-release: "v2.6.4"
       - name: Install trufflehog
         run: |
           curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/f37f2eff68c31620fd88bc37ff2b7d57ea0c700c/scripts/install.sh | sh -s -- -b /usr/local/bin/
