@@ -38,7 +38,7 @@ repos:
         args: ["--baseline", ".secrets.baseline"]
         # exclude: .*/tests/.*
   - repo: https://github.com/aristanetworks/j2lint.git
-    rev: v1.2.0
+    rev: v1.3.0
     hooks:
       - id: j2lint
   - repo: https://github.com/jackdewinter/pymarkdown
