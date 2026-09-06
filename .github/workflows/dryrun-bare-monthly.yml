@@ -22,7 +22,6 @@ jobs:
       ANSIBLE_CALLBACKS_ENABLED: profile_tasks
       ANSIBLE_EXTRA_VARS: ""
       ANSIBLE_ROLE: juju4.adduser
-      ANSIBLE_SUITE: ${{ matrix.suite }}
 
     steps:
       - name: Checkout code
@@ -56,7 +55,7 @@ jobs:
           set -x
           pwd
           env
-          find -ls
+          find . -ls
       - name: run test
         run: |
           cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv test/integration/default/default.yml ${ANSIBLE_EXTRA_VARS} --check --diff
