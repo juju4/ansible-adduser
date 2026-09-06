@@ -71,7 +71,7 @@ jobs:
             /var/cache/apt/archives
             /var/lib/apt
             /var/_install
-          key: cache-ansible-adduser-${{ steps.get-date.outputs.date }}
+          key: cache-ansible-adduser-${{ runner.os }}
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip

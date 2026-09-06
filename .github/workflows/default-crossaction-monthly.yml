@@ -120,7 +120,7 @@ jobs:
           ANSIBLE_EXTRA_VARS: ''
           ANSIBLE_FORCE_COLOR: '1'
           PY_COLORS: '1'
-          PYTHON_VERSION: ${{ matrix.python_version }}"
+          PYTHON_VERSION: ${{ matrix.os.python_version }}
         with:
           environment_variables: ANSIBLE_CALLBACKS_ENABLED ANSIBLE_ROLE ANSIBLE_EXTRA_VARS ANSIBLE_FORCE_COLOR PY_COLORS PYTHON_VERSION
           operating_system: ${{ matrix.os.name }}
