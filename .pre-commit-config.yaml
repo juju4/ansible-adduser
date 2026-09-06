@@ -22,12 +22,12 @@ repos:
       # - id: detect-aws-credentials
       - id: check-docstring-first
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.3
     hooks:
       - id: codespell
         args: [-I, .codespellignore]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.13.8
+    rev: v4.18.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -38,11 +38,11 @@ repos:
         args: ["--baseline", ".secrets.baseline"]
         # exclude: .*/tests/.*
   - repo: https://github.com/aristanetworks/j2lint.git
-    rev: v1.2.0
+    rev: v1.3.0
     hooks:
       - id: j2lint
   - repo: https://github.com/jackdewinter/pymarkdown
-    rev: v0.9.35
+    rev: v0.9.39
     hooks:
       - id: pymarkdown
         args:
@@ -50,7 +50,7 @@ repos:
           - MD013
           - scan
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 43.91.5
+    rev: 44.5.3
     hooks:
       - id: renovate-config-validator
         args: [--strict]
@@ -92,12 +92,14 @@ repos:
         language: system
         stages: ["pre-commit", "pre-push"]
   - repo: https://github.com/betterleaks/betterleaks
-    rev: v1.1.1
+    rev: v1.8.1
     hooks:
       - id: betterleaks
         stages: ["pre-commit", "pre-push"]
   - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v26.1.1
+    rev: v26.8.0
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
+        additional_dependencies:
+          - ansible

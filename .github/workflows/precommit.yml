@@ -1,0 +1,48 @@
+---
+name: precommit
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Install gitleaks
+        run: |
+          cd /tmp/
+          curl -sSfLO https://github.com/gitleaks/gitleaks/releases/download/v8.23.1/gitleaks_8.23.1_linux_x64.tar.gz
+          tar xzf gitleaks_*_linux_x64.tar.gz
+          sudo install -m 755 gitleaks /usr/local/bin/
+        continue-on-error: true
+      - name: Install cosign
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6  # v4.1.2
+        with:
+          cosign-release: "v3.1.3"
+      - name: Install trufflehog
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/f37f2eff68c31620fd88bc37ff2b7d57ea0c700c/scripts/install.sh | sh -s -- -b /usr/local/bin/
+        continue-on-error: true
+      - name: Install mypy
+        run: |
+          set -x
+          pip install --no-deps -e .[ci]
+          mypy --install-types .
+        continue-on-error: true
+      - name: Run pre-commit
+        uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd  # tag=v3.0.1
+        with:
+          extra_args: --all-files --show-diff-on-failure
+        continue-on-error: true
+      - name: Run prek
+        uses: j178/prek-action@4e14d07f9231acabce116ccfca13b13dd9755ece  # v3.0.0
