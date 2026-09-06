@@ -3,3 +3,4 @@ paths:
   .github/workflows/**/*.{yml,yaml}:
     ignore:
       - 'shellcheck reported issue in this script: SC2086:.+'
+      - 'shellcheck reported issue in this script: SC2015:.+'
