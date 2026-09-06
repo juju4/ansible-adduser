@@ -1,0 +1,34 @@
+---
+# https://arxiv.org/html/2601.14455v2
+name: Workflow checks
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  scan-workflows:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Install actionlint
+        run: |
+          gh release download --repo rhysd/actionlint --pattern '*_linux_amd64.tar.gz' v1.7.12
+          tar xf actionlint_1.7.12_linux_amd64.tar.gz
+          ./actionlint -version
+          gh attestation verify -R rhysd/actionlint actionlint_1.7.12_linux_amd64.tar.gz
+      - name: Run actionlint
+        run: ./actionlint .github/workflows/*.yml
+
+      - name: poutine - GitHub Actions SAST
+        uses: boostsecurityio/poutine-action@e240ebd3eff8b2db5a8e5f6b28f58739d7db2247 # tag=v1.1.4
+
+      - name: Upload poutine SARIF file
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
+        with:
+          sarif_file: poutine.sarif
