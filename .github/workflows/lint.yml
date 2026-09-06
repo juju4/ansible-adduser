@@ -57,7 +57,7 @@ jobs:
           pwd
           env
           find . -ls
-      - uses: codespell-project/actions-codespell@master
+      - uses: codespell-project/actions-codespell@e3258cca84ce02b0bb36a3d41f2c18f719a0cc1a  # tag=v2.4.3
         with:
           ignore_words_file: ${{ env.ANSIBLE_ROLE }}/.codespellignore
           skip: .git
