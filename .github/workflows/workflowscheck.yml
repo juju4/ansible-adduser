@@ -11,7 +11,8 @@ jobs:
   scan-workflows:
     permissions:
       contents: read
-      security-events: read
+      actions: read
+      security-events: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
