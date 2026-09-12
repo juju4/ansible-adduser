@@ -70,7 +70,8 @@ jobs:
             whoami
             # freebsd
             sudo env ASSUME_ALWAYS_YES=YES pkg bootstrap || true
-            sudo pkg install -y python3 py311-pip rust || true
+            sudo pkg install -y python3 rust || true
+            sudo pkg install -y py312-pip || true
             sudo pkg info || true
             # netbsd
             export PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
