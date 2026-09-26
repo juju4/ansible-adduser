@@ -48,6 +48,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           path: ${{ env.ANSIBLE_ROLE }}
+          persist-credentials: false
 
       - name: Test on ${{ matrix.os.name }}
         uses: cross-platform-actions/action@e3d398ccb5a2c7515317e19d84b92baf2ae5ed71
