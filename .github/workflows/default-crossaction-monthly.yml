@@ -50,7 +50,7 @@ jobs:
           path: ${{ env.ANSIBLE_ROLE }}
           persist-credentials: false
 
-      - name: Test on ${{ matrix.os.name }}
+      - name: Start VM on ${{ matrix.os.name }}
         uses: cross-platform-actions/action@e0b9770014ba65d5e0815f15b74031c3a635f641  # v1.6.0
         env:
           ANSIBLE_CALLBACKS_ENABLED: profile_tasks
@@ -66,7 +66,8 @@ jobs:
           shell: bash
           memory: 5G
           cpu_count: 4
-          run: |
+      - name: Test on ${{ matrix.os.name }}
+        run: |
             set -x
             whoami
             # freebsd
@@ -114,7 +115,7 @@ jobs:
             cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/verify.yml ${ANSIBLE_EXTRA_VARS}
         if: ${{ matrix.os.name != 'openbsd' }}
 
-      - name: Test on ${{ matrix.os.name }}
+      - name: Start VM on ${{ matrix.os.name }}
         uses: cross-platform-actions/action@e3d398ccb5a2c7515317e19d84b92baf2ae5ed71
         env:
           ANSIBLE_CALLBACKS_ENABLED: profile_tasks
@@ -131,7 +132,8 @@ jobs:
           shell: bash
           memory: 5G
           cpu_count: 4
-          run: |
+      - name: Test on ${{ matrix.os.name }}
+        run: |
             set -x
             whoami
             # openbsd
