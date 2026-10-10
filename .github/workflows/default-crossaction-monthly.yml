@@ -68,51 +68,51 @@ jobs:
           cpu_count: 4
       - name: Test on ${{ matrix.os.name }}
         run: |
-            set -x
-            whoami
-            # freebsd
-            sudo env ASSUME_ALWAYS_YES=YES pkg bootstrap || true
-            sudo pkg install -y python3 rust || true
-            sudo pkg install -y py312-pip || true
-            sudo pkg info || true
-            # netbsd
-            export PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
-            export PKG_PATH="https://cdn.NetBSD.org/pub/pkgsrc/packages"
-            export PKG_PATH="$PKG_PATH/OPSYS/ARCH/VERSIONS/All/"
-            sudo pkg_add pkgin || true
-            sudo pkgin -y install python311 py311-pip py311-cryptography rust openssl || true
-            which python || true
-            which python3 || true
-            which python311 || true
-            which python3.11 || true
-            which pip || true
-            which pip3 || true
-            which pip3.11 || true
-            which pip-3.11 || true
-            [ -f /usr/pkg/bin/pip-3.11 ] && sudo ln -s /usr/pkg/bin/pip-3.11 /usr/bin/pip
-            python3 --version || true
-            python3.11 --version || true
-            export PATH=$PATH:/home/runner/.local/bin
-            pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible || true
-            pip show ansible || true
-            pip3.11 install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible || true
-            pip3.11 show ansible || true
-            mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
-            which ansible
-            ansible --version
-            ansible-config dump --only-changed -t all
-            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-galaxy install --timeout 120 --verbose -r molecule/default/requirements.yml
-            ln -s . juju4.adduser
-            # Environment
-            uname -a
-            pwd
-            env
-            # Run
-            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS}
-            # Idempotency
-            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS} | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
-            # Verify
-            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/verify.yml ${ANSIBLE_EXTRA_VARS}
+          set -x
+          whoami
+          # freebsd
+          sudo env ASSUME_ALWAYS_YES=YES pkg bootstrap || true
+          sudo pkg install -y python3 rust || true
+          sudo pkg install -y py312-pip || true
+          sudo pkg info || true
+          # netbsd
+          export PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
+          export PKG_PATH="https://cdn.NetBSD.org/pub/pkgsrc/packages"
+          export PKG_PATH="$PKG_PATH/OPSYS/ARCH/VERSIONS/All/"
+          sudo pkg_add pkgin || true
+          sudo pkgin -y install python311 py311-pip py311-cryptography rust openssl || true
+          which python || true
+          which python3 || true
+          which python311 || true
+          which python3.11 || true
+          which pip || true
+          which pip3 || true
+          which pip3.11 || true
+          which pip-3.11 || true
+          [ -f /usr/pkg/bin/pip-3.11 ] && sudo ln -s /usr/pkg/bin/pip-3.11 /usr/bin/pip
+          python3 --version || true
+          python3.11 --version || true
+          export PATH=$PATH:/home/runner/.local/bin
+          pip install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible || true
+          pip show ansible || true
+          pip3.11 install molecule molecule-plugins docker ansible-lint flake8 testinfra ansible || true
+          pip3.11 show ansible || true
+          mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
+          which ansible
+          ansible --version
+          ansible-config dump --only-changed -t all
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-galaxy install --timeout 120 --verbose -r molecule/default/requirements.yml
+          ln -s . juju4.adduser
+          # Environment
+          uname -a
+          pwd
+          env
+          # Run
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS}
+          # Idempotency
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS} | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
+          # Verify
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/verify.yml ${ANSIBLE_EXTRA_VARS}
         if: ${{ matrix.os.name != 'openbsd' }}
 
       - name: Start VM on ${{ matrix.os.name }}
@@ -134,36 +134,36 @@ jobs:
           cpu_count: 4
       - name: Test on ${{ matrix.os.name }}
         run: |
-            set -x
-            whoami
-            # openbsd
-            sudo pkg_add -rIvx python3 py3-pip rust || true
-            sudo pkg_add -rIvx ansible ansible-lint || true
-            which python || true
-            which python3 || true
-            which python311 || true
-            which "python$PYTHON_VERSION" || true
-            which pip || true
-            which pip3 || true
-            which "pip$PYTHON_VERSION" || true
-            python3 --version || true
-            "python$PYTHON_VERSION" --version || true
-            export PATH=$PATH:/home/runner/.local/bin
-            mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
-            pip show ansible
-            which ansible
-            ansible --version
-            ansible-config dump --only-changed -t all
-            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-galaxy install --timeout 120 --verbose -r molecule/default/requirements.yml
-            ln -s . juju4.adduser
-            # Environment
-            uname -a
-            pwd
-            env
-            # Run
-            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS}
-            # Idempotency
-            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS} | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
-            # Verify
-            cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/verify.yml ${ANSIBLE_EXTRA_VARS}
+          set -x
+          whoami
+          # openbsd
+          sudo pkg_add -rIvx python3 py3-pip rust || true
+          sudo pkg_add -rIvx ansible ansible-lint || true
+          which python || true
+          which python3 || true
+          which python311 || true
+          which "python$PYTHON_VERSION" || true
+          which pip || true
+          which pip3 || true
+          which "pip$PYTHON_VERSION" || true
+          python3 --version || true
+          "python$PYTHON_VERSION" --version || true
+          export PATH=$PATH:/home/runner/.local/bin
+          mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/$ANSIBLE_ROLE $HOME/.ansible/roles/
+          pip show ansible
+          which ansible
+          ansible --version
+          ansible-config dump --only-changed -t all
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-galaxy install --timeout 120 --verbose -r molecule/default/requirements.yml
+          ln -s . juju4.adduser
+          # Environment
+          uname -a
+          pwd
+          env
+          # Run
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS}
+          # Idempotency
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/converge.yml ${ANSIBLE_EXTRA_VARS} | tee /tmp/idempotency.log | grep -q 'changed=0.*failed=0'  && (echo 'Idempotence test: pass' && exit 0)  || (echo 'Idempotence test: fail' && cat /tmp/idempotency.log && exit 0)
+          # Verify
+          cd $GITHUB_WORKSPACE/$ANSIBLE_ROLE && ansible-playbook -i localhost, --connection=local --become -vvv molecule/default/verify.yml ${ANSIBLE_EXTRA_VARS}
         if: ${{ matrix.os.name == 'openbsd' }}
